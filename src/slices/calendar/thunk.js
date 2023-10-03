@@ -7,8 +7,8 @@ import {
   updateEvent as updateEventApi,
   deleteEvent as deleteEventApi,
   getCategories as getCategoriesApi,
-  getUpCommingEvent as getUpCommingEventApi
-} from "../../helpers/fakebackend_helper";
+  getUpCommingEvent as getUpCommingEventApi,
+} from "../../helpers/backend_helper";
 
 export const getEvents = createAsyncThunk("calendar/getEvents", async () => {
   try {
@@ -48,28 +48,28 @@ export const deleteEvent = createAsyncThunk("calendar/deleteEvent", async (event
 });
 
 export const getCategories = createAsyncThunk("calendar/getCategories", async () => {
-  try{
+  try {
     const response = getCategoriesApi();
     return response;
-  }catch (error) {
+  } catch (error) {
     return error;
   }
-})
+});
 
 export const getUpCommingEvent = createAsyncThunk("calendar/getUpCommingEvent", async () => {
-  try{
-    const response = getUpCommingEventApi()
+  try {
+    const response = getUpCommingEventApi();
     return response;
-  }catch (error) {
+  } catch (error) {
     return error;
   }
-})
+});
 
 export const resetCalendar = createAsyncThunk("calendar/resetCalendar", async () => {
-  try{
-    const response = '';
+  try {
+    const response = "";
     return response;
-  }catch (error) {
+  } catch (error) {
     return error;
   }
-})
+});

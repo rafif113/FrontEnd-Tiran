@@ -8,8 +8,8 @@ import {
   getAllProjectStatusData as getAllProjectStatusDataApi,
   getWeekProjectStatusData as getWeekProjectStatusDataApi,
   getMonthProjectStatusData as getMonthProjectStatusDataApi,
-  getQuarterProjectStatusData as getQuarterProjectStatusDataApi
-} from "../../helpers/fakebackend_helper";
+  getQuarterProjectStatusData as getQuarterProjectStatusDataApi,
+} from "../../helpers/backend_helper";
 
 export const getProjectChartsData = createAsyncThunk("dashboardProject/getProjectChartsData", async (data) => {
   try {

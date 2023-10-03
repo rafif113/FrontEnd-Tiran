@@ -12,9 +12,8 @@ import {
   getOctSalesData as getOctSalesDataApi,
   getNovSalesData as getNovSalesDataApi,
   getDecSalesData as getDecSalesDataApi,
-  getJanSalesData as getJanSalesDataApi
-}
-  from "../../helpers/fakebackend_helper";
+  getJanSalesData as getJanSalesDataApi,
+} from "../../helpers/backend_helper";
 
 export const getBalanceChartsData = createAsyncThunk("dashboardCrm/getBalanceChartsData", async (data) => {
   try {
@@ -53,8 +52,7 @@ export const getDialChartsData = createAsyncThunk("dashboardCrm/getDialChartsDat
       response = getYearlyDealDataApi(data);
     }
     return response;
-  }
-  catch (error) {
+  } catch (error) {
     return error;
   }
 });
@@ -75,8 +73,7 @@ export const getSalesChartsData = createAsyncThunk("dashboardCrm/getSalesChartsD
       response = getJanSalesDataApi(data);
     }
     return response;
-  }
-  catch (error) {
+  } catch (error) {
     return response;
   }
 });

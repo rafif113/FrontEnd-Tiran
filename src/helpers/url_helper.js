@@ -2,11 +2,18 @@
 export const POST_FAKE_REGISTER = "/auth/signup";
 
 //LOGIN
-export const POST_FAKE_LOGIN = "/auth/signin";
+export const POST_LOGIN = "/login";
+// export const POST_LOGIN = "/auth/signin";
 export const POST_FAKE_JWT_LOGIN = "/post-jwt-login";
 export const POST_FAKE_PASSWORD_FORGET = "/auth/forgot-password";
 export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 export const SOCIAL_LOGIN = "/social-login";
+
+// Barang
+
+export const GET_BARANG = "/barang";
+export const GET_BARANG_KATEGORI = "/barang_kategori";
+export const ADD_BARANG = "/store/barang";
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";

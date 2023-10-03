@@ -15,8 +15,8 @@ import {
   getTodaySessionData as getTodaySessionDataApi,
   getLastWeekSessionData as getLastWeekSessionDataApi,
   getLastMonthSessionData as getLastMonthSessionDataApi,
-  getCurrentYearSessionData as getCurrentYearSessionDataApi
-} from "../../helpers/fakebackend_helper";
+  getCurrentYearSessionData as getCurrentYearSessionDataApi,
+} from "../../helpers/backend_helper";
 
 export const getAllData = createAsyncThunk("dashboardAnalytics/getAllData", async (data) => {
   try {
@@ -38,28 +38,31 @@ export const getAllData = createAsyncThunk("dashboardAnalytics/getAllData", asyn
   }
 });
 
-export const getAudiencesMetricsChartsData = createAsyncThunk("dashboardAnalytics/getAudiencesMetricsChartsData", async (data) => {
-  try {
-    var response;
+export const getAudiencesMetricsChartsData = createAsyncThunk(
+  "dashboardAnalytics/getAudiencesMetricsChartsData",
+  async (data) => {
+    try {
+      var response;
 
-    if (data === "all") {
-      response = getAllAudiencesMetricsDataApi(data);
-    }
-    if (data === "monthly") {
-      response = getMonthlyAudiencesMetricsDataApi(data);
-    }
-    if (data === "halfyearly") {
-      response = getHalfYearlyAudiencesMetricsDataApi(data);
-    }
-    if (data === "yearly") {
-      response = getYearlyAudiencesMetricsDataApi(data);
-    }
+      if (data === "all") {
+        response = getAllAudiencesMetricsDataApi(data);
+      }
+      if (data === "monthly") {
+        response = getMonthlyAudiencesMetricsDataApi(data);
+      }
+      if (data === "halfyearly") {
+        response = getHalfYearlyAudiencesMetricsDataApi(data);
+      }
+      if (data === "yearly") {
+        response = getYearlyAudiencesMetricsDataApi(data);
+      }
 
-    return response;
-  } catch (error) {
-    return error;
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
-});
+);
 
 export const getUserDeviceChartsData = createAsyncThunk("dashboardAnalytics/getUserDeviceChartsData", async (data) => {
   try {
@@ -83,24 +86,27 @@ export const getUserDeviceChartsData = createAsyncThunk("dashboardAnalytics/getU
   }
 });
 
-export const getAudiencesSessionsChartsData = createAsyncThunk("dashboardAnalytics/getAudiencesSessionsChartsData", async (data) => {
-  try {
-    var response;
-    if (data === "today") {
-      response = getTodaySessionDataApi(data);
-    }
-    if (data === "lastWeek") {
-      response = getLastWeekSessionDataApi(data);
-    }
-    if (data === "lastMonth") {
-      response = getLastMonthSessionDataApi(data);
-    }
-    if (data === "currentYear") {
-      response = getCurrentYearSessionDataApi(data);
-    }
+export const getAudiencesSessionsChartsData = createAsyncThunk(
+  "dashboardAnalytics/getAudiencesSessionsChartsData",
+  async (data) => {
+    try {
+      var response;
+      if (data === "today") {
+        response = getTodaySessionDataApi(data);
+      }
+      if (data === "lastWeek") {
+        response = getLastWeekSessionDataApi(data);
+      }
+      if (data === "lastMonth") {
+        response = getLastMonthSessionDataApi(data);
+      }
+      if (data === "currentYear") {
+        response = getCurrentYearSessionDataApi(data);
+      }
 
-    return response;
-  } catch (error) {
-    return error;
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
-});
+);

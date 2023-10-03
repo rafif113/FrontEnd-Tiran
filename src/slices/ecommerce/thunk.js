@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Include Both Helper File with needed methods
 import {
@@ -16,8 +16,8 @@ import {
   updateCustomer as updateCustomerApi,
   deleteCustomer as deleteCustomerApi,
   addNewProduct as addNewProductApi,
-  updateProduct as updateProductApi
-} from "../../helpers/fakebackend_helper";
+  updateProduct as updateProductApi,
+} from "../../helpers/backend_helper";
 
 export const getProducts = createAsyncThunk("ecommerce/getProducts", async () => {
   try {
@@ -96,8 +96,7 @@ export const updateProduct = createAsyncThunk("ecommerce/updateProduct", async (
     const data = await response;
     toast.success("Product Updateded Successfully", { autoClose: 3000 });
     return data;
-  }
-  catch (error) {
+  } catch (error) {
     toast.error("Product Updateded Failed", { autoClose: 3000 });
     return error;
   }
@@ -142,7 +141,7 @@ export const deleteCustomer = createAsyncThunk("ecommerce/deleteCustomer", async
   try {
     const response = deleteCustomerApi(customer);
     toast.success("Customer Deleted Successfully", { autoClose: 3000 });
-    return { customer, ...response }
+    return { customer, ...response };
   } catch (error) {
     toast.error("Customer Deleted Failed", { autoClose: 3000 });
     return error;

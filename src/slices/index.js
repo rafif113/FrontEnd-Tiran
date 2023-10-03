@@ -9,6 +9,9 @@ import AccountReducer from "./auth/register/reducer";
 import ForgetPasswordReducer from "./auth/forgetpwd/reducer";
 import ProfileReducer from "./auth/profile/reducer";
 
+// Barang
+import BarangReducer from "./barang/reducer";
+
 //Calendar
 import CalendarReducer from "./calendar/reducer";
 //Chat
@@ -70,32 +73,33 @@ import JobReducer from "./jobs/reducer";
 import APIKeyReducer from "./apiKey/reducer";
 
 const rootReducer = combineReducers({
-    Layout: LayoutReducer,
-    Login: LoginReducer,
-    Account: AccountReducer,
-    ForgetPassword: ForgetPasswordReducer,
-    Profile: ProfileReducer,
-    Calendar: CalendarReducer,
-    Chat: chatReducer,
-    Projects: ProjectsReducer,
-    Ecommerce: EcommerceReducer,
-    Tasks: TasksReducer,
-    Crypto: CryptoReducer,
-    Tickets: TicketsReducer,
-    Crm: CrmReducer,
-    Invoice: InvoiceReducer,
-    Mailbox: MailboxReducer,
-    DashboardAnalytics: DashboardAnalyticsReducer,
-    DashboardCRM: DashboardCRMReducer,
-    DashboardEcommerce: DashboardEcommerceReducer,
-    DashboardCrypto: DashboardCryptoReducer,
-    DashboardProject: DashboardProjectReducer,
-    DashboardNFT: DashboardNFTReducer,
-    Team: TeamDataReducer,
-    FileManager: FileManagerReducer,
-    Todos: TodosReducer,
-    Jobs: JobReducer,
-    APIKey: APIKeyReducer
+  Layout: LayoutReducer,
+  Login: LoginReducer,
+  Barang: BarangReducer,
+  Account: AccountReducer,
+  ForgetPassword: ForgetPasswordReducer,
+  Profile: ProfileReducer,
+  Calendar: CalendarReducer,
+  Chat: chatReducer,
+  Projects: ProjectsReducer,
+  Ecommerce: EcommerceReducer,
+  Tasks: TasksReducer,
+  Crypto: CryptoReducer,
+  Tickets: TicketsReducer,
+  Crm: CrmReducer,
+  Invoice: InvoiceReducer,
+  Mailbox: MailboxReducer,
+  DashboardAnalytics: DashboardAnalyticsReducer,
+  DashboardCRM: DashboardCRMReducer,
+  DashboardEcommerce: DashboardEcommerceReducer,
+  DashboardCrypto: DashboardCryptoReducer,
+  DashboardProject: DashboardProjectReducer,
+  DashboardNFT: DashboardNFTReducer,
+  Team: TeamDataReducer,
+  FileManager: FileManagerReducer,
+  Todos: TodosReducer,
+  Jobs: JobReducer,
+  APIKey: APIKeyReducer,
 });
 
 export default rootReducer;

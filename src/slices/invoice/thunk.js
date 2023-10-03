@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Include Both Helper File with needed methods
 import {
   getInvoices as getInvoicesApi,
   addNewInvoice as addNewInvoiceApi,
   updateInvoice as updateInvoiceApi,
-  deleteInvoice as deleteInvoiceApi
-} from "../../helpers/fakebackend_helper";
+  deleteInvoice as deleteInvoiceApi,
+} from "../../helpers/backend_helper";
 
 export const getInvoices = createAsyncThunk("invoice/getInvoices", async () => {
   try {
@@ -47,8 +47,7 @@ export const deleteInvoice = createAsyncThunk("invoice/deleteInvoice", async (in
     const response = deleteInvoiceApi(invoice);
     toast.success("Invoice Delete Successfully", { autoClose: 3000 });
     return { invoice, ...response };
-  }
-  catch (error) {
+  } catch (error) {
     toast.error("Invoice Delete Failed", { autoClose: 3000 });
     return error;
   }
