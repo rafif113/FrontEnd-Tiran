@@ -62,6 +62,22 @@ export const postJwtForgetPwd = (data) => api.create(url.POST_FAKE_JWT_PASSWORD_
 
 // get Barang
 export const getBarang = () => api.get(url.GET_BARANG);
+export const getMasterBarang = () => api.get(url.GET_MASTER_BARANG);
+export const getKategoriBarang = () => api.get(url.GET_KATEGORI_BARANG);
+
+// post Barang
+export const addBarang = (data) => api.create(url.ADD_BARANG, data);
+export const addKategori = (data) => api.create(url.ADD_KATEGORI, data);
+
+// get MOL
+export const getComponentGroup = () => api.get(url.GET_COMPONENT_GROUP);
+export const getMaterialType = () => api.get(url.GET_MATERIAL_TYPE);
+export const getCostCode = () => api.get(url.GET_COST_CODE);
+
+// post MOL
+export const addComponentGroup = (data) => api.create(url.ADD_COMPONENT_GROUP, data);
+export const addMaterialType = (data) => api.create(url.ADD_MATERIAL_TYPE, data);
+export const addCostCode = (data) => api.create(url.ADD_COST_CODE, data);
 
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);

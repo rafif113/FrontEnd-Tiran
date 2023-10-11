@@ -10,6 +10,9 @@ export * from "./auth/profile/thunk";
 //Barang
 export * from "./barang/thunk";
 
+//Mol
+export * from "./mol/thunk";
+
 //Calendar
 export * from "./calendar/thunk";
 //Chat

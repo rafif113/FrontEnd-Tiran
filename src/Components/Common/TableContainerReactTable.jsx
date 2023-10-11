@@ -91,7 +91,7 @@ const TableContainer = ({
         selectedRowIds: 0,
         sortBy: [
           {
-            desc: true,
+            asc: true,
           },
         ],
       },

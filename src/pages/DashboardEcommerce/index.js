@@ -33,16 +33,17 @@ const DashboardEcommerce = () => {
                   <Col xl={8}>
                     <Revenue />
                   </Col>
-                  <SalesByLocations />
+                  {/* <SalesByLocations /> */}
+                  <StoreVisits />
                 </Row>
-                <Row>
+                {/* <Row>
                   <BestSellingProducts />
                   <TopSellers />
                 </Row>
                 <Row>
                   <StoreVisits />
                   <RecentOrders />
-                </Row>
+                </Row> */}
               </div>
             </Col>
             {/* <RecentActivity rightColumn={rightColumn} hideRightColumn={toggleRightColumn} /> */}

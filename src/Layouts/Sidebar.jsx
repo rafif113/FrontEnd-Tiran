@@ -5,6 +5,7 @@ import SimpleBar from "simplebar-react";
 import logoSm from "../assets/images/logo-sm.png";
 import logoDark from "../assets/images/logo-dark.png";
 import logoLight from "../assets/images/logo-light.png";
+import tiranLogo from "../assets/images/tiran-logo.png";
 
 //Import Components
 import VerticalLayout from "./VerticalLayouts";
@@ -32,27 +33,37 @@ const Sidebar = ({ layoutType }) => {
       document.documentElement.setAttribute("data-sidebar-size", "sm-hover");
     }
   };
+  const logoStyle = {
+    color: "white", // Mengatur warna teks menjadi putih
+    fontWeight: "bold", // Mengatur tebal teks menjadi tebal (bold)
+    fontFamily: "sans-serif", // Mengatur jenis huruf (font-family) sesuai keinginan Anda
+    fontSize: "24px", // Mengatur ukuran teks (font-size) sesuai keinginan Anda
+    textDecoration: "none", // Menghilangkan garis bawah (decoration) dari teks (jika ada)
+    // Anda juga dapat menambahkan properti CSS lain sesuai keinginan Anda
+  };
 
   return (
     <React.Fragment>
       <div className="app-menu navbar-menu">
         <div className="navbar-brand-box">
-          <Link to="/" className="logo logo-dark">
-            <span className="logo-sm">
+          <Link to="/" className="logo logo-dark" style={logoStyle}>
+            {/* <span className="logo-sm">
               <img src={logoSm} alt="" height="22" />
             </span>
             <span className="logo-lg">
               <img src={logoDark} alt="" height="17" />
-            </span>
+            </span> */}
+            Pt Tiran
           </Link>
 
-          <Link to="/" className="logo logo-light">
-            <span className="logo-sm">
-              <img src={logoSm} alt="" height="22" />
+          <Link to="/" className="logo logo-light" style={logoStyle}>
+            {/* <span className="logo-sm"> */}
+            {/* <img src={logoSm} alt="" height="22" />
             </span>
             <span className="logo-lg">
               <img src={logoLight} alt="" height="17" />
-            </span>
+            </span> */}
+            Pt Tiran
           </Link>
           <button
             onClick={addEventListenerOnSmHoverMenu}

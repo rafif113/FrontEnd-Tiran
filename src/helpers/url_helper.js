@@ -10,10 +10,22 @@ export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 export const SOCIAL_LOGIN = "/social-login";
 
 // Barang
-
 export const GET_BARANG = "/barang";
-export const GET_BARANG_KATEGORI = "/barang_kategori";
+export const GET_MASTER_BARANG = "/master/barang";
 export const ADD_BARANG = "/store/barang";
+
+export const GET_KATEGORI_BARANG = "/barang_kategori";
+export const ADD_KATEGORI = "/store/kategori";
+
+// MOL
+export const GET_COMPONENT_GROUP = "/get/master/componen_group";
+export const ADD_COMPONENT_GROUP = "/store/master/componen_group";
+
+export const GET_MATERIAL_TYPE = "/get/master/material_type";
+export const ADD_MATERIAL_TYPE = "/store/master/material_type";
+
+export const GET_COST_CODE = "/get/master/cost_code";
+export const ADD_COST_CODE = "/store/master/cost_code";
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";

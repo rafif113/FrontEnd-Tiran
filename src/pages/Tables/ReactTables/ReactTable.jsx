@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
-import { Link } from "react-router-dom";
 import { Spinner } from "reactstrap";
 import { getBarang as onGetBarang } from "../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,14 +12,8 @@ const PaginationTable = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: (cellProps) => {
-          return (
-            <Link to="#" className="fw-medium">
-              {cellProps.id}
-            </Link>
-          );
-        },
+        Header: "No.",
+        accessor: (cellProps, rowIndex) => rowIndex + 1,
         disableFilters: true,
         filterable: false,
       },
@@ -43,22 +36,26 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
       },
-
       {
         Header: "Quantity",
         accessor: "qty",
         disableFilters: true,
         filterable: false,
       },
-
       {
-        Header: "Actions",
+        Header: "Price",
+        accessor: "price",
         disableFilters: true,
-        filterable: true,
-        accessor: (cellProps) => {
-          return <React.Fragment>Details</React.Fragment>;
-        },
+        filterable: false,
       },
+      // {
+      //   Header: "Actions",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   accessor: (cellProps) => {
+      //     return <React.Fragment>Details</React.Fragment>;
+      //   },
+      // },
     ],
     []
   );
@@ -70,21 +67,12 @@ const PaginationTable = () => {
     (barang) => barang
   );
   const barang = useSelector(selectBarangData);
-  const [barangList, setBarangList] = useState([]);
 
   useEffect(() => {
     if (barang && !barang.length) {
       dispatch(onGetBarang());
     }
   }, [dispatch, barang]);
-
-  useEffect(() => {
-    setBarangList(barang);
-  }, [barang]);
-
-  useEffect(() => {
-    if (!isEmpty(barang)) setBarangList(barang);
-  }, [barang]);
 
   const [display, setDisplay] = useState(false);
 

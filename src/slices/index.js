@@ -11,6 +11,8 @@ import ProfileReducer from "./auth/profile/reducer";
 
 // Barang
 import BarangReducer from "./barang/reducer";
+// MOL
+import MolReducer from "./mol/reducer";
 
 //Calendar
 import CalendarReducer from "./calendar/reducer";
@@ -76,19 +78,11 @@ const rootReducer = combineReducers({
   Layout: LayoutReducer,
   Login: LoginReducer,
   Barang: BarangReducer,
+  Mol: MolReducer,
   Account: AccountReducer,
   ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,
-  Calendar: CalendarReducer,
-  Chat: chatReducer,
-  Projects: ProjectsReducer,
-  Ecommerce: EcommerceReducer,
-  Tasks: TasksReducer,
-  Crypto: CryptoReducer,
-  Tickets: TicketsReducer,
-  Crm: CrmReducer,
-  Invoice: InvoiceReducer,
-  Mailbox: MailboxReducer,
+
   DashboardAnalytics: DashboardAnalyticsReducer,
   DashboardCRM: DashboardCRMReducer,
   DashboardEcommerce: DashboardEcommerceReducer,

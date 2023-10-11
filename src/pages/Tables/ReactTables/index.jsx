@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import { PaginationTable } from "./ReactTable";
 
 const ReactTable = () => {
@@ -11,8 +11,9 @@ const ReactTable = () => {
           <Row>
             <Col lg={12}>
               <Card>
-                <CardHeader>
-                  <h5 className="card-title mb-0">Stok Barang</h5>
+                <CardHeader className="d-flex justify-content-between align-items-center">
+                  <h5 className="card-title mb-0">List Barang</h5>
+                  {/* <Button color="primary">Add Barang</Button> */}
                 </CardHeader>
                 <CardBody>
                   <PaginationTable />

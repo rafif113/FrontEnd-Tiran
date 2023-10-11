@@ -241,6 +241,8 @@ import RangeArea from "../pages/Charts/ApexCharts/RangeAreaCharts/Index";
 import FunnelChart from "../pages/Charts/ApexCharts/FunnelCharts/Index";
 import UiLink from "../pages/BaseUi/UiLinks/UiLinks";
 
+import Mol from "../pages/Mol";
+
 const authProtectedRoutes = [
   { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },
@@ -254,7 +256,8 @@ const authProtectedRoutes = [
   { path: "/apps-ecommerce-products", component: <EcommerceProducts /> },
   { path: "/apps-ecommerce-product-details/:_id", component: <EcommerceProductDetail /> },
   { path: "/apps-ecommerce-product-details", component: <EcommerceProductDetail /> },
-  { path: "/apps-ecommerce-add-product", component: <EcommerceAddProduct /> },
+  // { path: "/apps-ecommerce-add-product", component: <EcommerceAddProduct /> },
+  { path: "/create-barang", component: <EcommerceAddProduct /> },
   { path: "/apps-ecommerce-orders", component: <EcommerceOrders /> },
   { path: "/apps-ecommerce-order-details", component: <EcommerceOrderDetail /> },
   { path: "/apps-ecommerce-customers", component: <EcommerceCustomers /> },
@@ -262,6 +265,8 @@ const authProtectedRoutes = [
   { path: "/apps-ecommerce-checkout", component: <EcommerceCheckout /> },
   { path: "/apps-ecommerce-sellers", component: <EcommerceSellers /> },
   { path: "/apps-ecommerce-seller-details", component: <EcommerceSellerDetail /> },
+
+  { path: "/create-mol", component: <Mol /> },
 
   { path: "/apps-file-manager", component: <FileManager /> },
   { path: "/apps-todo", component: <ToDoList /> },
@@ -398,7 +403,7 @@ const authProtectedRoutes = [
 
   //Tables
   { path: "/tables-listjs", component: <ListTables /> },
-  { path: "/tables-react", component: <ReactTable /> },
+  { path: "/list-barang", component: <ReactTable /> },
 
   //Icons
   { path: "/icons-remix", component: <RemixIcons /> },
