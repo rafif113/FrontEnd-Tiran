@@ -7,6 +7,7 @@ const Navdata = () => {
   const [isDashboard, setIsDashboard] = useState(false);
   const [isBarang, setIsBarang] = useState(false);
   const [isMol, setIsMol] = useState(false);
+  const [isFpb, setIsFpb] = useState(false);
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -33,7 +34,10 @@ const Navdata = () => {
     if (iscurrentState !== "Mol") {
       setIsMol(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol]);
+    if (iscurrentState !== "Fpb") {
+      setIsFpb(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb]);
 
   const menuItems = [
     {
@@ -95,6 +99,20 @@ const Navdata = () => {
       },
       stateVariables: isMol,
       subItems: [{ id: "createmol", label: "Create Mol", link: "/create-mol", parentId: "mol" }],
+    },
+    {
+      id: "fpb",
+      label: "Permintaan Barang",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsFpb(!isFpb);
+        setIscurrentState("Fpb");
+        updateIconSidebar(e);
+      },
+      stateVariables: isFpb,
+      subItems: [{ id: "createfpb", label: "Create FPB", link: "/create-fpb", parentId: "fpb" }],
     },
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;

@@ -12,7 +12,6 @@ import {
 export const getComponentGroup = createAsyncThunk("mol/getComponentGroup", async () => {
   try {
     const response = getComponentGroupApi();
-    console.log(response);
     return response;
   } catch (error) {
     return error;

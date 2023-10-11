@@ -28,9 +28,7 @@ export const getMasterBarang = createAsyncThunk("barang/getMasterBarang", async 
 
 export const addBarang = createAsyncThunk("barang/addBarang", async (barang) => {
   try {
-    // console.log(barang);
     const response = addBarangApi(barang);
-    // console.log(response);
     const data = await response;
     toast.success("Barang Added Successfully", { autoClose: 3000 });
     return data;
