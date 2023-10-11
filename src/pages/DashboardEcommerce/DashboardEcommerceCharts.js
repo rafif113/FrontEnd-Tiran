@@ -29,20 +29,7 @@ const RevenueCharts = ({ dataColors, series }) => {
       },
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       axisTicks: {
         show: false,
       },
@@ -123,13 +110,7 @@ const RevenueCharts = ({ dataColors, series }) => {
   };
   return (
     <React.Fragment>
-      <ReactApexChart dir="ltr"
-        options={options}
-        series={series}
-        type="line"
-        height="370"
-        className="apex-charts"
-      />
+      <ReactApexChart dir="ltr" options={options} series={series} type="line" height="370" className="apex-charts" />
     </React.Fragment>
   );
 };
@@ -158,13 +139,7 @@ const StoreVisitsCharts = ({ dataColors }) => {
   };
   return (
     <React.Fragment>
-      <ReactApexChart dir="ltr"
-        options={options}
-        series={series}
-        type="donut"
-        height="333"
-        className="apex-charts"
-      />
+      <ReactApexChart dir="ltr" options={options} series={series} type="donut" height="333" className="apex-charts" />
     </React.Fragment>
   );
 };

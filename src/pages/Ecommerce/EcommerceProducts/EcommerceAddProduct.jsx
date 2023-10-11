@@ -20,7 +20,6 @@ import {
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { addNewProduct as onAddNewProduct } from "../../../slices/thunks";
 import {
   getMasterBarang as onGetMasterBarang,
   getKategoriBarang as onGetKategoriBarang,
@@ -35,18 +34,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 // Import React FilePond
-import { registerPlugin } from "react-filepond";
 import Select from "react-select";
-// Import FilePond styles
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useEffect } from "react";
 import { createSelector } from "reselect";
-
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const EcommerceAddProduct = (props) => {
   document.title = "Create Product | Velzon - React Admin & Dashboard Template";
