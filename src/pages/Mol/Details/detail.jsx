@@ -27,11 +27,9 @@ import {
   getDetailMol as onGetDetailMol,
 } from "../../../slices/thunks";
 
-import { clearDetailMol, setLoading, setSelectedPartRequest } from "../../../slices/mol/reducer";
+import { clearDetailMol, clearSelectedPartRequest, setLoading, setSelectedPartRequest } from "../../../slices/mol/reducer";
 
 import classnames from "classnames";
-import { Link, useNavigate } from "react-router-dom";
-import { isEmpty } from "lodash";
 
 //formik
 import { useFormik } from "formik";
@@ -39,11 +37,13 @@ import * as Yup from "yup";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
+import { useNavigate } from "react-router-dom";
 
 const DetailMol = () => {
   document.title = "Create Product | PT Tiran";
 
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   // handle active tab menu
   const [customActiveTab, setcustomActiveTab] = useState("1");
@@ -87,6 +87,7 @@ const DetailMol = () => {
     const id_mol = url.searchParams.get("id");
     dispatch(setLoading(true));
     dispatch(clearDetailMol());
+    dispatch(clearSelectedPartRequest());
     dispatch(onGetDetailMol({ id_mol })).then(() => {
       dispatch(setLoading(false));
     });
@@ -107,16 +108,12 @@ const DetailMol = () => {
     enableReinitialize: true,
     initialValues: {},
     validationSchema: Yup.object({}),
-    onSubmit: () => {
-      // const selectedItemsData = detailMol.mol.partrequest.filter((row) => selectedItems.includes(row.id));
-      // dispatch(setSelectedPartRequest(selectedItemsData));
-      // console.log(selectedItemsData);
+    onSubmit: async () => {
+      const selectedItemsData = detailMol.mol.partrequest.filter((row) => selectedItems.includes(row.id));
+      await dispatch(setSelectedPartRequest(selectedItemsData));
+      history("/fpb/create");
     },
   });
-
-  // const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
-
-  console.log(detailMol);
 
   return (
     <React.Fragment>

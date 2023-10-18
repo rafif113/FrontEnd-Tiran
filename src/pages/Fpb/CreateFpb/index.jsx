@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 //formik
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 
 const CreateFpb = () => {
   document.title = "Create Product | PT Tiran";
@@ -27,6 +28,9 @@ const CreateFpb = () => {
     setRows([...rows, newRow]);
   };
 
+  const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
+
+  console.log(selectedPartRequest);
   // handle form input
   const validation = useFormik({
     enableReinitialize: true,
@@ -166,10 +170,10 @@ const CreateFpb = () => {
                         </tr>
                       </thead>
                       <tbody id="newlink">
-                        {rows.map((row) => (
+                        {selectedPartRequest.map((row, index) => (
                           <tr key={row.id} className="product">
                             <th scope="row" className="product-id">
-                              {row.id}
+                              {index + 1}
                             </th>
                             <td className="text-start">
                               <Input
@@ -178,6 +182,8 @@ const CreateFpb = () => {
                                 id="productName-1"
                                 placeholder="Product Name"
                                 name="product_name"
+                                readOnly
+                                value={row.part_number}
                               />
                             </td>
                             <td className="text-start">
@@ -187,6 +193,8 @@ const CreateFpb = () => {
                                 id="productName-1"
                                 placeholder="Product Name"
                                 name="product_name"
+                                readOnly
+                                value={row.desc}
                               />
                             </td>
                             <td className="text-start">
@@ -196,6 +204,8 @@ const CreateFpb = () => {
                                 id="productName-1"
                                 placeholder="Product Name"
                                 name="product_name"
+                                readOnly
+                                value={row.unit}
                               />
                             </td>
                             <td className="text-start">
@@ -205,6 +215,8 @@ const CreateFpb = () => {
                                 id="productName-1"
                                 placeholder="Product Name"
                                 name="product_name"
+                                readOnly
+                                value={row.qty}
                               />
                             </td>
                             <td className="text-start">
@@ -214,6 +226,8 @@ const CreateFpb = () => {
                                 id="productName-1"
                                 placeholder="Product Name"
                                 name="product_name"
+                                readOnly
+                                value={row.page_desc}
                               />
                             </td>
 
@@ -224,20 +238,6 @@ const CreateFpb = () => {
                           </td> */}
                           </tr>
                         ))}
-                      </tbody>
-                      <tbody>
-                        <tr id="newForm" style={{ display: "none" }}>
-                          <td className="d-none" colSpan="5">
-                            <p>Add New Form</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colSpan="5">
-                            <Link to="#" className="btn btn-soft-secondary fw-medium" id="add-item" onClick={handleAddItem}>
-                              <i className="ri-add-fill me-1 align-bottom"></i> Add Item
-                            </Link>
-                          </td>
-                        </tr>
                       </tbody>
                     </Table>
                   </div>

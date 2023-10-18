@@ -16,7 +16,8 @@ export const initialState = {
   componentGroup: [],
   costCode: [],
   materialType: [],
-  // selectedPartRequest: [],
+  loading: true,
+  selectedPartRequest: [],
   error: {},
 };
 
@@ -33,12 +34,12 @@ const MolSlice = createSlice({
     clearDetailMol: (state) => {
       state.detailMol = null;
     },
-    // setSelectedPartRequest: (state, action) => {
-    //   state.selectedPartRequest = action.payload;
-    // },
-    // clearSelectedPartRequest: (state) => {
-    //   state.selectedPartRequest = null;
-    // },
+    setSelectedPartRequest: (state, action) => {
+      state.selectedPartRequest = action.payload;
+    },
+    clearSelectedPartRequest: (state) => {
+      state.selectedPartRequest = null;
+    },
   },
   extraReducers: (builder) => {
     // Start MOL reducer
@@ -122,11 +123,6 @@ const MolSlice = createSlice({
     // End Material Type reducer
   },
 });
-export const {
-  clearDetailMol,
-  setDetailMol,
-  setLoading,
-  // setSelectedPartRequest, clearSelectedPartRequest
-} = MolSlice.actions;
+export const { clearDetailMol, setDetailMol, setLoading, setSelectedPartRequest, clearSelectedPartRequest } = MolSlice.actions;
 
 export default MolSlice.reducer;
