@@ -70,6 +70,8 @@ export const addBarang = (data) => api.create(url.ADD_BARANG, data);
 export const addKategori = (data) => api.create(url.ADD_KATEGORI, data);
 
 // get MOL
+export const getMol = (data) => api.create(url.GET_MOL, data);
+export const addMol = (data) => api.create(url.ADD_MOL, data);
 export const getComponentGroup = () => api.get(url.GET_COMPONENT_GROUP);
 export const getMaterialType = () => api.get(url.GET_MATERIAL_TYPE);
 export const getCostCode = () => api.get(url.GET_COST_CODE);

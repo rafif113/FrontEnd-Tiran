@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const CreateFpb = () => {
-  document.title = "Create Product | Velzon - React Admin & Dashboard Template";
+  document.title = "Create Product | PT Tiran";
 
   // Handle new part barang request
   const [rows, setRows] = useState([

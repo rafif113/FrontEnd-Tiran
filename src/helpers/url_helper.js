@@ -18,6 +18,8 @@ export const GET_KATEGORI_BARANG = "/barang_kategori";
 export const ADD_KATEGORI = "/store/kategori";
 
 // MOL
+export const GET_MOL = "/get/mol";
+export const ADD_MOL = "/store/mol";
 export const GET_COMPONENT_GROUP = "/get/master/componen_group";
 export const ADD_COMPONENT_GROUP = "/store/master/componen_group";
 

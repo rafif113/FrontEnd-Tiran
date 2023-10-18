@@ -82,8 +82,8 @@ const Navdata = () => {
       },
       stateVariables: isBarang,
       subItems: [
-        { id: "listbarang", label: "List Barang", link: "/list-barang", parentId: "barang" },
-        { id: "createbarang", label: "Create Barang", link: "/create-barang", parentId: "barang" },
+        { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
+        { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
       ],
     },
     {
@@ -98,7 +98,10 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isMol,
-      subItems: [{ id: "createmol", label: "Create Mol", link: "/create-mol", parentId: "mol" }],
+      subItems: [
+        { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+        { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+      ],
     },
     {
       id: "fpb",
@@ -112,7 +115,7 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isFpb,
-      subItems: [{ id: "createfpb", label: "Create FPB", link: "/create-fpb", parentId: "fpb" }],
+      subItems: [{ id: "createfpb", label: "Create FPB", link: "/fpb/create", parentId: "fpb" }],
     },
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;

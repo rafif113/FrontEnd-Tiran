@@ -6,7 +6,7 @@ import Section from "./Section";
 import StoreVisits from "./StoreVisits";
 
 const DashboardEcommerce = () => {
-  document.title = "Dashboard | Velzon - React Admin & Dashboard Template";
+  document.title = "Dashboard | PT Tiran";
 
   const [rightColumn, setRightColumn] = useState(true);
   const toggleRightColumn = () => {

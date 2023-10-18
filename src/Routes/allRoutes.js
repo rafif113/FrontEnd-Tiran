@@ -14,7 +14,10 @@ import DashboardEcommerce from "../pages/DashboardEcommerce";
 import CreateBarang from "../pages/Barang/CreateBarang";
 import ListBarang from "../pages/Barang/ListBarang";
 // MOL
-import Mol from "../pages/Mol";
+import Mol from "../pages/Mol/List";
+import CreateMol from "../pages/Mol/Create";
+import CetakMol from "../pages/Mol/Details";
+import DetailMol from "../pages/Mol/Details/detail";
 
 // FPB
 import CreateFpb from "../pages/Fpb/CreateFpb";
@@ -26,12 +29,15 @@ const authProtectedRoutes = [
   { path: "/dashboard", component: <DashboardEcommerce /> },
   { path: "/index", component: <DashboardEcommerce /> },
   // Master Barang
-  { path: "/create-barang", component: <CreateBarang /> },
-  { path: "/list-barang", component: <ListBarang /> },
+  { path: "/barang", component: <ListBarang /> },
+  { path: "/barang/create", component: <CreateBarang /> },
   // MOL
-  { path: "/create-mol", component: <Mol /> },
+  { path: "/mol", component: <Mol /> },
+  { path: "/mol/create", component: <CreateMol /> },
+  { path: "/mol/cetak", component: <CetakMol /> },
+  { path: "/mol/detail", component: <DetailMol /> },
   // FPB
-  { path: "/create-fpb", component: <CreateFpb /> },
+  { path: "/fpb/create", component: <CreateFpb /> },
   {
     path: "/",
     exact: true,

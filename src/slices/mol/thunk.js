@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
+  addMol as addMolApi,
+  getMol as getMolApi,
   getComponentGroup as getComponentGroupApi,
   getMaterialType as getMaterialTypeApi,
   getCostCode as getCostCodeApi,
@@ -8,6 +10,24 @@ import {
   addMaterialType as addMaterialTypeApi,
   addCostCode as addCostCodeApi,
 } from "../../helpers/backend_helper";
+
+export const getMol = createAsyncThunk("mol/getMol", async () => {
+  try {
+    const response = getMolApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailMol = createAsyncThunk("mol/getDetailMol", async (data) => {
+  try {
+    const response = getMolApi(data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
 
 export const getComponentGroup = createAsyncThunk("mol/getComponentGroup", async () => {
   try {
@@ -68,6 +88,18 @@ export const addCostCode = createAsyncThunk("mol/addCostCode", async (cost) => {
     return data;
   } catch (error) {
     toast.error("cost Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const addMol = createAsyncThunk("mol/addMol", async (mol) => {
+  try {
+    const response = addMolApi(mol);
+    const data = await response;
+    toast.success("mol Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("mol Added Failed", { autoClose: 3000 });
     return error;
   }
 });

@@ -3,7 +3,7 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactst
 import { PaginationTable } from "./ReactTable";
 
 const ReactTable = () => {
-  document.title = "React Tables | PT Tiran";
+  document.title = "List Mol | PT Tiran";
   return (
     <React.Fragment>
       <div className="page-content">
@@ -12,8 +12,7 @@ const ReactTable = () => {
             <Col lg={12}>
               <Card>
                 <CardHeader className="d-flex justify-content-between align-items-center">
-                  <h5 className="card-title mb-0">List Barang</h5>
-                  {/* <Button color="primary">Add Barang</Button> */}
+                  <h5 className="card-title mb-0">List Mol</h5>
                 </CardHeader>
                 <CardBody>
                   <PaginationTable />

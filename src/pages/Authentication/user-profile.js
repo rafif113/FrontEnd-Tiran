@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isEmpty } from "lodash";
 
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Alert,
-  CardBody,
-  Button,
-  Label,
-  Input,
-  FormFeedback,
-  Form,
-} from "reactstrap";
+import { Container, Row, Col, Card, Alert, CardBody, Button, Label, Input, FormFeedback, Form } from "reactstrap";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -35,23 +23,14 @@ const UserProfile = () => {
 
   const [userName, setUserName] = useState("Admin");
 
-
-
   const selectLayoutState = (state) => state.Profile;
-  const userprofileData = createSelector(
-    selectLayoutState,
-    (state) => ({
-      user: state.user,
-      success: state.success,
-      error: state.error
-    })
-  );
+  const userprofileData = createSelector(selectLayoutState, (state) => ({
+    user: state.user,
+    success: state.success,
+    error: state.error,
+  }));
   // Inside your component
-  const {
-    user, success, error 
-  } = useSelector(userprofileData);
-
-
+  const { user, success, error } = useSelector(userprofileData);
 
   useEffect(() => {
     if (sessionStorage.getItem("authUser")) {
@@ -73,25 +52,23 @@ const UserProfile = () => {
     }
   }, [dispatch, user]);
 
-
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
-      first_name: userName || 'Admin',
-      idx: idx || '',
+      first_name: userName || "Admin",
+      idx: idx || "",
     },
     validationSchema: Yup.object({
       first_name: Yup.string().required("Please Enter Your UserName"),
     }),
     onSubmit: (values) => {
       dispatch(editProfile(values));
-    }
+    },
   });
 
-  document.title = "Profile | Velzon - React Admin & Dashboard Template";
+  document.title = "Profile | PT Tiran";
   return (
     <React.Fragment>
       <div className="page-content mt-lg-5">
@@ -105,11 +82,7 @@ const UserProfile = () => {
                 <CardBody>
                   <div className="d-flex">
                     <div className="mx-3">
-                      <img
-                        src={avatar}
-                        alt=""
-                        className="avatar-md rounded-circle img-thumbnail"
-                      />
+                      <img src={avatar} alt="" className="avatar-md rounded-circle img-thumbnail" />
                     </div>
                     <div className="flex-grow-1 align-self-center">
                       <div className="text-muted">
@@ -147,9 +120,7 @@ const UserProfile = () => {
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
                     value={validation.values.first_name || ""}
-                    invalid={
-                      validation.touched.first_name && validation.errors.first_name ? true : false
-                    }
+                    invalid={validation.touched.first_name && validation.errors.first_name ? true : false}
                   />
                   {validation.touched.first_name && validation.errors.first_name ? (
                     <FormFeedback type="invalid">{validation.errors.first_name}</FormFeedback>

@@ -39,7 +39,7 @@ import { useEffect } from "react";
 import { createSelector } from "reselect";
 
 const CreateBarang = () => {
-  document.title = "Create Product | Velzon - React Admin & Dashboard Template";
+  document.title = "Create Product | PT Tiran";
 
   const history = useNavigate();
   const dispatch = useDispatch();
