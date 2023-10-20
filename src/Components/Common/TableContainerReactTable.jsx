@@ -91,7 +91,8 @@ const TableContainer = ({
         selectedRowIds: 0,
         sortBy: [
           {
-            asc: true,
+            id: "no",
+            asc: false,
           },
         ],
       },
@@ -119,7 +120,7 @@ const TableContainer = ({
           {isGlobalSearch && (
             <Col md={2}>
               <select className="form-select" value={pageSize} onChange={onChangeInSelect}>
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[5, 10, 20, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
                     Show {pageSize}
                   </option>

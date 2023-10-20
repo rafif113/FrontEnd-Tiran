@@ -9,6 +9,8 @@ import {
   addComponentGroup as addComponentGroupApi,
   addMaterialType as addMaterialTypeApi,
   addCostCode as addCostCodeApi,
+  getPengeluaran as getPengeluaranApi,
+  addPengeluaran as addPengeluaranApi,
 } from "../../helpers/backend_helper";
 
 export const getMol = createAsyncThunk("mol/getMol", async () => {
@@ -100,6 +102,37 @@ export const addMol = createAsyncThunk("mol/addMol", async (mol) => {
     return data;
   } catch (error) {
     toast.error("mol Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const addPengeluaran = createAsyncThunk("mol/addPengeluaran", async (pengeluaran) => {
+  try {
+    const response = addPengeluaranApi(pengeluaran);
+    const data = await response;
+    toast.success("Pengeluaran Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("Pengeluaran Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getPengeluaran = createAsyncThunk("mol/getPengeluaran", async () => {
+  console.log(1);
+  try {
+    const response = getPengeluaranApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailPengeluaran = createAsyncThunk("mol/getDetailPengeluaran", async (data) => {
+  try {
+    const response = getPengeluaranApi(data);
+    return response;
+  } catch (error) {
     return error;
   }
 });

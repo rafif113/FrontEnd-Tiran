@@ -1,20 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getMol as onGetMol } from "../../../slices/thunks";
+import { getPengeluaran as onGetPengeluaran } from "../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
-const PaginationTable = () => {
+const PengeluaranTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
-  const handleDetailsClick = (id) => {
-    history(`/mol/detail?id=${id}`);
-  };
+
   const handleCetakClick = (id) => {
-    history(`/mol/cetak?id=${id}`);
+    history(`/mol/pengeluaran/cetak?id=${id}`);
   };
   const columns = useMemo(
     () => [
@@ -26,43 +24,30 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "No Document",
-        accessor: "no_documen",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "No Mol",
+        Header: "Mol No",
         accessor: "mol_no",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Order For",
-        accessor: "order_for",
+        Header: "HM",
+        accessor: "hm",
         disableFilters: true,
         filterable: false,
-        Cell: ({ value }) => {
-          const orderForArray = value ? JSON.parse(value) : null;
-          return (
-            <React.Fragment>
-              {orderForArray
-                ? orderForArray.map((val, index) => {
-                    return <div key={index}>{val}</div>;
-                  })
-                : "-"}
-            </React.Fragment>
-          );
-        },
       },
       {
-        Header: "Status",
-        accessor: () => {
-          return <>Approved</>;
-        },
+        Header: "Unit",
+        accessor: "unit_id",
         disableFilters: true,
         filterable: false,
       },
+      {
+        Header: "Date",
+        accessor: "date",
+        disableFilters: true,
+        filterable: false,
+      },
+
       {
         Header: "Actions",
         disableFilters: true,
@@ -70,9 +55,6 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
-                Details
-              </button>
               <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
                 Cetak
               </button>
@@ -86,32 +68,33 @@ const PaginationTable = () => {
 
   // -------------------------------------------
 
-  const selectMolData = createSelector(
-    (state) => state.Mol.mol,
-    (mol) => mol
+  const selectPengeluaranData = createSelector(
+    (state) => state.Mol.pengeluaran,
+    (pengeluaran) => pengeluaran
   );
-  const mol = useSelector(selectMolData);
+  const pengeluaran = useSelector(selectPengeluaranData);
 
   useEffect(() => {
-    if (mol && !mol.length) {
-      dispatch(onGetMol());
+    if (pengeluaran && !pengeluaran.length) {
+      dispatch(onGetPengeluaran());
     }
-  }, [dispatch, mol]);
+  }, [dispatch, pengeluaran]);
+  console.log(pengeluaran);
 
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    if (mol && !isEmpty(mol)) {
+    if (pengeluaran && !isEmpty(pengeluaran)) {
       setDisplay(true);
     }
-  }, [mol]);
+  }, [pengeluaran]);
 
   return (
     <React.Fragment>
       {display ? (
         <TableContainer
           columns={columns || []}
-          data={mol || []}
+          data={pengeluaran || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -121,7 +104,7 @@ const PaginationTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari Mol..."
+          SearchPlaceholder="Cari Pengeluaran..."
         />
       ) : (
         <div className="text-center">
@@ -132,4 +115,4 @@ const PaginationTable = () => {
   );
 };
 
-export { PaginationTable };
+export { PengeluaranTable };

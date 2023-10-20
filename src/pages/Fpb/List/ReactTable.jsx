@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getMol as onGetMol } from "../../../slices/thunks";
+import { getBarang as onGetBarang, getFpb as onGetFpb } from "../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
@@ -10,12 +10,11 @@ import { useNavigate } from "react-router-dom";
 const PaginationTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
-  const handleDetailsClick = (id) => {
-    history(`/mol/detail?id=${id}`);
-  };
+
   const handleCetakClick = (id) => {
-    history(`/mol/cetak?id=${id}`);
+    history(`/fpb/cetak?id=${id}`);
   };
+
   const columns = useMemo(
     () => [
       {
@@ -25,41 +24,28 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
       },
+
       {
-        Header: "No Document",
-        accessor: "no_documen",
+        Header: "Nomor",
+        accessor: "nomor",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "No Mol",
-        accessor: "mol_no",
+        Header: "Diajukan ",
+        accessor: "diajukan_oleh",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Order For",
-        accessor: "order_for",
+        Header: "Pengajuan",
+        accessor: "pengajuan",
         disableFilters: true,
         filterable: false,
-        Cell: ({ value }) => {
-          const orderForArray = value ? JSON.parse(value) : null;
-          return (
-            <React.Fragment>
-              {orderForArray
-                ? orderForArray.map((val, index) => {
-                    return <div key={index}>{val}</div>;
-                  })
-                : "-"}
-            </React.Fragment>
-          );
-        },
       },
       {
-        Header: "Status",
-        accessor: () => {
-          return <>Approved</>;
-        },
+        Header: "Site",
+        accessor: "site",
         disableFilters: true,
         filterable: false,
       },
@@ -70,7 +56,10 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
+              <button
+                // onClick={() => handleDetailsClick(cellProps.id)}
+                className="btn btn-sm btn-light"
+              >
                 Details
               </button>
               <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
@@ -85,43 +74,46 @@ const PaginationTable = () => {
   );
 
   // -------------------------------------------
-
-  const selectMolData = createSelector(
-    (state) => state.Mol.mol,
-    (mol) => mol
-  );
-  const mol = useSelector(selectMolData);
-
-  useEffect(() => {
-    if (mol && !mol.length) {
-      dispatch(onGetMol());
-    }
-  }, [dispatch, mol]);
-
   const [display, setDisplay] = useState(false);
 
+  const SelectFpbData = createSelector(
+    (state) => state.Fpb.fpb,
+    (fpb) => fpb
+  );
+  const fpb = useSelector(SelectFpbData);
+
   useEffect(() => {
-    if (mol && !isEmpty(mol)) {
+    if (fpb && !fpb.length) {
+      dispatch(onGetFpb());
+    }
+  }, [dispatch, fpb]);
+
+  console.log(fpb);
+
+  useEffect(() => {
+    if (fpb && !isEmpty(fpb)) {
       setDisplay(true);
     }
-  }, [mol]);
+  }, [fpb]);
+
+  // ----------------------------------------------
 
   return (
     <React.Fragment>
       {display ? (
         <TableContainer
           columns={columns || []}
-          data={mol || []}
+          data={fpb || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
-          iscustomPageSize={true}
+          isCustomPageSize={true}
           isBordered={true}
           customPageSize={5}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari Mol..."
+          SearchPlaceholder="Cari FPB..."
         />
       ) : (
         <div className="text-center">

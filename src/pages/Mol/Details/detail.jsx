@@ -104,6 +104,7 @@ const DetailMol = () => {
     }
   };
 
+  const [selectedButton, setSelectedButton] = useState(null);
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {},
@@ -111,7 +112,13 @@ const DetailMol = () => {
     onSubmit: async () => {
       const selectedItemsData = detailMol.mol.partrequest.filter((row) => selectedItems.includes(row.id));
       await dispatch(setSelectedPartRequest(selectedItemsData));
-      history("/fpb/create");
+      if (selectedButton === "pengeluaran") {
+        console.log("Pengeluaran");
+        history("/mol/pengeluaran/create");
+      } else if (selectedButton === "fpb") {
+        history("/fpb/create");
+        console.log("FPB");
+      }
     },
   });
 
@@ -480,15 +487,23 @@ const DetailMol = () => {
                                     readOnly
                                   />
                                 </td>
-
                                 <td className="product-removal">
-                                  <Input
+                                  {/* <Input
                                     className="form-check-input"
                                     type="checkbox"
-                                    value={row.id}
+                                    value={row.flag === "1" ? "" : row.id}
                                     onChange={() => handleCheckboxChange(row.id)}
-                                    checked={selectedItems.includes(row.id)}
-                                  />
+                                    checked={row.flag === "1" || selectedItems.includes(row.id)}
+                                  /> */}
+                                  {row.flag !== "1" && (
+                                    <Input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      value={row.id}
+                                      onChange={() => handleCheckboxChange(row.id)}
+                                      checked={selectedItems.includes(row.id)}
+                                    />
+                                  )}
                                 </td>
                               </tr>
                             ))}
@@ -667,8 +682,11 @@ const DetailMol = () => {
                   </Card>
 
                   <div className="text-end mb-3">
-                    <button type="submit" className="btn btn-success w-sm">
-                      Submit
+                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => setSelectedButton("pengeluaran")}>
+                      Pengeluaran
+                    </button>
+                    <button type="submit" className="btn btn-success w-sm" onClick={() => setSelectedButton("fpb")}>
+                      Create FPB
                     </button>
                   </div>
                 </Form>

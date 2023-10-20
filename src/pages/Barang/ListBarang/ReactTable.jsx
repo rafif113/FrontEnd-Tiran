@@ -13,6 +13,7 @@ const PaginationTable = () => {
     () => [
       {
         Header: "No.",
+        id: "no",
         accessor: (cellProps, rowIndex) => rowIndex + 1,
         disableFilters: true,
         filterable: false,
@@ -42,12 +43,12 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
       },
-      {
-        Header: "Price",
-        accessor: "price",
-        disableFilters: true,
-        filterable: false,
-      },
+      // {
+      //   Header: "Price",
+      //   accessor: "price",
+      //   disableFilters: true,
+      //   filterable: false,
+      // },
       // {
       //   Header: "Actions",
       //   disableFilters: true,

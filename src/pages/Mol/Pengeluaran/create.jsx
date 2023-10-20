@@ -1,68 +1,51 @@
 import React, { useState } from "react";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import { Card, CardBody, Col, Container, Row, Input, Form, Table } from "reactstrap";
+import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback } from "reactstrap";
 
 import { Link } from "react-router-dom";
-
+import { addPengeluaran as onAddPengeluaran } from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const CreateFpb = () => {
-  document.title = "Create Product | PT Tiran";
-
-  // Handle new part barang request
-  const [rows, setRows] = useState([
-    {
-      id: 1,
-      productName: "",
-    },
-  ]);
-
-  const handleAddItem = () => {
-    const newRow = {
-      id: rows.length + 1,
-      productName: "",
-    };
-    setRows([...rows, newRow]);
-  };
+const CreatePengeluaran = () => {
+  document.title = "Create Pengeluaran | PT Tiran";
+  const dispatch = useDispatch();
 
   const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
+  const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
 
-  console.log(selectedPartRequest);
+  const selectedPartRequestForString = selectedPartRequest.map((item) => item.id);
+  const idPartRequestString = JSON.stringify(selectedPartRequestForString);
+
   // handle form input
   const validation = useFormik({
     enableReinitialize: true,
-    // initialValues,
     initialValues: {
-      id: "",
-      part_number: "",
-      keterangan: "",
-      qty: "",
-      price: "",
-      merktype: "",
-      desc_barang: "",
-      id_kategori: "",
+      mol_no: "",
+      hm: "",
+      unit_id: "",
+      date: "",
     },
     validationSchema: Yup.object({
-      keterangan: Yup.string().required("Please Enter a Keterangan"),
-      qty: Yup.string().required("Please Enter a Barang stock"),
-      price: Yup.string().required("Please Enter a Barang price"),
-      merktype: Yup.string().required("Please Enter a Barang Type"),
+      mol_no: Yup.string().required("Please Enter a mol_no"),
+      hm: Yup.string().required("Please Enter a hm"),
+      unit_id: Yup.string().required("Please Enter a unit_id"),
+      date: Yup.string().required("Please Enter a date"),
     }),
     onSubmit: (values) => {
-      const newBarang = {
-        id: values.id,
-        part_number: values.part_number,
-        keterangan: values.keterangan,
-        qty: values.qty,
-        price: values.price,
-        merktype: values.merktype,
-        desc_barang: values.desc_barang,
-        id_kategori: values.id_kategori,
+      const newPengeluaran = {
+        mol_no: values.mol_no,
+        hm: values.hm,
+        unit_id: values.unit_id,
+        date: values.date,
+        id_part_request: selectedPartRequestIds,
+        part_request: idPartRequestString,
       };
-      console.log(newBarang);
+      // console.log(newPengeluaran);
+      dispatch(onAddPengeluaran(newPengeluaran));
+
       //   history("/create-barang");
       //   validation.resetForm();
     },
@@ -71,7 +54,7 @@ const CreateFpb = () => {
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Create FPB" pageTitle="FPB" />
+        <BreadCrumb title="Create Pengeluaran" pageTitle="Pengeluaran" />
 
         <Row>
           <Col lg={12}>
@@ -87,23 +70,23 @@ const CreateFpb = () => {
                   <Row>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="title">
-                          Title
+                        <label className="form-label" htmlFor="mol_no">
+                          Mol No
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="title"
-                          name="title"
-                          placeholder="Enter title"
-                          //   value={validation.values.manufacturer_name || ""}
-                          //   onBlur={validation.handleBlur}
-                          //   onChange={validation.handleChange}
-                          //   invalid={validation.errors.manufacturer_name && validation.touched.manufacturer_name ? true : false}
+                          id="mol_no"
+                          name="mol_no"
+                          placeholder="Enter Mol No"
+                          value={validation.values.mol_no || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.mol_no && validation.touched.mol_no ? true : false}
                         />
-                        {/* {validation.errors.manufacturer_name && validation.touched.manufacturer_name ? (
-                          <FormFeedback type="invalid">{validation.errors.manufacturer_name}</FormFeedback>
-                        ) : null} */}
+                        {validation.errors.mol_no && validation.touched.mol_no ? (
+                          <FormFeedback type="invalid">{validation.errors.mol_no}</FormFeedback>
+                        ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
@@ -117,36 +100,56 @@ const CreateFpb = () => {
                           id="date"
                           name="date"
                           placeholder="Enter date"
-                          //   value={validation.values.manufacturer_name || ""}
-                          //   onBlur={validation.handleBlur}
-                          //   onChange={validation.handleChange}
-                          //   invalid={validation.errors.manufacturer_name && validation.touched.manufacturer_name ? true : false}
+                          value={validation.values.date || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.date && validation.touched.date ? true : false}
                         />
-                        {/* {validation.errors.manufacturer_name && validation.touched.manufacturer_name ? (
-                          <FormFeedback type="invalid">{validation.errors.manufacturer_name}</FormFeedback>
-                        ) : null} */}
+                        {validation.errors.date && validation.touched.date ? (
+                          <FormFeedback type="invalid">{validation.errors.date}</FormFeedback>
+                        ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="title">
-                          Tujuan
+                        <label className="form-label" htmlFor="hm">
+                          HM
                         </label>
-                        <textarea className="form-control" id="message-text" rows="4"></textarea>
-                        {/* {validation.errors.manufacturer_name && validation.touched.manufacturer_name ? (
-                          <FormFeedback type="invalid">{validation.errors.manufacturer_name}</FormFeedback>
-                        ) : null} */}
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="hm"
+                          name="hm"
+                          placeholder="Enter HM"
+                          value={validation.values.hm || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.hm && validation.touched.hm ? true : false}
+                        />
+                        {validation.errors.hm && validation.touched.hm ? (
+                          <FormFeedback type="invalid">{validation.errors.hm}</FormFeedback>
+                        ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="title">
-                          Keterangan
+                        <label className="form-label" htmlFor="unit_id">
+                          Unit
                         </label>
-                        <textarea className="form-control" id="message-text" rows="4"></textarea>
-                        {/* {validation.errors.manufacturer_name && validation.touched.manufacturer_name ? (
-                          <FormFeedback type="invalid">{validation.errors.manufacturer_name}</FormFeedback>
-                        ) : null} */}
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="unit_id"
+                          name="unit_id"
+                          placeholder="Enter Unit"
+                          value={validation.values.unit_id || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.unit_id && validation.touched.unit_id ? true : false}
+                        />
+                        {validation.errors.unit_id && validation.touched.unit_id ? (
+                          <FormFeedback type="invalid">{validation.errors.unit_id}</FormFeedback>
+                        ) : null}
                       </div>
                     </Col>
                   </Row>
@@ -257,4 +260,4 @@ const CreateFpb = () => {
   );
 };
 
-export default CreateFpb;
+export default CreatePengeluaran;

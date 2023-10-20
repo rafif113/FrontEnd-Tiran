@@ -9,6 +9,9 @@ import {
   getCostCode,
   getMaterialType,
   getDetailMol,
+  getPengeluaran,
+  addPengeluaran,
+  getDetailPengeluaran,
 } from "./thunk";
 export const initialState = {
   mol: [],
@@ -18,6 +21,8 @@ export const initialState = {
   materialType: [],
   loading: true,
   selectedPartRequest: [],
+  pengeluaran: [],
+  detailPengeluaran: [],
   error: {},
 };
 
@@ -39,6 +44,9 @@ const MolSlice = createSlice({
     },
     clearSelectedPartRequest: (state) => {
       state.selectedPartRequest = null;
+    },
+    clearDetailPengeluaran: (state) => {
+      state.detailPengeluaran = null;
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +72,32 @@ const MolSlice = createSlice({
     });
 
     builder.addCase(getDetailMol.rejected, (state, action) => {
+      state.error = action.payload.error || null;
+    });
+    // End Mol reducer
+
+    // Start MOL reducer
+    builder.addCase(getPengeluaran.fulfilled, (state, action) => {
+      state.pengeluaran = action.payload.data;
+    });
+
+    builder.addCase(getPengeluaran.rejected, (state, action) => {
+      state.error = action.payload.error || null;
+    });
+
+    builder.addCase(addPengeluaran.fulfilled, (state, action) => {
+      state.pengeluaran.push(action.payload);
+    });
+
+    builder.addCase(addPengeluaran.rejected, (state, action) => {
+      state.error = action.payload.error || null;
+    });
+
+    builder.addCase(getDetailPengeluaran.fulfilled, (state, action) => {
+      state.detailPengeluaran = action.payload.data;
+    });
+
+    builder.addCase(getDetailPengeluaran.rejected, (state, action) => {
       state.error = action.payload.error || null;
     });
     // End Mol reducer
@@ -123,6 +157,13 @@ const MolSlice = createSlice({
     // End Material Type reducer
   },
 });
-export const { clearDetailMol, setDetailMol, setLoading, setSelectedPartRequest, clearSelectedPartRequest } = MolSlice.actions;
+export const {
+  clearDetailMol,
+  setDetailMol,
+  setLoading,
+  setSelectedPartRequest,
+  clearSelectedPartRequest,
+  clearDetailPengeluaran,
+} = MolSlice.actions;
 
 export default MolSlice.reducer;

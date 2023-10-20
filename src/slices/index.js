@@ -11,6 +11,10 @@ import ProfileReducer from "./auth/profile/reducer";
 import BarangReducer from "./barang/reducer";
 // MOL
 import MolReducer from "./mol/reducer";
+// FPB
+import FpbReducer from "./fpb/reducer";
+// PO
+import PoReducer from "./po/reducer";
 // Dashboard Ecommerce
 import DashboardEcommerceReducer from "./dashboardEcommerce/reducer";
 
@@ -19,6 +23,8 @@ const rootReducer = combineReducers({
   Login: LoginReducer,
   Barang: BarangReducer,
   Mol: MolReducer,
+  Fpb: FpbReducer,
+  Po: PoReducer,
   Account: AccountReducer,
   ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,

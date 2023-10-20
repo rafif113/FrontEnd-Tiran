@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { CardBody, Row, Col, Card, Container } from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link } from "react-router-dom";
 
-import logoDark from "../../../assets/images/logo-dark.png";
 import Ttd from "../../../assets/images/dummy/download.png";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +12,6 @@ import { clearDetailMol, setLoading } from "../../../slices/mol/reducer";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 
 const Details = () => {
   //Print the Invoice
@@ -22,33 +20,6 @@ const Details = () => {
   };
 
   const dispatch = useDispatch();
-
-  // const selectDetailMolData = createSelector(
-  //   (state) => state.Mol.detailMol,
-  //   (detailMol) => detailMol
-  // );
-  // const detailMol = useSelector(selectDetailMolData);
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const url = new URL(window.location.href);
-  //   const id_mol = url.searchParams.get("id");
-
-  //   // if (detailMol && !detailMol.mol) {
-  //   dispatch(onGetDetailMol({ id_mol }));
-  //   // }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (detailMol && !isEmpty(detailMol)) {
-  //     setIsLoading(false);
-  //   }
-  // }, [detailMol]);
-
-  // useEffect(() => {
-  //   dispatch(clearDetailMol(detailMol));
-  // }, []);
-
   //   Data detail Mol
   const selectDetailMolData = createSelector(
     (state) => state.Mol.detailMol,

@@ -11,5 +11,9 @@ export * from "./auth/profile/thunk";
 export * from "./barang/thunk";
 //Mol
 export * from "./mol/thunk";
+//Fpb
+export * from "./fpb/thunk";
+//Po
+export * from "./po/thunk";
 // Dashboard Ecommerce
 export * from "./dashboardEcommerce/thunk";

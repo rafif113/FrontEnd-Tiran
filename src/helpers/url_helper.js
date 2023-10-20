@@ -23,6 +23,16 @@ export const ADD_MOL = "/store/mol";
 export const GET_COMPONENT_GROUP = "/get/master/componen_group";
 export const ADD_COMPONENT_GROUP = "/store/master/componen_group";
 
+export const GET_PENGELUARAN = "/get/mol/pengeluaran";
+export const ADD_PENGELUARAN = "/sote/mol/pengeluaran";
+// FPB
+export const GET_FPB = "/get/fpb";
+export const ADD_FPB = "/store/fpb";
+
+// PO
+export const GET_PO = "/get/po";
+export const ADD_PO = "/store/po";
+
 export const GET_MATERIAL_TYPE = "/get/master/material_type";
 export const ADD_MATERIAL_TYPE = "/store/master/material_type";
 

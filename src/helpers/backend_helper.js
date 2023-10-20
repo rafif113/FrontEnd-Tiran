@@ -76,10 +76,21 @@ export const getComponentGroup = () => api.get(url.GET_COMPONENT_GROUP);
 export const getMaterialType = () => api.get(url.GET_MATERIAL_TYPE);
 export const getCostCode = () => api.get(url.GET_COST_CODE);
 
+export const getPengeluaran = (data) => api.create(url.GET_PENGELUARAN, data);
+export const addPengeluaran = (data) => api.create(url.ADD_PENGELUARAN, data);
+
 // post MOL
 export const addComponentGroup = (data) => api.create(url.ADD_COMPONENT_GROUP, data);
 export const addMaterialType = (data) => api.create(url.ADD_MATERIAL_TYPE, data);
 export const addCostCode = (data) => api.create(url.ADD_COST_CODE, data);
+
+// FPB
+export const getFpb = (data) => api.create(url.GET_FPB, data);
+export const addFpb = (data) => api.create(url.ADD_FPB, data);
+
+// PO
+export const getPo = (data) => api.create(url.GET_PO, data);
+export const addPo = (data) => api.create(url.ADD_PO, data);
 
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);

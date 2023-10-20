@@ -8,6 +8,7 @@ const Navdata = () => {
   const [isBarang, setIsBarang] = useState(false);
   const [isMol, setIsMol] = useState(false);
   const [isFpb, setIsFpb] = useState(false);
+  const [isPo, setIsPo] = useState(false);
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -37,7 +38,10 @@ const Navdata = () => {
     if (iscurrentState !== "Fpb") {
       setIsFpb(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb]);
+    if (iscurrentState !== "Po") {
+      setIsPo(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo]);
 
   const menuItems = [
     {
@@ -101,11 +105,12 @@ const Navdata = () => {
       subItems: [
         { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
         { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+        { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
       ],
     },
     {
       id: "fpb",
-      label: "Permintaan Barang",
+      label: "FPB",
       icon: "ri-file-list-3-line",
       link: "/#",
       click: function (e) {
@@ -115,7 +120,23 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isFpb,
-      subItems: [{ id: "createfpb", label: "Create FPB", link: "/fpb/create", parentId: "fpb" }],
+
+      subItems: [{ id: "listfpb", label: "List FPB", link: "/fpb", parentId: "fpb" }],
+    },
+    {
+      id: "po",
+      label: "PO",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsPo(!isPo);
+        setIscurrentState("Po");
+        updateIconSidebar(e);
+      },
+      stateVariables: isPo,
+
+      subItems: [{ id: "listpo", label: "List PO", link: "/po", parentId: "po" }],
     },
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;
