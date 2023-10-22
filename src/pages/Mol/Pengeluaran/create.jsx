@@ -8,10 +8,12 @@ import { addPengeluaran as onAddPengeluaran } from "../../../slices/thunks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreatePengeluaran = () => {
   document.title = "Create Pengeluaran | PT Tiran";
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
   const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
@@ -46,7 +48,7 @@ const CreatePengeluaran = () => {
       // console.log(newPengeluaran);
       dispatch(onAddPengeluaran(newPengeluaran));
 
-      //   history("/create-barang");
+      history("/mol/pengeluaran");
       //   validation.resetForm();
     },
   });

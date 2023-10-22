@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getBarang as onGetBarang, getFpb as onGetFpb } from "../../../slices/thunks";
+import { getBarang as onGetBarang, getFpb as onGetFpb, getPo as onGetPo } from "../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
@@ -12,11 +12,11 @@ const PaginationTable = () => {
   const history = useNavigate();
 
   const handleCetakClick = (id) => {
-    history(`/fpb/cetak?id=${id}`);
+    history(`/po/cetak?id=${id}`);
   };
 
   const handleDetailClick = (id) => {
-    history(`/fpb/detail?id=${id}`);
+    history(`/po/detail?id=${id}`);
   };
 
   const columns = useMemo(
@@ -30,26 +30,20 @@ const PaginationTable = () => {
       },
 
       {
-        Header: "Nomor",
-        accessor: "nomor",
+        Header: "Nomor PO",
+        accessor: "nomor_po",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Diajukan ",
-        accessor: "diajukan_oleh",
+        Header: "Nomor PR ",
+        accessor: "nomor_pr",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Pengajuan",
-        accessor: "pengajuan",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "Site",
-        accessor: "site",
+        Header: "Special Instruction",
+        accessor: "spesial_intruksi",
         disableFilters: true,
         filterable: false,
       },
@@ -60,9 +54,9 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailClick(cellProps.id)} className="btn btn-sm btn-light">
+              {/* <button onClick={() => handleDetailClick(cellProps.id)} className="btn btn-sm btn-light">
                 Details
-              </button>
+              </button> */}
               <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
                 Cetak
               </button>
@@ -77,25 +71,25 @@ const PaginationTable = () => {
   // -------------------------------------------
   const [display, setDisplay] = useState(false);
 
-  const SelectFpbData = createSelector(
-    (state) => state.Fpb.fpb,
-    (fpb) => fpb
+  const SelectPoData = createSelector(
+    (state) => state.Po.po,
+    (po) => po
   );
-  const fpb = useSelector(SelectFpbData);
+  const po = useSelector(SelectPoData);
 
   useEffect(() => {
-    if (fpb && !fpb.length) {
-      dispatch(onGetFpb());
+    if (po && !po.length) {
+      dispatch(onGetPo());
     }
-  }, [dispatch, fpb]);
+  }, [dispatch, po]);
 
-  console.log(fpb);
+  console.log(po);
 
   useEffect(() => {
-    if (fpb && !isEmpty(fpb)) {
+    if (po && !isEmpty(po)) {
       setDisplay(true);
     }
-  }, [fpb]);
+  }, [po]);
 
   // ----------------------------------------------
 
@@ -104,7 +98,7 @@ const PaginationTable = () => {
       {display ? (
         <TableContainer
           columns={columns || []}
-          data={fpb || []}
+          data={po || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}

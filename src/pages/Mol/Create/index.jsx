@@ -212,10 +212,9 @@ const Mol = () => {
         part_request: rows,
         id_fpb: 0,
       };
-      console.log(newMol);
       dispatch(onAddMol(newMol));
-      // history("/mol/detail");
-      //   validation.resetForm();
+      history("/mol");
+      validation.resetForm();
     },
   });
 

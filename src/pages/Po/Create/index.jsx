@@ -3,74 +3,46 @@ import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback } from "reactstrap";
 
 import { Link } from "react-router-dom";
-import { addFpb as onAddFpb } from "../../../slices/thunks";
+import { addPo as onAddPo } from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreateFpb = () => {
   document.title = "Create PO | PT Tiran";
   const dispatch = useDispatch();
+  const history = useNavigate();
 
-  // Handle new part barang request
-  const [rows, setRows] = useState([
-    {
-      id: 1,
-      productName: "",
-    },
-  ]);
-
-  const handleAddItem = () => {
-    const newRow = {
-      id: rows.length + 1,
-      productName: "",
-    };
-    setRows([...rows, newRow]);
-  };
-
-  const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
-  const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
+  const selectedFpbList = useSelector((state) => state.Fpb.selectedFpbList);
+  const selectedFpbData = selectedFpbList.map((item) => ({ id: item.id, price: item.price }));
   // handle form input
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      site: "",
-      nomor: "",
-      pengajuan: "",
-      diajukan_oleh: "",
-      title: "",
-      date: "",
-      tujuan: "",
-      desc: "",
+      nomor_po: "",
+      nomor_pr: "",
+      spesial_intruksi: "",
+      st_name: "",
     },
     validationSchema: Yup.object({
-      site: Yup.string().required("Please Enter a site"),
-      nomor: Yup.string().required("Please Enter a nomor"),
-      pengajuan: Yup.string().required("Please Enter a pengajuan"),
-      diajukan_oleh: Yup.string().required("Please Enter a diajukan"),
-      title: Yup.string().required("Please Enter a title"),
-      date: Yup.string().required("Please Enter a date"),
-      tujuan: Yup.string().required("Please Enter a tujuan"),
-      desc: Yup.string().required("Please Enter a desc"),
+      nomor_po: Yup.string().required("Please Enter a Nomor PO"),
+      nomor_pr: Yup.string().required("Please Enter a Nomor PR"),
+      spesial_intruksi: Yup.string().required("Please Enter a Special Instruction"),
+      st_name: Yup.string().required("Please Enter a Staff Name"),
     }),
     onSubmit: (values) => {
-      const newFpb = {
-        site: values.site,
-        nomor: values.nomor,
-        pengajuan: values.pengajuan,
-        diajukan_oleh: values.diajukan_oleh,
-        title: values.title,
-        date: values.date,
-        tujuan: values.tujuan,
-        desc: values.desc,
-        id_mol: selectedPartRequest[0].id_mol,
-        id_part_request: selectedPartRequestIds,
+      const newPo = {
+        nomor_po: values.nomor_po,
+        nomor_pr: values.nomor_pr,
+        spesial_intruksi: values.spesial_intruksi,
+        st_name: values.st_name,
+        id_part_request: selectedFpbData,
       };
-      console.log(newFpb);
-      dispatch(onAddFpb(newFpb));
-
-      //   history("/create-barang");
+      console.log(newPo);
+      dispatch(onAddPo(newPo));
+      history("/po");
       //   validation.resetForm();
     },
   });
@@ -94,131 +66,89 @@ const CreateFpb = () => {
                   <Row>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="site">
+                        <label className="form-label" htmlFor="nomor_po">
                           Nomor PO
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="site"
-                          name="site"
-                          placeholder="Enter site"
-                          value={validation.values.site || ""}
+                          id="nomor_po"
+                          name="nomor_po"
+                          placeholder="Enter No PO"
+                          value={validation.values.nomor_po || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
-                          invalid={validation.errors.site && validation.touched.site ? true : false}
+                          invalid={validation.errors.nomor_po && validation.touched.nomor_po ? true : false}
                         />
-                        {validation.errors.site && validation.touched.site ? (
-                          <FormFeedback type="invalid">{validation.errors.site}</FormFeedback>
+                        {validation.errors.nomor_po && validation.touched.nomor_po ? (
+                          <FormFeedback type="invalid">{validation.errors.nomor_po}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
+                        <label className="form-label" htmlFor="nomor_pr">
                           Nomor PR
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          placeholder="Enter nomor"
-                          value={validation.values.nomor || ""}
+                          id="nomor_pr"
+                          name="nomor_pr"
+                          placeholder="Enter No PR"
+                          value={validation.values.nomor_pr || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
-                          invalid={validation.errors.nomor && validation.touched.nomor ? true : false}
+                          invalid={validation.errors.nomor_pr && validation.touched.nomor_pr ? true : false}
                         />
-                        {validation.errors.nomor && validation.touched.nomor ? (
-                          <FormFeedback type="invalid">{validation.errors.nomor}</FormFeedback>
+                        {validation.errors.nomor_pr && validation.touched.nomor_pr ? (
+                          <FormFeedback type="invalid">{validation.errors.nomor_pr}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="pengajuan">
+                        <label className="form-label" htmlFor="spesial_intruksi">
                           Spesial Intruksi
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="pengajuan"
-                          name="pengajuan"
-                          placeholder="Enter pengajuan"
-                          value={validation.values.pengajuan || ""}
+                          id="spesial_intruksi"
+                          name="spesial_intruksi"
+                          placeholder="Enter Special Instruction"
+                          value={validation.values.spesial_intruksi || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
-                          invalid={validation.errors.pengajuan && validation.touched.pengajuan ? true : false}
+                          invalid={validation.errors.spesial_intruksi && validation.touched.spesial_intruksi ? true : false}
                         />
-                        {validation.errors.pengajuan && validation.touched.pengajuan ? (
-                          <FormFeedback type="invalid">{validation.errors.pengajuan}</FormFeedback>
+                        {validation.errors.spesial_intruksi && validation.touched.spesial_intruksi ? (
+                          <FormFeedback type="invalid">{validation.errors.spesial_intruksi}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="diajukan_oleh">
+                        <label className="form-label" htmlFor="st_name">
                           Serah Terima Name
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="diajukan_oleh"
-                          name="diajukan_oleh"
-                          placeholder="Enter Diajukan Oleh"
-                          value={validation.values.diajukan_oleh || ""}
+                          id="st_name"
+                          name="st_name"
+                          placeholder="Enter Serah Terima"
+                          value={validation.values.st_name || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
-                          invalid={validation.errors.diajukan_oleh && validation.touched.diajukan_oleh ? true : false}
+                          invalid={validation.errors.st_name && validation.touched.st_name ? true : false}
                         />
-                        {validation.errors.diajukan_oleh && validation.touched.diajukan_oleh ? (
-                          <FormFeedback type="invalid">{validation.errors.diajukan_oleh}</FormFeedback>
+                        {validation.errors.st_name && validation.touched.st_name ? (
+                          <FormFeedback type="invalid">{validation.errors.st_name}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>
                     {/* <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="title">
-                          Title
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="title"
-                          name="title"
-                          placeholder="Enter title"
-                          value={validation.values.title || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.title && validation.touched.title ? true : false}
-                        />
-                        {validation.errors.title && validation.touched.title ? (
-                          <FormFeedback type="invalid">{validation.errors.title}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="date">
-                          Date
-                        </label>
-                        <Input
-                          type="date"
-                          className="form-control"
-                          id="date"
-                          name="date"
-                          placeholder="Enter date"
-                          value={validation.values.date || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.date && validation.touched.date ? true : false}
-                        />
-                        {validation.errors.date && validation.touched.date ? (
-                          <FormFeedback type="invalid">{validation.errors.date}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col> */}
-                    <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="title">
                           Vendor
@@ -257,7 +187,7 @@ const CreateFpb = () => {
                           <FormFeedback type="invalid">{validation.errors.desc}</FormFeedback>
                         ) : null}
                       </div>
-                    </Col>
+                    </Col> */}
                   </Row>
                 </CardBody>
               </Card>
@@ -278,7 +208,7 @@ const CreateFpb = () => {
                         </tr>
                       </thead>
                       <tbody id="newlink">
-                        {selectedPartRequest.map((row, index) => (
+                        {selectedFpbList.map((row, index) => (
                           <tr key={row.id} className="product">
                             <th scope="row" className="product-id">
                               {index + 1}
@@ -302,37 +232,31 @@ const CreateFpb = () => {
                                 placeholder="Product Name"
                                 name="product_name"
                                 readOnly
-                                value={row.desc}
-                              />
-                            </td>
-                            <td className="text-start">
-                              <Input
-                                type="text"
-                                className="form-control bg-light border-0"
-                                id="productName-1"
-                                placeholder="Product Name"
-                                name="product_name"
-                                readOnly
-                                value={row.unit}
-                              />
-                            </td>
-                            <td className="text-start">
-                              <Input
-                                type="text"
-                                className="form-control bg-light border-0"
-                                id="productName-1"
-                                placeholder="Product Name"
-                                name="product_name"
-                                readOnly
                                 value={row.qty}
                               />
                             </td>
-
-                            {/* <td className="product-removal">
-                            <Link to="#" className="btn btn-success">
-                              Delete
-                            </Link>
-                          </td> */}
+                            <td className="text-start">
+                              <Input
+                                type="text"
+                                className="form-control bg-light border-0"
+                                id="productName-1"
+                                placeholder="Product Name"
+                                name="product_name"
+                                readOnly
+                                value={row.price}
+                              />
+                            </td>
+                            <td className="text-start">
+                              <Input
+                                type="text"
+                                className="form-control bg-light border-0"
+                                id="productName-1"
+                                placeholder="Product Name"
+                                name="product_name"
+                                readOnly
+                                value={row.qty * row.price}
+                              />
+                            </td>
                           </tr>
                         ))}
                       </tbody>

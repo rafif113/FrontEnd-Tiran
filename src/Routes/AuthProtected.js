@@ -7,10 +7,10 @@ import { useProfile } from "../Components/Hooks/UserHooks";
 
 import { logoutUser } from "../slices/auth/login/thunk";
 
-const AuthProtected = (props) =>{
+const AuthProtected = (props) => {
   const dispatch = useDispatch();
   const { userProfile, loading, token } = useProfile();
-  
+
   useEffect(() => {
     if (userProfile && !loading && token) {
       setAuthorization(token);
@@ -24,9 +24,7 @@ const AuthProtected = (props) =>{
     */
 
   if (!userProfile && loading && !token) {
-    return (
-      <Navigate to={{ pathname: "/login", state: { from: props.location } }} />
-    );
+    return <Navigate to={{ pathname: "/login", state: { from: props.location } }} />;
   }
 
   return <>{props.children}</>;
@@ -36,8 +34,13 @@ const AccessRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props => {
-        return (<> <Component {...props} /> </>);
+      render={(props) => {
+        return (
+          <>
+            {" "}
+            <Component {...props} />{" "}
+          </>
+        );
       }}
     />
   );

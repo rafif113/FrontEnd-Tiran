@@ -24,11 +24,14 @@ import ListPengeluaran from "../pages/Mol/Pengeluaran/list";
 import CetakPengeluaran from "../pages/Mol/Pengeluaran/cetak";
 
 // FPB
-import CreateFpb from "../pages/Fpb/Create";
 import Fpb from "../pages/Fpb/List";
+import DetailFpb from "../pages/Fpb/Details";
+import CreateFpb from "../pages/Fpb/Create";
 import CetakFpb from "../pages/Fpb/Cetak";
 // PO
+import Po from "../pages/Po/List";
 import CreatePo from "../pages/Po/Create";
+import CetakPo from "../pages/Po/Cetak";
 // import Fpb from "../pages/Fpb/List";
 
 const authProtectedRoutes = [
@@ -51,11 +54,14 @@ const authProtectedRoutes = [
   { path: "/mol/pengeluaran/cetak", component: <CetakPengeluaran /> },
   // FPB
   { path: "/fpb", component: <Fpb /> },
+  { path: "/fpb/detail", component: <DetailFpb /> },
   { path: "/fpb/create", component: <CreateFpb /> },
   { path: "/fpb/cetak", component: <CetakFpb /> },
   // PO
-  // { path: "/fpb", component: <Fpb /> },
+  { path: "/po", component: <Po /> },
   { path: "/po/create", component: <CreatePo /> },
+  { path: "/po/cetak", component: <CetakPo /> },
+
   {
     path: "/",
     exact: true,

@@ -21,7 +21,6 @@ export const getDetailFpb = createAsyncThunk("fpb/getDetailFpb", async (data) =>
 });
 
 export const addFpb = createAsyncThunk("fpb/addFpb", async (fpb) => {
-  console.log(fpb);
   try {
     const response = addFpbApi(fpb);
     const data = await response;

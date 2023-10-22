@@ -47,9 +47,9 @@ const PoSlice = createSlice({
       state.po.push(action.payload);
     });
 
-    builder.addCase(addPo.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(addPo.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
     // End po reducer
   },
 });

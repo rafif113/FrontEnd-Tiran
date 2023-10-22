@@ -19,12 +19,14 @@ const loginSlice = createSlice({
       state.errorMsg = true;
     },
     loginSuccess(state, action) {
-      state.user = action.payload;
+      // console.log(action.payload);
+      state.user = action.payload.email;
       state.loading = false;
       state.errorMsg = false;
     },
     logoutUserSuccess(state, action) {
       state.isUserLogout = true;
+      state.user = null;
     },
     reset_login_flag(state) {
       state.error = null;

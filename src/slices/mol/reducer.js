@@ -55,25 +55,25 @@ const MolSlice = createSlice({
       state.mol = action.payload.data;
     });
 
-    builder.addCase(getMol.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getMol.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(addMol.fulfilled, (state, action) => {
       state.mol.push(action.payload);
     });
 
-    builder.addCase(addMol.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(addMol.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(getDetailMol.fulfilled, (state, action) => {
       state.detailMol = action.payload.data;
     });
 
-    builder.addCase(getDetailMol.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getDetailMol.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
     // End Mol reducer
 
     // Start MOL reducer
@@ -81,25 +81,25 @@ const MolSlice = createSlice({
       state.pengeluaran = action.payload.data;
     });
 
-    builder.addCase(getPengeluaran.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getPengeluaran.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(addPengeluaran.fulfilled, (state, action) => {
       state.pengeluaran.push(action.payload);
     });
 
-    builder.addCase(addPengeluaran.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(addPengeluaran.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(getDetailPengeluaran.fulfilled, (state, action) => {
       state.detailPengeluaran = action.payload.data;
     });
 
-    builder.addCase(getDetailPengeluaran.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getDetailPengeluaran.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
     // End Mol reducer
 
     // Start Component Group reducer

@@ -8,7 +8,7 @@ module.exports = {
     APP_ID: "",
   },
   api: {
-    API_URL: "https://d9ac-2404-c0-2120-00-51a-3dde.ngrok-free.app/api",
+    API_URL: "https://f844-114-124-178-58.ngrok-free.app/api",
     // API_URL: "https://api-node.themesbrand.website",
   },
 };

@@ -17,16 +17,12 @@ const BarangSlice = createSlice({
       state.barang = action.payload.data;
     });
 
-    builder.addCase(getBarang.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getBarang.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(addBarang.fulfilled, (state, action) => {
       state.barang.push(action.payload);
-    });
-
-    builder.addCase(addBarang.rejected, (state, action) => {
-      state.error = action.payload.error || null;
     });
     // End Barang reducer
 

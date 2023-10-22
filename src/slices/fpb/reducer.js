@@ -31,25 +31,25 @@ const FpbSlice = createSlice({
       state.fpb = action.payload.data;
     });
 
-    builder.addCase(getFpb.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getFpb.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(getDetailFpb.fulfilled, (state, action) => {
       state.detailFpb = action.payload.data;
     });
 
-    builder.addCase(getDetailFpb.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getDetailFpb.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(addFpb.fulfilled, (state, action) => {
       state.fpb.push(action.payload);
     });
 
-    builder.addCase(addFpb.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(addFpb.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
     // End FPB reducer
   },
 });

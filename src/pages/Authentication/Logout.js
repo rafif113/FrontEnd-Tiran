@@ -13,9 +13,13 @@ import { createSelector } from "reselect";
 const Logout = (props) => {
   const dispatch = useDispatch();
 
+  // const logoutData = createSelector(
+  //   (state) => state.Dashboard.productOverviewChart,
+  //   (isUserLogout) => isUserLogout
+  // );
 
   const logoutData = createSelector(
-    (state) => state.Dashboard.productOverviewChart,
+    (state) => state.Login.isUserLogout,
     (isUserLogout) => isUserLogout
   );
   // Inside your component
@@ -24,6 +28,8 @@ const Logout = (props) => {
   useEffect(() => {
     dispatch(logoutUser());
   }, [dispatch]);
+
+  console.log(isUserLogout);
 
   if (isUserLogout) {
     return <Navigate to="/login" />;
@@ -35,6 +41,5 @@ const Logout = (props) => {
 Logout.propTypes = {
   history: PropTypes.object,
 };
-
 
 export default withRouter(Logout);

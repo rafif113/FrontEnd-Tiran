@@ -16,7 +16,6 @@ export const loginUser = (user, history) => async (dispatch) => {
         password: user.password,
       });
     } else if (process.env.REACT_APP_DEFAULTAUTH) {
-      console.log(user.email);
       response = postLogin({
         email: user.email,
         password: user.password,
@@ -26,14 +25,13 @@ export const loginUser = (user, history) => async (dispatch) => {
     var data = await response;
 
     if (data) {
-      sessionStorage.setItem("authUser", JSON.stringify(data));
+      localStorage.setItem("authUser", JSON.stringify(data));
       if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
         var finallogin = JSON.stringify(data);
         finallogin = JSON.parse(finallogin);
         data = finallogin.data;
-        console.log(finallogin);
         if (finallogin.status === "success") {
-          // dispatch(loginSuccess(data));
+          dispatch(loginSuccess(data));
           history("/dashboard");
         } else {
           dispatch(apiError(finallogin));
@@ -50,14 +48,16 @@ export const loginUser = (user, history) => async (dispatch) => {
 
 export const logoutUser = () => async (dispatch) => {
   try {
-    sessionStorage.removeItem("authUser");
-    let fireBaseBackend = getFirebaseBackend();
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = fireBaseBackend.logout;
-      dispatch(logoutUserSuccess(response));
-    } else {
-      dispatch(logoutUserSuccess(true));
-    }
+    localStorage.removeItem("authUser");
+    dispatch(logoutUserSuccess(true));
+
+    // let fireBaseBackend = getFirebaseBackend();
+    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+    //   const response = fireBaseBackend.logout;
+    //   dispatch(logoutUserSuccess(response));
+    // } else {
+    //   dispatch(logoutUserSuccess(true));
+    // }
   } catch (error) {
     dispatch(apiError(error));
   }

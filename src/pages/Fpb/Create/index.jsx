@@ -8,10 +8,12 @@ import { addFpb as onAddFpb } from "../../../slices/thunks";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreateFpb = () => {
   document.title = "Create Product | PT Tiran";
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   // Handle new part barang request
   const [rows, setRows] = useState([
@@ -69,9 +71,8 @@ const CreateFpb = () => {
       };
       console.log(newFpb);
       dispatch(onAddFpb(newFpb));
-
-      //   history("/create-barang");
-      //   validation.resetForm();
+      history("/fpb");
+      validation.resetForm();
     },
   });
 
