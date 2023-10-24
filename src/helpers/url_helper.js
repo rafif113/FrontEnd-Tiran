@@ -39,6 +39,11 @@ export const ADD_MATERIAL_TYPE = "/store/master/material_type";
 export const GET_COST_CODE = "/get/master/cost_code";
 export const ADD_COST_CODE = "/store/master/cost_code";
 
+// VENDOR
+export const GET_VENDOR = "/vendor";
+// PENAWARAN
+export const POST_PENAWARAN = "/store/penawaran";
+
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/user";

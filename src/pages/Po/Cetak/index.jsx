@@ -39,8 +39,6 @@ const CetakPo = () => {
     });
   }, []);
 
-  console.log(detailPo);
-
   document.title = "PO Cetak | PT Tiran";
 
   return (

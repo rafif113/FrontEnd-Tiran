@@ -15,8 +15,8 @@ const PaginationTable = () => {
     history(`/po/cetak?id=${id}`);
   };
 
-  const handleDetailClick = (id) => {
-    history(`/po/detail?id=${id}`);
+  const handlePenawaranClick = (id) => {
+    history(`/penawaran/create?id=${id}`);
   };
 
   const columns = useMemo(
@@ -54,9 +54,9 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              {/* <button onClick={() => handleDetailClick(cellProps.id)} className="btn btn-sm btn-light">
-                Details
-              </button> */}
+              <button onClick={() => handlePenawaranClick(cellProps.id)} className="btn btn-sm btn-light">
+                Penawaran
+              </button>
               <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
                 Cetak
               </button>
@@ -82,8 +82,6 @@ const PaginationTable = () => {
       dispatch(onGetPo());
     }
   }, [dispatch, po]);
-
-  console.log(po);
 
   useEffect(() => {
     if (po && !isEmpty(po)) {

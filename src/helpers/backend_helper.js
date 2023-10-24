@@ -92,6 +92,11 @@ export const addFpb = (data) => api.create(url.ADD_FPB, data);
 export const getPo = (data) => api.create(url.GET_PO, data);
 export const addPo = (data) => api.create(url.ADD_PO, data);
 
+// VENDOR
+export const getVendor = (data) => api.create(url.GET_VENDOR, data);
+// PENAWARAN
+export const addPenawaran = (data) => api.create(url.POST_PENAWARAN, data);
+
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);
 
