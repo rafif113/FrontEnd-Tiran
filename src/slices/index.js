@@ -17,6 +17,8 @@ import FpbReducer from "./fpb/reducer";
 import PoReducer from "./po/reducer";
 // VENDOR
 import VendorReducer from "./vendor/reducer";
+// PENAWARAN
+import PenawaranReducer from "./penawaran/reducer";
 // Dashboard Ecommerce
 import DashboardEcommerceReducer from "./dashboardEcommerce/reducer";
 
@@ -28,6 +30,7 @@ const rootReducer = combineReducers({
   Fpb: FpbReducer,
   Po: PoReducer,
   Vendor: VendorReducer,
+  Penawaran: PenawaranReducer,
   Account: AccountReducer,
   ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,

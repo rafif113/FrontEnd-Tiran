@@ -28,20 +28,21 @@ const PoSlice = createSlice({
   extraReducers: (builder) => {
     // Start po reducer
     builder.addCase(getPo.fulfilled, (state, action) => {
+      console.log(action.payload.data);
       state.po = action.payload.data;
     });
 
-    builder.addCase(getPo.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getPo.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(getDetailPo.fulfilled, (state, action) => {
       state.detailPo = action.payload.data;
     });
 
-    builder.addCase(getDetailPo.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
+    // builder.addCase(getDetailPo.rejected, (state, action) => {
+    //   state.error = action.payload.error || null;
+    // });
 
     builder.addCase(addPo.fulfilled, (state, action) => {
       state.po.push(action.payload);

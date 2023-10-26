@@ -95,6 +95,7 @@ export const addPo = (data) => api.create(url.ADD_PO, data);
 // VENDOR
 export const getVendor = (data) => api.create(url.GET_VENDOR, data);
 // PENAWARAN
+export const getPenawaran = (data) => api.create(url.GET_PENAWARAN, data);
 export const addPenawaran = (data) => api.create(url.POST_PENAWARAN, data);
 
 // postSocialLogin

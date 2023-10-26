@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginSuccess } from "../slices/auth/login/reducer";
+import { getLoggedinUser } from "../helpers/api_helper";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navdata = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
+
   //state data
   const [isDashboard, setIsDashboard] = useState(false);
   const [isBarang, setIsBarang] = useState(false);
   const [isMol, setIsMol] = useState(false);
   const [isFpb, setIsFpb] = useState(false);
   const [isPo, setIsPo] = useState(false);
+  const [isPenawaran, setIsPenawaran] = useState(false);
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -41,7 +47,19 @@ const Navdata = () => {
     if (iscurrentState !== "Po") {
       setIsPo(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo]);
+    if (iscurrentState !== "Penawaran") {
+      setIsPenawaran(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran]);
+
+  const userLogin = getLoggedinUser();
+  const userData = useSelector((state) => state.Login.role);
+
+  useEffect(() => {
+    if (userLogin) {
+      dispatch(loginSuccess(userLogin.data));
+    }
+  }, [dispatch]);
 
   const menuItems = [
     {
@@ -138,7 +156,28 @@ const Navdata = () => {
 
       subItems: [{ id: "listpo", label: "List PO", link: "/po", parentId: "po" }],
     },
+    {
+      id: "penawaran",
+      label: "Penawaran",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsPenawaran(!isPenawaran);
+        setIscurrentState("Penawaran");
+        updateIconSidebar(e);
+      },
+      stateVariables: isPenawaran,
+
+      subItems: [{ id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" }],
+    },
   ];
+
+  // const isVendor = userData.includes("vendor");
+  // const filteredMenuItems = menuItems.filter((item) => {
+  //   return isVendor && (item.id === "dashboard" || item.id === "penawaran");
+  // });
+  // return <React.Fragment>{filteredMenuItems}</React.Fragment>;
   return <React.Fragment>{menuItems}</React.Fragment>;
 };
 export default Navdata;

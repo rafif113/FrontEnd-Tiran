@@ -42,7 +42,10 @@ export const ADD_COST_CODE = "/store/master/cost_code";
 // VENDOR
 export const GET_VENDOR = "/vendor";
 // PENAWARAN
+export const GET_PENAWARAN = "/get/penawaran/vendor";
 export const POST_PENAWARAN = "/store/penawaran";
+export const ADD_PENAWARAN = "/add/po/penawaran";
+export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";

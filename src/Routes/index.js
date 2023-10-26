@@ -25,7 +25,7 @@ const Index = () => {
     }
   }, [dispatch]);
 
-  //   console.log(userData);
+  // console.log(userData);
 
   return (
     <React.Fragment>

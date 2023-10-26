@@ -1,58 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addPo, getPo, getDetailPo } from "./thunk";
+import { getPenawaran, getDetailPenawaran } from "./thunk";
 export const initialState = {
-  po: [],
-  detailPo: [],
+  penawaran: [],
+  detailPenawaran: [],
   loading: true,
-  selectedPoList: [],
   error: {},
 };
 
-const PoSlice = createSlice({
-  name: "PoSlice",
+const PenawaranSlice = createSlice({
+  name: "PenawaranSlice",
   initialState,
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    clearDetailPo: (state) => {
-      state.detailPo = null;
-    },
-    setSelectedPoList: (state, action) => {
-      state.selectedPoList = action.payload;
-    },
-    clearSelectedPoList: (state) => {
-      state.selectedPoList = null;
+    clearDetailPenawaran: (state) => {
+      state.detailPenawaran = null;
     },
   },
   extraReducers: (builder) => {
-    // Start po reducer
-    builder.addCase(getPo.fulfilled, (state, action) => {
-      state.po = action.payload.data;
+    builder.addCase(getPenawaran.fulfilled, (state, action) => {
+      state.penawaran = action.payload.data;
     });
 
-    builder.addCase(getPo.rejected, (state, action) => {
-      state.error = action.payload.error || null;
+    builder.addCase(getDetailPenawaran.fulfilled, (state, action) => {
+      state.detailPenawaran = action.payload.data;
     });
-
-    builder.addCase(getDetailPo.fulfilled, (state, action) => {
-      state.detailPo = action.payload.data;
-    });
-
-    builder.addCase(getDetailPo.rejected, (state, action) => {
-      state.error = action.payload.error || null;
-    });
-
-    builder.addCase(addPo.fulfilled, (state, action) => {
-      state.po.push(action.payload);
-    });
-
-    // builder.addCase(addPo.rejected, (state, action) => {
-    //   state.error = action.payload.error || null;
-    // });
-    // End po reducer
   },
 });
-export const { clearDetailPo, clearSelectedPoList, setLoading, setSelectedPoList } = PoSlice.actions;
+export const { clearDetailPenawaran, setLoading } = PenawaranSlice.actions;
 
-export default PoSlice.reducer;
+export default PenawaranSlice.reducer;
