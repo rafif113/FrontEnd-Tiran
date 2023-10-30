@@ -4,7 +4,13 @@ import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback, 
 import Select from "react-select";
 
 import { Link } from "react-router-dom";
-import { getVendor as onGetVendor, getDetailPo as onGetDetailPo, addPenawaran as onAddPenawaran } from "../../../slices/thunks";
+import {
+  getVendor as onGetVendor,
+  getDetailPo as onGetDetailPo,
+  addPenawaran as onAddPenawaran,
+  tunjukPenawaran as onTunjukPenawaran,
+  tambahPenawaran as onTambahPenawaran,
+} from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -41,7 +47,6 @@ const CreatePenawaran = () => {
   );
   const vendor = useSelector(selectVendorData);
   const loadingVendor = useSelector((state) => state.Vendor.loading);
-
   useEffect(() => {
     if (loadingVendor) {
       dispatch(onGetVendor());
@@ -50,7 +55,7 @@ const CreatePenawaran = () => {
 
   // handle form input
 
-  const [selectedStatus, setselectedStatus] = useState({ label: "Penawaran", value: true });
+  const [selectedStatus, setSelectedStatus] = useState({ label: "Penawaran", value: true });
   const typeStatus = [
     {
       options: [
@@ -63,14 +68,13 @@ const CreatePenawaran = () => {
     label: item.name,
     value: item.id,
   }));
+
   function handleSelectStatus(selectedStatus) {
-    setselectedStatus(selectedStatus);
+    setSelectedStatus(selectedStatus);
     validation.setFieldValue("vendorSelected", []);
   }
 
-  const handleVendorChange = (value) => {
-    validation.setFieldValue("vendorSelected", value);
-  };
+  const [submitButtonName, setSubmitButtonName] = useState(null);
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -82,21 +86,33 @@ const CreatePenawaran = () => {
       const url = new URL(window.location.href);
       const id_po = url.searchParams.get("id");
 
-      let id_vendor;
-      if (selectedStatus.label === "Tunjuk Langsung") {
-        id_vendor = [values.vendorSelected]; // Wrap the value in an array
-      } else {
-        id_vendor = values.vendorSelected;
-      }
+      if (!detailPo.penawaran) {
+        let id_vendor;
+        if (selectedStatus.label === "Tunjuk Langsung") {
+          id_vendor = [values.vendorSelected];
+        } else {
+          id_vendor = values.vendorSelected;
+        }
 
-      const newPenawaran = {
-        id_po,
-        type: selectedStatus.label,
-        id_vendor: JSON.stringify(id_vendor),
-      };
-      dispatch(onAddPenawaran(newPenawaran));
+        const newPenawaran = {
+          id_po,
+          type: selectedStatus.label,
+          id_vendor: JSON.stringify(id_vendor),
+        };
+        dispatch(onAddPenawaran(newPenawaran));
+      } else {
+        if (submitButtonName === "penawaran") {
+          dispatch(onTambahPenawaran({ id_po }));
+        } else if (submitButtonName === "submit") {
+          const lastPenawaran = detailPo.detail[detailPo.detail.length - 1].detail_penawaran;
+          // dispatch(onTunjukPenawaran(newPenawaran));
+        }
+      }
     },
   });
+  // const lastDetail = detailPo.detail[detailPo.detail.length - 1].detail_penawaran;
+
+  // console.log(lastDetail);
 
   return (
     <div className="page-content">
@@ -179,7 +195,7 @@ const CreatePenawaran = () => {
                 </CardBody>
               </Card>
 
-              {detailPo.penawaran.type_penawaran == "penawaran" ? (
+              {detailPo.penawaran != null ? (
                 <>
                   {detailPo.detail.map((rowPenawaran, indexPenawaran) => (
                     <Card key={indexPenawaran}>
@@ -211,7 +227,7 @@ const CreatePenawaran = () => {
                                         type="text"
                                         className="form-control bg-light border-0"
                                         id="productName-1"
-                                        placeholder="Product Name"
+                                        placeholder="Part Name"
                                         name="product_name"
                                         readOnly
                                         value={rowPrice.part_request}
@@ -222,7 +238,7 @@ const CreatePenawaran = () => {
                                         type="text"
                                         className="form-control bg-light border-0"
                                         id="productName-1"
-                                        placeholder="Product Name"
+                                        placeholder="Price"
                                         name="product_name"
                                         readOnly
                                         value={rowPrice.price}
@@ -241,6 +257,7 @@ const CreatePenawaran = () => {
                   <Form
                     onSubmit={(e) => {
                       e.preventDefault();
+                      setSubmitButtonName(e.nativeEvent.submitter.name);
                       validation.handleSubmit();
                       return false;
                     }}
@@ -266,6 +283,16 @@ const CreatePenawaran = () => {
                         </Row>
                       </CardBody>
                     </Card>
+                    <div className="text-end mb-3">
+                      <div className="hstack gap-2 justify-content-end d-print-none mt-4">
+                        <button type="submit" name="penawaran" className="btn btn-primary w-sm">
+                          Penawaran
+                        </button>
+                        <button type="submit" name="submit" className="btn btn-success w-sm">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
                   </Form>
                 </>
               ) : (
@@ -305,39 +332,19 @@ const CreatePenawaran = () => {
                             Select Vendor
                           </label>
                         </div>
-
                         {selectedStatus.value ? (
-                          vendor.map((item, key) => {
-                            return (
-                              <Col lg={4} md={4} key={key}>
-                                <div className="mb-3">
-                                  <div className="form-check mb-2">
-                                    <Input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id={item.name}
-                                      value={item.id}
-                                      onChange={(e) => {
-                                        const selectedValues = [...validation.values.vendorSelected];
-                                        if (e.target.checked) {
-                                          selectedValues.push(e.target.value);
-                                        } else {
-                                          const index = selectedValues.indexOf(e.target.value);
-                                          if (index !== -1) {
-                                            selectedValues.splice(index, 1);
-                                          }
-                                        }
-                                        handleVendorChange(selectedValues);
-                                      }}
-                                    />
-                                    <Label className="form-check-label" for={item.name}>
-                                      {item.name}
-                                    </Label>
-                                  </div>
-                                </div>
-                              </Col>
-                            );
-                          })
+                          <Select
+                            value={vendorOptions.find((option) => option.value === validation.values.vendorSelected)}
+                            onChange={(selectedOptions) => {
+                              const selectedValues = selectedOptions.map((option) => option.value);
+                              validation.setFieldValue("vendorSelected", selectedValues);
+                            }}
+                            isMulti
+                            name="colors"
+                            options={vendorOptions}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                          />
                         ) : (
                           <Select
                             value={vendorOptions.find((option) => option.value === validation.values.vendorSelected)}
@@ -352,92 +359,15 @@ const CreatePenawaran = () => {
                       </Row>
                     </CardBody>
                   </Card>
+                  <div className="text-end mb-3">
+                    <div className="hstack gap-2 justify-content-end d-print-none mt-4">
+                      <button type="submit" className="btn btn-success w-sm">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
                 </Form>
               )}
-
-              {/* <Card>
-                  <CardBody className="p-4">
-                    <div className="table-responsive">
-                      <Table className="invoice-table table-borderless table-nowrap mb-0">
-                        <thead className="align-middle">
-                          <tr className="table-active">
-                            <th scope="col" style={{ width: "50px" }}>
-                              No.
-                            </th>
-                            <th scope="col">Description and Specification</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Total</th>
-                          </tr>
-                        </thead>
-                        <tbody id="newlink">
-                          {selectedFpbList.map((row, index) => (
-                            <tr key={row.id} className="product">
-                              <th scope="row" className="product-id">
-                                {index + 1}
-                              </th>
-                              <td className="text-start">
-                                <Input
-                                  type="text"
-                                  className="form-control bg-light border-0"
-                                  id="productName-1"
-                                  placeholder="Product Name"
-                                  name="product_name"
-                                  readOnly
-                                  value={row.part_number}
-                                />
-                              </td>
-                              <td className="text-start">
-                                <Input
-                                  type="text"
-                                  className="form-control bg-light border-0"
-                                  id="productName-1"
-                                  placeholder="Product Name"
-                                  name="product_name"
-                                  readOnly
-                                  value={row.qty}
-                                />
-                              </td>
-                              <td className="text-start">
-                                <Input
-                                  type="text"
-                                  className="form-control bg-light border-0"
-                                  id="productName-1"
-                                  placeholder="Product Name"
-                                  name="product_name"
-                                  readOnly
-                                  value={row.price}
-                                />
-                              </td>
-                              <td className="text-start">
-                                <Input
-                                  type="text"
-                                  className="form-control bg-light border-0"
-                                  id="productName-1"
-                                  placeholder="Product Name"
-                                  name="product_name"
-                                  readOnly
-                                  value={row.qty * row.price}
-                                />
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </div>
-                  </CardBody>
-                </Card> */}
-
-              <div className="text-end mb-3">
-                <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                  <button type="submit" className="btn btn-primary w-sm">
-                    Penawaran
-                  </button>
-                  <button type="submit" className="btn btn-success w-sm">
-                    Submit
-                  </button>
-                </div>
-              </div>
             </Col>
           </Row>
         )}

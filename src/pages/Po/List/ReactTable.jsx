@@ -95,8 +95,6 @@ const PaginationTable = () => {
     }
   }, [po]);
 
-  console.log(po);
-
   // ----------------------------------------------
 
   return (

@@ -11,7 +11,7 @@ const PaginationTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const handleDetailsClick = (id) => {
-    history(`/mol/detail?id=${id}`);
+    history(`/penawaran/detail?id=${id}`);
   };
   const handleCetakClick = (id) => {
     history(`/mol/cetak?id=${id}`);
@@ -44,10 +44,7 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button
-                // onClick={() => handleDetailsClick(cellProps.id)}
-                className="btn btn-sm btn-light"
-              >
+              <button onClick={() => handleDetailsClick(cellProps.id_penawaran_po)} className="btn btn-sm btn-light">
                 Details
               </button>
             </>

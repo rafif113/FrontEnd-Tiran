@@ -35,6 +35,7 @@ import CetakPo from "../pages/Po/Cetak";
 // PENAWARAN
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
+import DetailPenawaran from "../pages/Penawaran/Details";
 
 const authProtectedRoutes = [
   // User Profile
@@ -66,6 +67,7 @@ const authProtectedRoutes = [
   // PENAWARAN
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
+  { path: "/penawaran/detail", component: <DetailPenawaran /> },
 
   {
     path: "/",

@@ -44,8 +44,9 @@ export const GET_VENDOR = "/vendor";
 // PENAWARAN
 export const GET_PENAWARAN = "/get/penawaran/vendor";
 export const POST_PENAWARAN = "/store/penawaran";
-export const ADD_PENAWARAN = "/add/po/penawaran";
+export const TAMBAH_PENAWARAN = "/add/po/penawaran";
 export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";
+export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
