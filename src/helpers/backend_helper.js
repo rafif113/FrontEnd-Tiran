@@ -91,6 +91,7 @@ export const addFpb = (data) => api.create(url.ADD_FPB, data);
 // PO
 export const getPo = (data) => api.create(url.GET_PO, data);
 export const addPo = (data) => api.create(url.ADD_PO, data);
+export const getReferensiPart = (data) => api.create(url.REFERENSI_PART, data);
 
 // VENDOR
 export const getVendor = (data) => api.create(url.GET_VENDOR, data);
@@ -101,6 +102,8 @@ export const tambahPenawaran = (data) => api.create(url.TAMBAH_PENAWARAN, data);
 export const tunjukPenawaran = (data) => api.create(url.TUNJUK_PENAWARAN, data);
 export const postPricePenawaran = (data) => api.create(url.POST_PRICE_PENAWARAN, data);
 
+export const getPenawaranPemenang = (data) => api.create(url.GET_PENAWARAN_PEMENANG, data);
+export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE, data);
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);
 

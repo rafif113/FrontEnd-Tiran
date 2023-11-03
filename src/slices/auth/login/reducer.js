@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   user: {},
   role: "",
+  roleTes: "admin",
   error: "", // for error message
   loading: false,
   isUserLogout: false,
@@ -34,9 +35,12 @@ const loginSlice = createSlice({
       state.loading = false;
       state.errorMsg = false;
     },
+    changeRole(state, action) {
+      state.roleTes = action.payload;
+    },
   },
 });
 
-export const { apiError, loginSuccess, logoutUserSuccess, reset_login_flag } = loginSlice.actions;
+export const { apiError, loginSuccess, logoutUserSuccess, reset_login_flag, changeRole } = loginSlice.actions;
 
 export default loginSlice.reducer;

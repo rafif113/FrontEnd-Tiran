@@ -136,6 +136,8 @@ const Mol = () => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
+      no_document: "",
+      mol_no: "",
       unit_name: "",
       engine_model: "",
       unit_code: "",
@@ -156,6 +158,8 @@ const Mol = () => {
       orderForSelected: [],
     },
     validationSchema: Yup.object({
+      no_document: Yup.string().required("Please Enter a No Document"),
+      mol_no: Yup.string().required("Please Enter a Mol No"),
       unit_name: Yup.string().required("Please Enter a Unit Name"),
       engine_model: Yup.string().required("Please Enter a Engine Model"),
       unit_code: Yup.string().required("Please Enter a Unit Code"),
@@ -189,8 +193,8 @@ const Mol = () => {
     }),
     onSubmit: (values) => {
       const newMol = {
-        no_document: "1221",
-        mol_no: 999,
+        no_document: values.no_document,
+        mol_no: values.mol_no,
         unit_name: values.unit_name,
         engine_model: values.engine_model,
         unit_code: values.unit_code,
@@ -252,6 +256,48 @@ const Mol = () => {
                 <CardHeader>Specification Unit : </CardHeader>
                 <CardBody>
                   <Row>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="no-document">
+                          No Document
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="no-document"
+                          name="no_document"
+                          placeholder="Enter no document"
+                          value={validation.values.no_document || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.no_document && validation.touched.no_document ? true : false}
+                        />
+                        {validation.errors.no_document && validation.touched.no_document ? (
+                          <FormFeedback type="invalid">{validation.errors.no_document}</FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="mol-no">
+                          Mol No
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="mol-no"
+                          name="mol_no"
+                          placeholder="Enter Mol No"
+                          value={validation.values.mol_no || ""}
+                          onBlur={validation.handleBlur}
+                          onChange={validation.handleChange}
+                          invalid={validation.errors.mol_no && validation.touched.mol_no ? true : false}
+                        />
+                        {validation.errors.mol_no && validation.touched.mol_no ? (
+                          <FormFeedback type="invalid">{validation.errors.mol_no}</FormFeedback>
+                        ) : null}
+                      </div>
+                    </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="unit-name">

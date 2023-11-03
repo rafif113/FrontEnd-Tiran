@@ -64,6 +64,7 @@ const CreatePenawaran = () => {
       ],
     },
   ];
+
   const vendorOptions = vendor.map((item) => ({
     label: item.name,
     value: item.id,
@@ -104,8 +105,7 @@ const CreatePenawaran = () => {
         if (submitButtonName === "penawaran") {
           dispatch(onTambahPenawaran({ id_po }));
         } else if (submitButtonName === "submit") {
-          const lastPenawaran = detailPo.detail[detailPo.detail.length - 1].detail_penawaran;
-          // dispatch(onTunjukPenawaran(newPenawaran));
+          dispatch(onTunjukPenawaran({ id_detail: values.vendorSelected }));
         }
       }
     },
@@ -276,7 +276,12 @@ const CreatePenawaran = () => {
                             onChange={(selectedOption) => {
                               validation.setFieldValue("vendorSelected", selectedOption.value);
                             }}
-                            options={vendorOptions}
+                            options={detailPo.detail.flatMap((rowPenawaran, indexPenawaran) =>
+                              rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => ({
+                                label: rowDetail.vendor,
+                                value: rowDetail.id_detail,
+                              }))
+                            )}
                             name="choices-publish-visibility-input"
                             classNamePrefix="select2-selection form-select"
                           />

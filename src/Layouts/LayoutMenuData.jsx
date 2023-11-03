@@ -15,6 +15,10 @@ const Navdata = () => {
   const [isFpb, setIsFpb] = useState(false);
   const [isPo, setIsPo] = useState(false);
   const [isPenawaran, setIsPenawaran] = useState(false);
+
+  const [isFinance, setIsFinance] = useState(false);
+  const [isFinanceMonitoring, setIsFinanceMonitoring] = useState(false);
+
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -50,11 +54,15 @@ const Navdata = () => {
     if (iscurrentState !== "Penawaran") {
       setIsPenawaran(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran]);
+    if (iscurrentState !== "Finance") {
+      setIsFinance(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance]);
 
   const userLogin = getLoggedinUser();
   const userData = useSelector((state) => state.Login.role);
-
+  const roleTes = useSelector((state) => state.Login.roleTes);
+  console.log(roleTes);
   useEffect(() => {
     if (userLogin) {
       dispatch(loginSuccess(userLogin.data));
@@ -171,6 +179,39 @@ const Navdata = () => {
 
       subItems: [{ id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" }],
     },
+    {
+      id: "finance",
+      label: "Finance",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsFinance(!isFinance);
+        setIscurrentState("Finance");
+        updateIconSidebar(e);
+      },
+      stateVariables: isFinance,
+
+      subItems: [
+        { id: "piutang", label: "Piutang", link: "/finance/piutang", parentId: "finance" },
+        {
+          id: "monitoringFinance",
+          label: "Monitoring",
+          link: "/#",
+          isChildItem: true,
+          click: function (e) {
+            e.preventDefault();
+            setIsFinanceMonitoring(!isFinanceMonitoring);
+          },
+          parentId: "finance",
+          stateVariables: isFinanceMonitoring,
+          childItems: [
+            { id: 1, label: "Invoice PO", link: "/finance/monitoring/invoice", parentId: "monitoringFinance" },
+            { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
+          ],
+        },
+      ],
+    },
   ];
 
   // const isVendor = userData.includes("vendor");
@@ -178,6 +219,25 @@ const Navdata = () => {
   //   return isVendor && (item.id === "dashboard" || item.id === "penawaran");
   // });
   // return <React.Fragment>{filteredMenuItems}</React.Fragment>;
-  return <React.Fragment>{menuItems}</React.Fragment>;
+
+  // return <React.Fragment>{menuItems}</React.Fragment>;
+
+  // const filteredMenuItems = menuItems.filter((item) => {
+  //   return roleTes == "pengadaan" && item.id != "finance";
+  // });
+  // return <React.Fragment>{roleTes == "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
+
+  const filteredMenuItems = menuItems.filter((item) => {
+    return roleTes === "pengadaan" && item.id !== "finance";
+  });
+
+  if (roleTes === "finance") {
+    const financeItem = menuItems.find((item) => item.id === "finance");
+    const dashboardItem = menuItems.find((item) => item.id === "dashboard");
+
+    return <React.Fragment>{financeItem && dashboardItem ? [dashboardItem, financeItem] : null}</React.Fragment>;
+  } else {
+    return <React.Fragment>{roleTes === "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
+  }
 };
 export default Navdata;

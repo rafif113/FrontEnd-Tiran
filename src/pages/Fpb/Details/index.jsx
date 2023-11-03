@@ -26,9 +26,11 @@ import {
   getCostCode as onGetCostCode,
   getDetailMol as onGetDetailMol,
   getDetailFpb as onGetDetailFpb,
+  // getReferensiPart as onGetReferensiPart,
 } from "../../../slices/thunks";
 
 import { setLoading, clearDetailFpb, clearSelectedFpbList, setSelectedFpbList } from "../../../slices/fpb/reducer";
+import { getReferensiPart as getReferensiPartApi } from "../../../helpers/backend_helper";
 
 import classnames from "classnames";
 
@@ -39,6 +41,7 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
+import Modals from "./modals";
 
 const DetailFpb = () => {
   document.title = "Detail FPB | PT Tiran";
@@ -143,6 +146,27 @@ const DetailFpb = () => {
       history("/po/create");
     },
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const handleModalOpen = (part_number) => {
+  //   // dispatch(onGetReferensiPart({ part_number }));
+  //   getReferensiPartApi({ part_number });
+  //   // setIsModalOpen(true);
+  // };
+
+  const [partPrice, setPartPrice] = useState(null);
+
+  const handleModalOpen = async (part_number) => {
+    try {
+      const response = await getReferensiPartApi({ part_number });
+      const data = response.data;
+      setPartPrice(data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Terjadi kesalahan dalam mengambil data dari API", error);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -280,6 +304,7 @@ const DetailFpb = () => {
                               <th scope="col">Qty</th>
                               <th scope="col">Keterangan</th>
                               <th scope="col">Price</th>
+                              <th scope="col">Ref Price</th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>
@@ -354,6 +379,11 @@ const DetailFpb = () => {
                                     onChange={(e) => handlePriceChange(e, row.id)}
                                   />
                                 </td>
+                                <td>
+                                  <span className="link-primary" onClick={() => handleModalOpen(row.part_number)}>
+                                    <i className="ri-eye-line cursor-pointer"></i>
+                                  </span>
+                                </td>
                                 <td className="text-start">
                                   {prices[row.id] && (
                                     <Input
@@ -384,6 +414,8 @@ const DetailFpb = () => {
           </Container>
         </div>
       )}
+      {/* {isModalOpen && <Modals isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} */}
+      {isModalOpen && partPrice && <Modals data={partPrice} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
     </React.Fragment>
   );
 };

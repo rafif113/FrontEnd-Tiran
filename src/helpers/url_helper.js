@@ -32,6 +32,7 @@ export const ADD_FPB = "/store/fpb";
 // PO
 export const GET_PO = "/get/po";
 export const ADD_PO = "/store/po";
+export const REFERENSI_PART = "/referensi/part";
 
 export const GET_MATERIAL_TYPE = "/get/master/material_type";
 export const ADD_MATERIAL_TYPE = "/store/master/material_type";
@@ -41,6 +42,7 @@ export const ADD_COST_CODE = "/store/master/cost_code";
 
 // VENDOR
 export const GET_VENDOR = "/vendor";
+
 // PENAWARAN
 export const GET_PENAWARAN = "/get/penawaran/vendor";
 export const POST_PENAWARAN = "/store/penawaran";
@@ -48,6 +50,8 @@ export const TAMBAH_PENAWARAN = "/add/po/penawaran";
 export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";
 export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
 
+export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
+export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/user";

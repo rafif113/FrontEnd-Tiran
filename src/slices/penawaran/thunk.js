@@ -6,6 +6,8 @@ import {
   tambahPenawaran as tambahPenawaranApi,
   tunjukPenawaran as tunjukPenawaranApi,
   postPricePenawaran as postPricePenawaranApi,
+  getPenawaranPemenang as getPenawaranPemenangApi,
+  addPemenangInvoice as addPemenangInvoiceApi,
 } from "../../helpers/backend_helper";
 
 export const addPenawaran = createAsyncThunk("penawaran/addPenawaran", async (penawaran) => {
@@ -70,6 +72,27 @@ export const addPricePenawaran = createAsyncThunk("penawaran/addPricePenawaran",
     return data;
   } catch (error) {
     toast.error("penawaran price Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getPenawaranPemenang = createAsyncThunk("penawaran/getPenawaranPemenang", async (data) => {
+  try {
+    const response = getPenawaranPemenangApi(data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const addPemenangInvoice = createAsyncThunk("penawaran/addPemenangInvoice", async (pemenang) => {
+  try {
+    const response = addPemenangInvoiceApi(pemenang);
+    const data = await response;
+    toast.success("pemenang price Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("pemenang price Added Failed", { autoClose: 3000 });
     return error;
   }
 });

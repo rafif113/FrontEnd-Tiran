@@ -36,6 +36,11 @@ import CetakPo from "../pages/Po/Cetak";
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
 import DetailPenawaran from "../pages/Penawaran/Details";
+import DetailPenawaranPemenang from "../pages/Pemenang/Detail";
+// Finance
+import FinancePiutang from "../pages/Finance/Piutang";
+import FinanceMonitoringInvoice from "../pages/Finance/Monitoring/Invoice";
+import FinanceMonitoringTongkang from "../pages/Finance/Monitoring/Tongkang";
 
 const authProtectedRoutes = [
   // User Profile
@@ -68,6 +73,11 @@ const authProtectedRoutes = [
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
   { path: "/penawaran/detail", component: <DetailPenawaran /> },
+  { path: "/penawaran/pemenang", component: <DetailPenawaranPemenang /> },
+  // Finance
+  { path: "/finance/piutang", component: <FinancePiutang /> },
+  { path: "/finance/monitoring/invoice", component: <FinanceMonitoringInvoice /> },
+  { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
 
   {
     path: "/",
