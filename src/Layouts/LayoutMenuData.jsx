@@ -206,6 +206,7 @@ const Navdata = () => {
           parentId: "finance",
           stateVariables: isFinanceMonitoring,
           childItems: [
+            { id: 1, label: "List PO", link: "/finance/monitoring/po", parentId: "monitoringFinance" },
             { id: 1, label: "Invoice PO", link: "/finance/monitoring/invoice", parentId: "monitoringFinance" },
             { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
           ],

@@ -9,11 +9,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const CreatePengeluaran = () => {
   document.title = "Create Pengeluaran | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
   const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
@@ -53,6 +55,19 @@ const CreatePengeluaran = () => {
     },
   });
 
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -63,8 +78,7 @@ const CreatePengeluaran = () => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                validation.handleSubmit();
-                return false;
+                openSubmitModal();
               }}
             >
               <Card>
@@ -255,6 +269,7 @@ const CreatePengeluaran = () => {
                 </button>
               </div>
             </Form>
+            <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
           </Col>
         </Row>
       </Container>

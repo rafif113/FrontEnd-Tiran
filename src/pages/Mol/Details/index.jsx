@@ -1,5 +1,5 @@
-import React from "react";
-import { CardBody, Row, Col, Card, Container } from "reactstrap";
+import React, { useState } from "react";
+import { CardBody, Row, Col, Card, Container, Button } from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link } from "react-router-dom";
 
@@ -89,6 +89,10 @@ const Details = () => {
     return tableRows;
   }
 
+  const [isHide, setIsHide] = useState(true);
+  const handleApproveClick = () => {
+    setIsHide(false); // Ketika tombol "Approve" diklik, atur isHide menjadi false
+  };
   document.title = "Mol Detail | PT Tiran";
 
   return (
@@ -2862,7 +2866,15 @@ const Details = () => {
                               align="center"
                               valign="middle"
                             >
-                              <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
+                              <img
+                                src={Ttd}
+                                className="card-logo card-logo-dark"
+                                alt="logo dark"
+                                height="90"
+                                style={{
+                                  display: isHide ? "none" : "block",
+                                }}
+                              />
                             </td>
                             <td
                               style={{
@@ -2873,7 +2885,7 @@ const Details = () => {
                               align="center"
                               valign="middle"
                             >
-                              <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
+                              {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
                             </td>
                             <td
                               style={{
@@ -2884,7 +2896,7 @@ const Details = () => {
                               align="center"
                               valign="middle"
                             >
-                              <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
+                              {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
                             </td>
                           </tr>
                           <tr>
@@ -3083,9 +3095,9 @@ const Details = () => {
                           <Link to="#" onClick={printInvoice} className="btn btn-success">
                             <i className="ri-printer-line align-bottom me-1"></i> Print
                           </Link>
-                          <Link to="#" className="btn btn-primary">
-                            <i className="ri-download-2-line align-bottom me-1"></i> Download
-                          </Link>
+                          <button className="btn btn-primary" onClick={handleApproveClick}>
+                            <i className="ri-send-plane-fill align-bottom me-1"></i> Approve
+                          </button>
                         </div>
                       </CardBody>
                     </Col>

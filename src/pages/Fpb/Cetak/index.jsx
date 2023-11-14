@@ -13,6 +13,7 @@ import { clearDetailFpb, setLoading } from "../../../slices/fpb/reducer";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
+import { useState } from "react";
 
 const CetakFpb = () => {
   //Print the Invoice
@@ -39,8 +40,10 @@ const CetakFpb = () => {
     });
   }, []);
 
-  console.log(detailFpb);
-
+  const [isHide, setIsHide] = useState(true);
+  const handleApproveClick = () => {
+    setIsHide(false); // Ketika tombol "Approve" diklik, atur isHide menjadi false
+  };
   document.title = "FPB Cetak | PT Tiran";
 
   return (
@@ -293,7 +296,15 @@ const CetakFpb = () => {
                                           }}
                                         >
                                           <center>
-                                            <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
+                                            <img
+                                              src={Ttd}
+                                              style={{
+                                                display: isHide ? "none" : "block",
+                                              }}
+                                              className="card-logo card-logo-dark"
+                                              alt="logo dark"
+                                              height="90"
+                                            />
                                           </center>
                                         </td>
                                         <td
@@ -305,8 +316,8 @@ const CetakFpb = () => {
                                           }}
                                         >
                                           <center>
-                                            <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
-                                          </center>{" "}
+                                            {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
+                                          </center>
                                         </td>
                                         <td
                                           style={{
@@ -317,7 +328,7 @@ const CetakFpb = () => {
                                           }}
                                         >
                                           <center>
-                                            <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" />
+                                            {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
                                           </center>
                                         </td>
                                       </tr>
@@ -363,9 +374,9 @@ const CetakFpb = () => {
                           <Link to="#" onClick={printInvoice} className="btn btn-success">
                             <i className="ri-printer-line align-bottom me-1"></i> Print
                           </Link>
-                          <Link to="#" className="btn btn-primary">
-                            <i className="ri-download-2-line align-bottom me-1"></i> Download
-                          </Link>
+                          <button className="btn btn-primary" onClick={handleApproveClick}>
+                            <i className="ri-send-plane-fill align-bottom me-1"></i> Approve
+                          </button>
                         </div>
                       </CardBody>
                     </Col>

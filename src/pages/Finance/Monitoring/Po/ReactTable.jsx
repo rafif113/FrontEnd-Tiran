@@ -1,28 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
-import TableContainer from "../../../Components/Common/TableContainerReactTable";
+import TableContainer from "../../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getPo as onGetPo } from "../../../slices/thunks";
+import { getPo as onGetPo } from "../../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
-const PaginationTable = () => {
+const FinancePoTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const handleCetakClick = (id) => {
+  const handleDetailClick = (id) => {
     history(`/po/cetak?id=${id}`);
-  };
-
-  const handlePenawaranClick = (id, keterangan) => {
-    if (keterangan == "selesai") {
-      history(`/penawaran/pemenang?id=${id}`);
-    } else if (keterangan == "detail") {
-      history(`/po/detail?id=${id}`);
-    } else {
-      history(`/penawaran/create?id=${id}`);
-    }
   };
 
   const columns = useMemo(
@@ -59,31 +49,20 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
       },
-      {
-        Header: "Actions",
-        disableFilters: true,
-        filterable: true,
-        accessor: (cellProps) => {
-          return (
-            <>
-              <button
-                onClick={() => handlePenawaranClick(cellProps.po.id, cellProps.keterangan)}
-                className="btn btn-sm btn-light"
-              >
-                {cellProps.keterangan == "selesai" ? "Invoice" : "Penawaran"}
-              </button>
-              <button onClick={() => handleCetakClick(cellProps.po.id)} className="btn btn-sm btn-light">
-                Cetak
-              </button>
-              {cellProps.keterangan == "selesai" ? (
-                <button onClick={() => handlePenawaranClick(cellProps.po.id, "detail")} className="btn btn-sm btn-light">
-                  Detail
-                </button>
-              ) : null}
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: "Actions",
+      //   disableFilters: true,
+      //   filterable: true,
+      //   accessor: (cellProps) => {
+      //     return (
+      //       <>
+      //         <button onClick={() => handleDetailClick()} className="btn btn-sm btn-light">
+      //           Detail
+      //         </button>
+      //       </>
+      //     );
+      //   },
+      // },
     ],
     []
   );
@@ -137,4 +116,4 @@ const PaginationTable = () => {
   );
 };
 
-export { PaginationTable };
+export { FinancePoTable };

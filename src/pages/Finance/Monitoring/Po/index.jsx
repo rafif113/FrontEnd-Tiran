@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
-import { InvoicePoFinanceTable } from "./ReactTable";
+import { FinancePoTable } from "./ReactTable";
 
 const ReactTable = () => {
-  document.title = "Invoice PO | PT Tiran";
+  document.title = "List PO | PT Tiran";
   return (
     <React.Fragment>
       <div className="page-content">
@@ -12,10 +12,10 @@ const ReactTable = () => {
             <Col lg={12}>
               <Card>
                 <CardHeader className="d-flex justify-content-between align-items-center">
-                  <h5 className="card-title mb-0">Invoice PO</h5>
+                  <h5 className="card-title mb-0">List PO</h5>
                 </CardHeader>
                 <CardBody>
-                  <InvoicePoFinanceTable />
+                  <FinancePoTable />
                 </CardBody>
               </Card>
             </Col>

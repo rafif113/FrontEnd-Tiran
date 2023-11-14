@@ -9,11 +9,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const CreateFpb = () => {
   document.title = "Create PO | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const selectedFpbList = useSelector((state) => state.Fpb.selectedFpbList);
   const selectedFpbData = selectedFpbList.map((item) => ({ id: item.id, price: item.price }));
@@ -47,6 +49,19 @@ const CreateFpb = () => {
     },
   });
 
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -57,8 +72,7 @@ const CreateFpb = () => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                validation.handleSubmit();
-                return false;
+                openSubmitModal();
               }}
             >
               <Card>
@@ -271,6 +285,7 @@ const CreateFpb = () => {
                 </button>
               </div>
             </Form>
+            <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
           </Col>
         </Row>
       </Container>

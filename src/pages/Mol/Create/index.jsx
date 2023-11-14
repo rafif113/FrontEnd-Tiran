@@ -38,6 +38,7 @@ import * as Yup from "yup";
 import Select from "react-select";
 import { useEffect } from "react";
 import { createSelector } from "reselect";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const Mol = () => {
   document.title = "Create Product | PT Tiran";
@@ -47,6 +48,7 @@ const Mol = () => {
 
   // handle active tab menu
   const [customActiveTab, setcustomActiveTab] = useState("1");
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
   const toggleCustom = (tab) => {
     if (customActiveTab !== tab) {
       setcustomActiveTab(tab);
@@ -238,6 +240,19 @@ const Mol = () => {
     validation.setFieldValue("orderForSelected", value);
   };
 
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -248,8 +263,7 @@ const Mol = () => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                validation.handleSubmit();
-                return false;
+                openSubmitModal();
               }}
             >
               <Card>
@@ -972,6 +986,7 @@ const Mol = () => {
                 </button>
               </div>
             </Form>
+            <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
           </Col>
         </Row>
       </Container>

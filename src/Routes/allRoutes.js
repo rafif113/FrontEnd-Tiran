@@ -32,6 +32,7 @@ import CetakFpb from "../pages/Fpb/Cetak";
 import Po from "../pages/Po/List";
 import CreatePo from "../pages/Po/Create";
 import CetakPo from "../pages/Po/Cetak";
+import DetailPo from "../pages/Po/Detail";
 // PENAWARAN
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
@@ -40,7 +41,9 @@ import DetailPenawaranPemenang from "../pages/Pemenang/Detail";
 // Finance
 import FinancePiutang from "../pages/Finance/Piutang";
 import FinanceMonitoringInvoice from "../pages/Finance/Monitoring/Invoice";
+import FinanceMonitoringDetailInvoice from "../pages/Finance/Monitoring/Invoice/Detail";
 import FinanceMonitoringTongkang from "../pages/Finance/Monitoring/Tongkang";
+import FinanceMonitoringPo from "../pages/Finance/Monitoring/Po";
 
 const authProtectedRoutes = [
   // User Profile
@@ -69,6 +72,7 @@ const authProtectedRoutes = [
   { path: "/po", component: <Po /> },
   { path: "/po/create", component: <CreatePo /> },
   { path: "/po/cetak", component: <CetakPo /> },
+  { path: "/po/detail", component: <DetailPo /> },
   // PENAWARAN
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
@@ -76,7 +80,9 @@ const authProtectedRoutes = [
   { path: "/penawaran/pemenang", component: <DetailPenawaranPemenang /> },
   // Finance
   { path: "/finance/piutang", component: <FinancePiutang /> },
+  { path: "/finance/monitoring/po", component: <FinanceMonitoringPo /> },
   { path: "/finance/monitoring/invoice", component: <FinanceMonitoringInvoice /> },
+  { path: "/finance/monitoring/invoice/detail", component: <FinanceMonitoringDetailInvoice /> },
   { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
 
   {

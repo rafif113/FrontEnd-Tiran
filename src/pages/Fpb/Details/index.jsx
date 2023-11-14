@@ -371,6 +371,7 @@ const DetailFpb = () => {
                                 </td>
                                 <td className="text-start">
                                   <Input
+                                    disabled={row.flag == 1 ? true : false}
                                     type="number"
                                     className="form-control bg-light border-0"
                                     placeholder="Price"
@@ -394,6 +395,7 @@ const DetailFpb = () => {
                                       onChange={(e) => handleCheckboxChange(e, row.id)}
                                     />
                                   )}
+                                  {row.flag == 1 ? <Input className="form-check-input" type="checkbox" value checked /> : ""}
                                 </td>
                               </tr>
                             ))}

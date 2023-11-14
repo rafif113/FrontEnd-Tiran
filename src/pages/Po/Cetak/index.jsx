@@ -21,7 +21,7 @@ const CetakPo = () => {
   };
 
   const dispatch = useDispatch();
-  //   Data detail Mol
+  //   Data detail po
   const selectDetailPo = createSelector(
     (state) => state.Po.detailPo,
     (detailPo) => detailPo
@@ -131,11 +131,11 @@ const CetakPo = () => {
                                               </tr>
                                               <tr>
                                                 <td>PO</td>
-                                                <td style={{ border: "1px solid black" }}>: {detailPo.mol.nomor_po}</td>
+                                                <td style={{ border: "1px solid black" }}>: {detailPo.po.nomor_po}</td>
                                               </tr>
                                               <tr>
                                                 <td>PR</td>
-                                                <td style={{ border: "1px solid black" }}>: {detailPo.mol.nomor_pr}</td>
+                                                <td style={{ border: "1px solid black" }}>: {detailPo.po.nomor_pr}</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -314,7 +314,7 @@ const CetakPo = () => {
                                             border: "1px solid black",
                                           }}
                                         >
-                                          {detailPo.mol.spesial_intruksi}
+                                          {detailPo.po.spesial_intruksi}
                                         </td>
                                         <td />
                                         <td style={{ width: "50%" }} className="kolom">

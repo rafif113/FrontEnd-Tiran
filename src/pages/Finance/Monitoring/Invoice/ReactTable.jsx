@@ -1,29 +1,38 @@
 import React, { useEffect, useMemo, useState } from "react";
-import TableContainer from "../../../Components/Common/TableContainerReactTable";
+import TableContainer from "../../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getPo as onGetPo } from "../../../slices/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
-const PaginationTable = () => {
+import { getPo as onGetPo, getFinancePo as onGetInvoicePo } from "../../../../slices/thunks";
+import { clearDetailPo, setLoading } from "../../../../slices/finance/reducer";
+
+const InvoicePoFinanceTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const handleCetakClick = (id) => {
-    history(`/po/cetak?id=${id}`);
+  const handleDetailClick = (id) => {
+    console.log(id);
+    history(`/finance/monitoring/invoice/detail?id=${id}`);
   };
 
-  const handlePenawaranClick = (id, keterangan) => {
-    if (keterangan == "selesai") {
-      history(`/penawaran/pemenang?id=${id}`);
-    } else if (keterangan == "detail") {
-      history(`/po/detail?id=${id}`);
-    } else {
-      history(`/penawaran/create?id=${id}`);
-    }
-  };
+  const InvoicePoData = createSelector(
+    (state) => state.Finance.invoicePo,
+    (invoicePo) => invoicePo
+  );
+  const invoicePo = useSelector(InvoicePoData);
+  const loading = useSelector((state) => state.Finance.loading);
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    dispatch(onGetInvoicePo()).then(() => {
+      dispatch(setLoading(false));
+    });
+  }, []);
+
+  console.log(invoicePo);
 
   const columns = useMemo(
     () => [
@@ -34,7 +43,6 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
       },
-
       {
         Header: "Nomor PO",
         accessor: "po.nomor_po",
@@ -66,20 +74,9 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button
-                onClick={() => handlePenawaranClick(cellProps.po.id, cellProps.keterangan)}
-                className="btn btn-sm btn-light"
-              >
-                {cellProps.keterangan == "selesai" ? "Invoice" : "Penawaran"}
+              <button onClick={() => handleDetailClick(cellProps.penawaran_vendor.id)} className="btn btn-sm btn-light">
+                Detail
               </button>
-              <button onClick={() => handleCetakClick(cellProps.po.id)} className="btn btn-sm btn-light">
-                Cetak
-              </button>
-              {cellProps.keterangan == "selesai" ? (
-                <button onClick={() => handlePenawaranClick(cellProps.po.id, "detail")} className="btn btn-sm btn-light">
-                  Detail
-                </button>
-              ) : null}
             </>
           );
         },
@@ -88,35 +85,14 @@ const PaginationTable = () => {
     []
   );
 
-  // -------------------------------------------
-  const [display, setDisplay] = useState(false);
-
-  const SelectPoData = createSelector(
-    (state) => state.Po.po,
-    (po) => po
-  );
-  const po = useSelector(SelectPoData);
-
-  useEffect(() => {
-    if (po && !po.length) {
-      dispatch(onGetPo());
-    }
-  }, [dispatch, po]);
-
-  useEffect(() => {
-    if (po && !isEmpty(po)) {
-      setDisplay(true);
-    }
-  }, [po]);
-
   // ----------------------------------------------
 
   return (
     <React.Fragment>
-      {display ? (
+      {!loading ? (
         <TableContainer
           columns={columns || []}
-          data={po || []}
+          data={invoicePo || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -137,4 +113,4 @@ const PaginationTable = () => {
   );
 };
 
-export { PaginationTable };
+export { InvoicePoFinanceTable };

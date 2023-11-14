@@ -19,5 +19,7 @@ export * from "./po/thunk";
 export * from "./vendor/thunk";
 //Penawwaran
 export * from "./penawaran/thunk";
+//Finance
+export * from "./finance/thunk";
 // Dashboard Ecommerce
 export * from "./dashboardEcommerce/thunk";

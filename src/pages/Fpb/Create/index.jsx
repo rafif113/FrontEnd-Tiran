@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback } from "reactstrap";
 
 import { Link } from "react-router-dom";
@@ -14,6 +15,7 @@ const CreateFpb = () => {
   document.title = "Create Product | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   // Handle new part barang request
   const [rows, setRows] = useState([
@@ -69,12 +71,24 @@ const CreateFpb = () => {
         id_mol: selectedPartRequest[0].id_mol,
         id_part_request: selectedPartRequestIds,
       };
-      console.log(newFpb);
       dispatch(onAddFpb(newFpb));
       history("/fpb");
       validation.resetForm();
     },
   });
+
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
 
   return (
     <div className="page-content">
@@ -86,8 +100,7 @@ const CreateFpb = () => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                validation.handleSubmit();
-                return false;
+                openSubmitModal();
               }}
             >
               <Card>
@@ -360,6 +373,7 @@ const CreateFpb = () => {
                 </button>
               </div>
             </Form>
+            <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
           </Col>
         </Row>
       </Container>

@@ -18,11 +18,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 import { clearDetailPo, setLoading as setLoadingPo } from "../../../slices/po/reducer";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const CreatePenawaran = () => {
   document.title = "Create Penawaran | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const selectDetailPo = createSelector(
     (state) => state.Po.detailPo,
@@ -108,11 +110,22 @@ const CreatePenawaran = () => {
           dispatch(onTunjukPenawaran({ id_detail: values.vendorSelected }));
         }
       }
+      history("/po");
     },
   });
-  // const lastDetail = detailPo.detail[detailPo.detail.length - 1].detail_penawaran;
 
-  // console.log(lastDetail);
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
 
   return (
     <div className="page-content">
@@ -258,8 +271,7 @@ const CreatePenawaran = () => {
                     onSubmit={(e) => {
                       e.preventDefault();
                       setSubmitButtonName(e.nativeEvent.submitter.name);
-                      validation.handleSubmit();
-                      return false;
+                      openSubmitModal();
                     }}
                   >
                     <Card>
@@ -276,11 +288,17 @@ const CreatePenawaran = () => {
                             onChange={(selectedOption) => {
                               validation.setFieldValue("vendorSelected", selectedOption.value);
                             }}
-                            options={detailPo.detail.flatMap((rowPenawaran, indexPenawaran) =>
-                              rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => ({
+                            // options={detailPo.detail.flatMap((rowPenawaran, indexPenawaran) =>
+                            //   rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => ({
+                            //     label: rowDetail.vendor,
+                            //     value: rowDetail.id_detail,
+                            //   }))
+                            // )}
+                            options={detailPo.detail[detailPo.detail.length - 1].detail_penawaran.map(
+                              (rowDetail, indexDetail) => ({
                                 label: rowDetail.vendor,
                                 value: rowDetail.id_detail,
-                              }))
+                              })
                             )}
                             name="choices-publish-visibility-input"
                             classNamePrefix="select2-selection form-select"
@@ -304,8 +322,7 @@ const CreatePenawaran = () => {
                 <Form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    validation.handleSubmit();
-                    return false;
+                    openSubmitModal();
                   }}
                 >
                   <Card>
@@ -376,6 +393,7 @@ const CreatePenawaran = () => {
             </Col>
           </Row>
         )}
+        <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
       </Container>
     </div>
   );

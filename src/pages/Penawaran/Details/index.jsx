@@ -11,11 +11,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 import { clearDetailPenawaran, setLoading as setLoadingPenawaran } from "../../../slices/penawaran/reducer";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const DetailPenawaran = () => {
   document.title = "Detail Penawaran | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const selectDetailPenawaran = createSelector(
     (state) => state.Penawaran.detailPenawaran,
@@ -55,8 +57,22 @@ const DetailPenawaran = () => {
     onSubmit: (values) => {
       const inputValuesArray = Object.values(inputValues);
       dispatch(onAddPricePenawaran(inputValuesArray));
+      history("/penawaran");
     },
   });
+
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
 
   return (
     <div className="page-content">
@@ -74,8 +90,7 @@ const DetailPenawaran = () => {
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
+                  openSubmitModal();
                 }}
               >
                 {detailPenawaran.map((rowPenawaran, indexPenawaran) => (
@@ -161,10 +176,16 @@ const DetailPenawaran = () => {
                     ))}
                   </Card>
                 ))}
+
+                {/* {detailPenawaran.map((rowPenawaran, indexPenawaran) => (
+                  <Card key={indexPenawaran}>
+                    <CardHeader>Penawaran {rowPenawaran.penawaran_ke}</CardHeader>
+                    {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => ( */}
+
                 <div className="text-end mb-3">
                   <div className="hstack gap-2 justify-content-end d-print-none mt-4">
                     <button type="submit" className="btn btn-success w-sm">
-                      Submit
+                      {detailPenawaran[0].detail_penawaran[0].flag == 1 ? "Delivery Order" : "Submit"}
                     </button>
                   </div>
                 </div>
@@ -172,6 +193,7 @@ const DetailPenawaran = () => {
             </Col>
           </Row>
         )}
+        <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
       </Container>
     </div>
   );

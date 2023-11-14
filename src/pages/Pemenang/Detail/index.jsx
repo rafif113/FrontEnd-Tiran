@@ -36,12 +36,14 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
+import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const Pemenang = () => {
   document.title = "Detail Pemenang | PT Tiran";
 
   const dispatch = useDispatch();
   const history = useNavigate();
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   //   Data detail Mol
   const selectDetailPenawaranData = createSelector(
@@ -85,6 +87,19 @@ const Pemenang = () => {
     },
   });
 
+  const openSubmitModal = () => {
+    setShowSubmitModal(true);
+  };
+
+  const closeSubmitModal = () => {
+    setShowSubmitModal(false);
+  };
+
+  const onSubmitClick = () => {
+    validation.handleSubmit();
+    closeSubmitModal();
+  };
+
   return (
     <React.Fragment>
       {loading ? (
@@ -99,8 +114,7 @@ const Pemenang = () => {
                 <Form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    validation.handleSubmit();
-                    return false;
+                    openSubmitModal();
                   }}
                 >
                   <Card>
@@ -233,6 +247,7 @@ const Pemenang = () => {
                     </button>
                   </div>
                 </Form>
+                <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
               </Col>
             </Row>
           </Container>
