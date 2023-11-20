@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailFinancePo, getFinancePo } from "./thunk";
+import { getDetailFinancePo, getFinancePo, getFinanceTongkang, getDetailFinanceTongkang } from "./thunk";
 export const initialState = {
   invoicePo: [],
   detailInvoicePo: [],
+  tongkang: [],
+  detailTongkang: [],
   loading: true,
   error: {},
 };
 
-const FinancePoSlice = createSlice({
-  name: "FinancePoSlice",
+const FinanceSlice = createSlice({
+  name: "FinanceSlice",
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -16,6 +18,9 @@ const FinancePoSlice = createSlice({
     },
     clearDetailInvoicePo: (state) => {
       state.detailInvoicePo = null;
+    },
+    clearDetailTongkang: (state) => {
+      state.detailTongkang = null;
     },
   },
   extraReducers: (builder) => {
@@ -26,8 +31,17 @@ const FinancePoSlice = createSlice({
     builder.addCase(getDetailFinancePo.fulfilled, (state, action) => {
       state.detailInvoicePo = action.payload;
     });
+
+    builder.addCase(getFinanceTongkang.fulfilled, (state, action) => {
+      console.log(action);
+      state.tongkang = action.payload.message;
+    });
+
+    builder.addCase(getDetailFinanceTongkang.fulfilled, (state, action) => {
+      state.detailTongkang = action.payload.data;
+    });
   },
 });
-export const { clearDetailInvoicePo, setLoading } = FinancePoSlice.actions;
+export const { clearDetailInvoicePo, setLoading, clearDetailTongkang } = FinanceSlice.actions;
 
-export default FinancePoSlice.reducer;
+export default FinanceSlice.reducer;

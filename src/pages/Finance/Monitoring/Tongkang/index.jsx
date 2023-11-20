@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { TongkangFinanceTable } from "./ReactTable";
 
 const ReactTable = () => {
   document.title = "Tongkang | PT Tiran";
@@ -13,7 +14,9 @@ const ReactTable = () => {
                 <CardHeader className="d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Tongkang</h5>
                 </CardHeader>
-                <CardBody>{/* <PaginationTable /> */}</CardBody>
+                <CardBody>
+                  <TongkangFinanceTable />
+                </CardBody>
               </Card>
             </Col>
           </Row>

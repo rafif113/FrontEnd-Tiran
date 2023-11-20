@@ -52,6 +52,7 @@ export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
 
 // FINANCE
 export const GET_FINANCE_PO = "/get/finance/po/validate";
+export const GET_FINANCE_TONGKANG = "/get/finance/tongkang";
 
 export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
