@@ -6,6 +6,7 @@ export const initialState = {
   tongkang: [],
   detailTongkang: [],
   loading: true,
+  loadingDetail: true,
   error: {},
 };
 
@@ -15,6 +16,9 @@ const FinanceSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setLoadingDetail: (state, action) => {
+      state.loadingDetail = action.payload;
     },
     clearDetailInvoicePo: (state) => {
       state.detailInvoicePo = null;
@@ -42,6 +46,6 @@ const FinanceSlice = createSlice({
     });
   },
 });
-export const { clearDetailInvoicePo, setLoading, clearDetailTongkang } = FinanceSlice.actions;
+export const { clearDetailInvoicePo, setLoading, setLoadingDetail, clearDetailTongkang } = FinanceSlice.actions;
 
 export default FinanceSlice.reducer;

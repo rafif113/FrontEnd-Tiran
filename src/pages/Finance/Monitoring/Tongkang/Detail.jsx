@@ -26,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 
 import { getDetailFinanceTongkang as onGetDetailTongkang } from "../../../../slices/thunks";
-import { clearDetailTongkang, setLoading } from "../../../../slices/finance/reducer";
+import { clearDetailTongkang, setLoadingDetail } from "../../../../slices/finance/reducer";
 const DetailTongkang = () => {
   document.title = "Detail Tongkang | PT Tiran";
   const dispatch = useDispatch();
@@ -37,15 +37,15 @@ const DetailTongkang = () => {
     (detailTongkang) => detailTongkang
   );
   const detailTongkang = useSelector(selectDetailTongkang);
-  const loading = useSelector((state) => state.Finance.loading);
+  const loadingDetail = useSelector((state) => state.Finance.loadingDetail);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_tongkang = url.searchParams.get("id");
-    dispatch(setLoading(true));
+    dispatch(setLoadingDetail(true));
     dispatch(clearDetailTongkang());
     dispatch(onGetDetailTongkang({ id_tongkang })).then(() => {
-      dispatch(setLoading(false));
+      dispatch(setLoadingDetail(false));
     });
   }, []);
 
@@ -56,14 +56,12 @@ const DetailTongkang = () => {
     }
   };
 
-  console.log(detailTongkang);
-
   return (
     <div className="page-content">
       <Container fluid>
         <BreadCrumb title="Detail Tongkang" pageTitle="Tongkang" />
 
-        {loading ? (
+        {loadingDetail ? (
           ""
         ) : (
           <Card>
