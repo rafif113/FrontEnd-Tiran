@@ -13,9 +13,13 @@ const InvoicePoFinanceTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const handleDetailClick = (id) => {
-    console.log(id);
-    history(`/finance/monitoring/invoice/detail?id=${id}`);
+  const handleDetailClick = (id, kelengkapan) => {
+    if (kelengkapan.flag == "tidak komplit") {
+      const keteranganText = kelengkapan.keterangan.join("\n");
+      alert(keteranganText);
+    } else {
+      history(`/finance/monitoring/invoice/detail?id=${id}`);
+    }
   };
 
   const InvoicePoData = createSelector(
@@ -74,7 +78,10 @@ const InvoicePoFinanceTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailClick(cellProps.penawaran_vendor.id)} className="btn btn-sm btn-light">
+              <button
+                onClick={() => handleDetailClick(cellProps.penawaran_vendor.id, cellProps.kelengkapan_dok)}
+                className="btn btn-sm btn-light"
+              >
                 Detail
               </button>
             </>
