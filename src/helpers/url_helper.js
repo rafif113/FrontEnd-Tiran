@@ -42,6 +42,7 @@ export const ADD_COST_CODE = "/store/master/cost_code";
 
 // VENDOR
 export const GET_VENDOR = "/vendor";
+export const ADD_DO = "/get/request/do";
 
 // PENAWARAN
 export const GET_PENAWARAN = "/get/penawaran/vendor";

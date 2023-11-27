@@ -4,6 +4,7 @@ export const initialState = {
   po: [],
   detailPo: [],
   loading: true,
+  loadingDetail: true,
   selectedPoList: [],
   error: {},
 };
@@ -14,6 +15,9 @@ const PoSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setLoadingDetail: (state, action) => {
+      state.loadingDetail = action.payload;
     },
     clearDetailPo: (state) => {
       state.detailPo = null;
@@ -54,6 +58,6 @@ const PoSlice = createSlice({
     // End po reducer
   },
 });
-export const { clearDetailPo, clearSelectedPoList, setLoading, setSelectedPoList } = PoSlice.actions;
+export const { clearDetailPo, clearSelectedPoList, setLoading, setSelectedPoList, setLoadingDetail } = PoSlice.actions;
 
 export default PoSlice.reducer;

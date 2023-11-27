@@ -3,13 +3,13 @@ import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, CardHeader } from "reactstrap";
 
 import { Link } from "react-router-dom";
-import { getDetailPo as onGetDetailPo } from "../../../slices/thunks";
+import { getDetailPo as onGetDetailPo, addDo as onAddDo } from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
-import { clearDetailPo, setLoading as setLoadingPo } from "../../../slices/po/reducer";
+import { clearDetailPo, setLoadingDetail as setLoadingPoDetail } from "../../../slices/po/reducer";
 import SubmitModal from "../../../Components/Common/SubmitModal";
 
 const DetailPo = () => {
@@ -23,25 +23,24 @@ const DetailPo = () => {
     (detailPo) => detailPo
   );
   const detailPo = useSelector(selectDetailPo);
-  const loadingPo = useSelector((state) => state.Po.loading);
+  const loadingPo = useSelector((state) => state.Po.loadingDetail);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_po = url.searchParams.get("id");
-    dispatch(setLoadingPo(true));
+    dispatch(setLoadingPoDetail(true));
     dispatch(clearDetailPo());
     dispatch(onGetDetailPo({ id_po })).then(() => {
-      dispatch(setLoadingPo(false));
+      dispatch(setLoadingPoDetail(false));
     });
   }, []);
 
   const validation = useFormik({
     enableReinitialize: true,
-    initialValues: {
-      type: "",
-      vendorSelected: [],
+    onSubmit: (values) => {
+      // dispatch(onAddDo({ id_penawaran_vendor: idPenawaranVendor }));
+      // history("/po");
     },
-    onSubmit: (values) => {},
   });
 
   const openSubmitModal = () => {
@@ -141,66 +140,84 @@ const DetailPo = () => {
               {detailPo.detail.map((rowPenawaran, indexPenawaran) => (
                 <Card key={indexPenawaran}>
                   <CardHeader>Penawaran {rowPenawaran.penawaran_ke}</CardHeader>
-                  {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => (
-                    <CardBody key={indexDetail}>
-                      <CardHeader style={{ backgroundColor: rowDetail.flag == 1 ? "lightgrey" : "inherit" }}>
-                        Vendor : {rowDetail.vendor} {rowDetail.flag == 1 ? "(Pemenang)" : ""}
-                      </CardHeader>
-                      <div className="table-responsive">
-                        <Table className="invoice-table table-borderless table-nowrap mb-0">
-                          <thead className="align-middle">
-                            <tr className="table-active">
-                              <th scope="col" style={{ width: "50px" }}>
-                                No.
-                              </th>
-                              <th scope="col">Description and Specification</th>
-                              {/* <th scope="col">Qty</th> */}
-                              <th scope="col">Price</th>
-                              {/* <th scope="col">Total</th> */}
-                            </tr>
-                          </thead>
-                          <tbody id="newlink">
-                            {rowDetail.detail_price.map((rowPrice, indexPrice) => (
-                              <tr key={rowPrice.id} className="product">
-                                <th scope="row" className="product-id">
-                                  {indexPrice + 1}
+                  {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => {
+                    return (
+                      <CardBody key={indexDetail}>
+                        <CardHeader style={{ backgroundColor: rowDetail.flag == 1 ? "lightgrey" : "inherit" }}>
+                          Vendor : {rowDetail.vendor} {rowDetail.flag == 1 ? "(Pemenang)" : ""}
+                        </CardHeader>
+                        <div className="table-responsive">
+                          <Table className="invoice-table table-borderless table-nowrap mb-0">
+                            <thead className="align-middle">
+                              <tr className="table-active">
+                                <th scope="col" style={{ width: "50px" }}>
+                                  No.
                                 </th>
-                                <td className="text-start">
-                                  <Input
-                                    type="text"
-                                    className="form-control bg-light border-0"
-                                    id="productName-1"
-                                    placeholder="Part Name"
-                                    name="product_name"
-                                    readOnly
-                                    value={rowPrice.part_request}
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    type="text"
-                                    className="form-control bg-light border-0"
-                                    id="productName-1"
-                                    placeholder="Price"
-                                    name="product_name"
-                                    readOnly
-                                    value={rowPrice.price}
-                                  />
-                                </td>
+                                <th scope="col">Description and Specification</th>
+                                {/* <th scope="col">Qty</th> */}
+                                <th scope="col">Price</th>
+                                {/* <th scope="col">Total</th> */}
                               </tr>
-                            ))}
-                          </tbody>
-                        </Table>
-                      </div>
-                    </CardBody>
-                  ))}
+                            </thead>
+                            <tbody id="newlink">
+                              {rowDetail.detail_price.map((rowPrice, indexPrice) => (
+                                <tr key={rowPrice.id} className="product">
+                                  <th scope="row" className="product-id">
+                                    {indexPrice + 1}
+                                  </th>
+                                  <td className="text-start">
+                                    <Input
+                                      type="text"
+                                      className="form-control bg-light border-0"
+                                      id="productName-1"
+                                      placeholder="Part Name"
+                                      name="product_name"
+                                      readOnly
+                                      value={rowPrice.part_request}
+                                    />
+                                  </td>
+                                  <td className="text-start">
+                                    <Input
+                                      type="text"
+                                      className="form-control bg-light border-0"
+                                      id="productName-1"
+                                      placeholder="Price"
+                                      name="product_name"
+                                      readOnly
+                                      value={rowPrice.price}
+                                    />
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </div>
+                      </CardBody>
+                    );
+                  })}
                 </Card>
               ))}
 
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  openSubmitModal();
+
+                  let idPenawaranVendor = null;
+
+                  detailPo.detail.forEach((rowPenawaran) => {
+                    rowPenawaran.detail_penawaran.forEach((rowDetail) => {
+                      if (rowDetail.flag == 1) {
+                        idPenawaranVendor = rowDetail.id_detail;
+                      }
+                    });
+                  });
+
+                  if (idPenawaranVendor !== null) {
+                    dispatch(onAddDo({ id_penawaran_vendor: idPenawaranVendor }));
+                    alert("berhasil");
+                  } else {
+                    console.error("Tidak dapat menemukan id_detail saat flag == 1");
+                  }
                 }}
               >
                 <div className="text-end mb-3">
@@ -208,9 +225,9 @@ const DetailPo = () => {
                     <button type="submit" name="penawaran" className="btn btn-primary w-sm">
                       Request DO
                     </button>
-                    <button type="submit" name="submit" className="btn btn-success w-sm">
+                    {/* <button type="submit" name="submit" className="btn btn-success w-sm">
                       Cek Kesesuaian
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </Form>
