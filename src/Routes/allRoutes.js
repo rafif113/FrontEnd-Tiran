@@ -46,6 +46,11 @@ import FinanceMonitoringPo from "../pages/Finance/Monitoring/Po";
 import FinanceMonitoringTongkang from "../pages/Finance/Monitoring/Tongkang";
 import FinanceMonitoringDetailTongkang from "../pages/Finance/Monitoring/Tongkang/Detail";
 
+// Report
+import ReportUnit from "../pages/Report/Unit";
+import ReportBarangOut from "../pages/Report/BarangKeluar";
+import ReportBarangIn from "../pages/Report/BarangMasuk";
+
 const authProtectedRoutes = [
   // User Profile
   { path: "/profile", component: <UserProfile /> },
@@ -86,6 +91,10 @@ const authProtectedRoutes = [
   { path: "/finance/monitoring/invoice/detail", component: <FinanceMonitoringDetailInvoice /> },
   { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
   { path: "/finance/monitoring/tongkang/detail", component: <FinanceMonitoringDetailTongkang /> },
+  // Report
+  { path: "/report/unit", component: <ReportUnit /> },
+  { path: "/report/barang-keluar", component: <ReportBarangOut /> },
+  { path: "/report/barang-masuk", component: <ReportBarangIn /> },
 
   {
     path: "/",

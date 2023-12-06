@@ -107,6 +107,16 @@ export const addDo = (data) => api.create(url.ADD_DO, data);
 export const getFinancePo = (data) => api.create(url.GET_FINANCE_PO, data);
 export const getFinanceTongkang = (data) => api.create(url.GET_FINANCE_TONGKANG, data);
 
+export const postFinanceTongkang = (data) => api.create(url.POST_FINANCE_TONGKANG, data);
+export const postFinanceTongkangDown = (data) => api.create(url.POST_FINANCE_TONGKANG_DOWN, data);
+export const postFinanceTongkangPayment = (data) => api.create(url.POST_FINANCE_TONGKANG_PAYMENT, data);
+export const postFinanceTongkangPort = (data) => api.create(url.POST_FINANCE_TONGKANG_PORT, data);
+
+// REPORT
+export const getReportUnit = () => api.get(url.GET_REPORT_UNIT);
+export const getReportBarangIn = () => api.get(url.GET_REPORT_BARANG_IN);
+export const getReportBarangOut = () => api.get(url.GET_REPORT_BARANG_OUT);
+
 export const getPenawaranPemenang = (data) => api.create(url.GET_PENAWARAN_PEMENANG, data);
 export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE, data);
 // postSocialLogin

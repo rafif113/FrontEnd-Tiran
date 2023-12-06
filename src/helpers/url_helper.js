@@ -53,7 +53,17 @@ export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
 
 // FINANCE
 export const GET_FINANCE_PO = "/get/finance/po/validate";
+
 export const GET_FINANCE_TONGKANG = "/get/finance/tongkang";
+export const POST_FINANCE_TONGKANG = "/post/finance/tongkang";
+export const POST_FINANCE_TONGKANG_DOWN = "/post/finance/tongkang/down_p";
+export const POST_FINANCE_TONGKANG_PAYMENT = "/post/finance/tongkang/final_payment";
+export const POST_FINANCE_TONGKANG_PORT = "/post/finance/tongkang/sd_port";
+
+// REPORT
+export const GET_REPORT_UNIT = "/get/report/unit";
+export const GET_REPORT_BARANG_IN = "/get/report/barang/in";
+export const GET_REPORT_BARANG_OUT = "/get/report/barang/out";
 
 export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";

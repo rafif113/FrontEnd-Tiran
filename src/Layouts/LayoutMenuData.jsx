@@ -19,6 +19,8 @@ const Navdata = () => {
   const [isFinance, setIsFinance] = useState(false);
   const [isFinanceMonitoring, setIsFinanceMonitoring] = useState(false);
 
+  const [isReport, setIsReport] = useState(false);
+
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -57,7 +59,10 @@ const Navdata = () => {
     if (iscurrentState !== "Finance") {
       setIsFinance(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance]);
+    if (iscurrentState !== "Report") {
+      setIsReport(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance, isReport]);
 
   const userLogin = getLoggedinUser();
   const userData = useSelector((state) => state.Login.role);
@@ -211,6 +216,25 @@ const Navdata = () => {
             { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
           ],
         },
+      ],
+    },
+    {
+      id: "report",
+      label: "Report",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsReport(!isReport);
+        setIscurrentState("Report");
+        updateIconSidebar(e);
+      },
+      stateVariables: isReport,
+
+      subItems: [
+        { id: "unit", label: "Unit", link: "/report/unit", parentId: "report" },
+        { id: "barangIn", label: "Barang Masuk", link: "/report/barang-masuk", parentId: "report" },
+        { id: "out", label: "Barang Keluar", link: "/report/barang-keluar", parentId: "report" },
       ],
     },
   ];
