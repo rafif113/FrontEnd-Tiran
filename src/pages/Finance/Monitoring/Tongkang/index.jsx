@@ -13,6 +13,7 @@ const ReactTable = () => {
               <Card>
                 <CardHeader className="d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Tongkang</h5>
+                  <Button color="primary">Add Tongkang</Button>
                 </CardHeader>
                 <CardBody>
                   <TongkangFinanceTable />
