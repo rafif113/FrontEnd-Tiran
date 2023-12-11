@@ -19,9 +19,12 @@ import { TongkangFinanceTable } from "./ReactTable";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { addFinanceTongkang as onAddFinanceTongkang } from "../../../../slices/thunks";
+import { useDispatch } from "react-redux";
 
 const ReactTable = () => {
   document.title = "Tongkang | PT Tiran";
+  const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
 
@@ -59,8 +62,8 @@ const ReactTable = () => {
         carrier: values.carrier,
         buyer: values.category,
       };
-      console.log(values);
-      // dispatch(onAddMol(newMol));
+      console.log(newTongkang);
+      dispatch(onAddFinanceTongkang(newTongkang));
       // history("/mol");
       // validation.resetForm();
     },
@@ -166,15 +169,15 @@ const ReactTable = () => {
                     className={"form-control d-block"}
                     placeholder="Enter date"
                     type="date"
-                    name="date"
+                    name="bl_date"
                     id="event-date"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.date || ""}
-                    invalid={validation.errors.date && validation.touched.date ? true : false}
+                    value={validation.values.bl_date || ""}
+                    invalid={validation.errors.bl_date && validation.touched.bl_date ? true : false}
                   />
-                  {validation.touched.date && validation.errors.date ? (
-                    <FormFeedback type="invalid">{validation.errors.date}</FormFeedback>
+                  {validation.touched.bl_date && validation.errors.bl_date ? (
+                    <FormFeedback type="invalid">{validation.errors.bl_date}</FormFeedback>
                   ) : null}
                 </div>
               </Col>
