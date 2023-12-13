@@ -44,6 +44,7 @@
     "lord-icon-element": "^4.1.1",
     "lottie-web": "^5.12.2",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "node-sass": "^9.0.0",
     "nouislider-react": "^3.4.1",
     "prismjs": "^1.29.0",

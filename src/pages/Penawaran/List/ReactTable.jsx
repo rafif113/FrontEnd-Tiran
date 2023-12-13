@@ -56,7 +56,7 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.id_penawaran_po)} className="btn btn-sm btn-light">
+              <button onClick={() => handleDetailsClick(cellProps.penawaran_po.id)} className="btn btn-sm btn-light">
                 Details
               </button>
             </>

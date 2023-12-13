@@ -22,6 +22,11 @@ export * from "./penawaran/thunk";
 //Finance
 export * from "./finance/thunk";
 
+// Report
 export * from "./report/thunk";
+
+// GCS
+export * from "./gcs/thunk";
+
 // Dashboard Ecommerce
 export * from "./dashboardEcommerce/thunk";

@@ -5,6 +5,7 @@ export const initialState = {
   detailPenawaran: [],
   detailPenawaranPemenang: [],
   loading: true,
+  loadingDetail: true,
   error: {},
 };
 
@@ -14,6 +15,9 @@ const PenawaranSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setLoadingDetail: (state, action) => {
+      state.loadingDetail = action.payload;
     },
     clearDetailPenawaran: (state) => {
       state.detailPenawaran = null;
@@ -36,6 +40,6 @@ const PenawaranSlice = createSlice({
     });
   },
 });
-export const { clearDetailPenawaran, setLoading, clearDetailPenawaranPemenang } = PenawaranSlice.actions;
+export const { clearDetailPenawaran, setLoading, setLoadingDetail, clearDetailPenawaranPemenang } = PenawaranSlice.actions;
 
 export default PenawaranSlice.reducer;

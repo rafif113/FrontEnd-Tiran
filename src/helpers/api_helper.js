@@ -5,6 +5,7 @@ import { api } from "../config";
 axios.defaults.baseURL = api.API_URL;
 // content type
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 
 // content type
 const token = JSON.parse(sessionStorage.getItem("authUser")) ? JSON.parse(sessionStorage.getItem("authUser")).token : null;
@@ -73,7 +74,6 @@ class APIClient {
    * post given data to url
    */
   create = (url, data) => {
-    // console.log(axios.post(url, data));
     return axios.post(url, data);
   };
   /**

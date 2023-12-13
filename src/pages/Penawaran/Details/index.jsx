@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback, Label, CardHeader } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Row,
+  Input,
+  Form,
+  Table,
+  FormFeedback,
+  Label,
+  CardHeader,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
 
 import { Link } from "react-router-dom";
 import { getDetailPenawaran as onGetDetailPenawaran, addPricePenawaran as onAddPricePenawaran } from "../../../slices/thunks";
@@ -10,8 +25,9 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
-import { clearDetailPenawaran, setLoading as setLoadingPenawaran } from "../../../slices/penawaran/reducer";
+import { clearDetailPenawaran, setLoadingDetail as setLoadingPenawaran } from "../../../slices/penawaran/reducer";
 import SubmitModal from "../../../Components/Common/SubmitModal";
+import ModalFileUpload from "./ModalFileUpload";
 
 const DetailPenawaran = () => {
   document.title = "Detail Penawaran | PT Tiran";
@@ -24,7 +40,7 @@ const DetailPenawaran = () => {
     (detailPenawaran) => detailPenawaran
   );
   const detailPenawaran = useSelector(selectDetailPenawaran);
-  const loadingPenawaran = useSelector((state) => state.Penawaran.loading);
+  const loadingPenawaran = useSelector((state) => state.Penawaran.loadingDetail);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -60,6 +76,16 @@ const DetailPenawaran = () => {
       history("/penawaran");
     },
   });
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => {
+    if (modal) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
+  };
 
   const openSubmitModal = () => {
     setShowSubmitModal(true);
@@ -184,16 +210,25 @@ const DetailPenawaran = () => {
 
                 <div className="text-end mb-3">
                   <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                    <button type="submit" className="btn btn-success w-sm">
-                      {detailPenawaran[0].detail_penawaran[0].flag == 1 ? "Delivery Order" : "Submit"}
-                    </button>
+                    {detailPenawaran[0].detail_penawaran[0].flag == 1 ? (
+                      <button type="button" className="btn btn-primary w-sm" onClick={toggle}>
+                        Delivery Order
+                      </button>
+                    ) : (
+                      <button type="submit" className="btn btn-primary w-sm">
+                        Submit
+                      </button>
+                    )}
                   </div>
                 </div>
               </Form>
             </Col>
           </Row>
         )}
+        {/*  */}
         <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
+        {/*  */}
+        <ModalFileUpload isOpen={modal} toggle={toggle} />
       </Container>
     </div>
   );

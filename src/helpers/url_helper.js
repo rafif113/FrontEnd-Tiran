@@ -67,6 +67,10 @@ export const GET_REPORT_BARANG_OUT = "/get/report/barang/out";
 
 export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
+
+// GCS
+export const POST_GCS = "/get/report/gcs";
+
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/user";

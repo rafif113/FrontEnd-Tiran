@@ -16,7 +16,7 @@ import {
   Row,
 } from "reactstrap";
 import { TongkangFinanceTable } from "./ReactTable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addFinanceTongkang as onAddFinanceTongkang } from "../../../../slices/thunks";
@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 const ReactTable = () => {
   document.title = "Tongkang | PT Tiran";
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   const [modal, setModal] = useState(false);
 
@@ -60,11 +61,12 @@ const ReactTable = () => {
         bl_date: values.bl_date,
         si_no: values.si_no,
         carrier: values.carrier,
-        buyer: values.category,
+        buyer: values.buyer,
+        category: values.category,
       };
       console.log(newTongkang);
       dispatch(onAddFinanceTongkang(newTongkang));
-      // history("/mol");
+      history("/mol");
       // validation.resetForm();
     },
   });

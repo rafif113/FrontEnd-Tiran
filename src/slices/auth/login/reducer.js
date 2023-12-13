@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   user: {},
   role: "",
-  roleTes: "admin",
+  token: {},
+  role: "admin",
   error: "", // for error message
   loading: false,
   isUserLogout: false,
@@ -23,12 +24,15 @@ const loginSlice = createSlice({
     loginSuccess(state, action) {
       state.user = action.payload.user.email;
       state.role = action.payload.roles;
+      state.token = action.payload.token;
       state.loading = false;
       state.errorMsg = false;
     },
     logoutUserSuccess(state, action) {
       state.isUserLogout = true;
-      state.user = null;
+      state.user = {};
+      state.role = "";
+      state.token = {};
     },
     reset_login_flag(state) {
       state.error = null;
@@ -36,7 +40,7 @@ const loginSlice = createSlice({
       state.errorMsg = false;
     },
     changeRole(state, action) {
-      state.roleTes = action.payload;
+      state.role = action.payload;
     },
   },
 });

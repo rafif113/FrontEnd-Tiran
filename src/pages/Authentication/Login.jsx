@@ -22,14 +22,14 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const selectLayoutState = (state) => state;
-  const loginpageData = createSelector(selectLayoutState, (state) => ({
+  const loginPageData = createSelector(selectLayoutState, (state) => ({
     user: state.Account.user,
     error: state.Login.error,
     loading: state.Login.loading,
     errorMsg: state.Login.errorMsg,
   }));
   // Inside your component
-  const { user, error, loading, errorMsg } = useSelector(loginpageData);
+  const { user, error, loading, errorMsg } = useSelector(loginPageData);
 
   const [userLogin, setUserLogin] = useState([]);
   const [passwordShow, setPasswordShow] = useState(false);

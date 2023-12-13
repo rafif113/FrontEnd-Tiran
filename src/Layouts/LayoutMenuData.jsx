@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginSuccess } from "../slices/auth/login/reducer";
+import { loginSuccess, changeRole } from "../slices/auth/login/reducer";
 import { getLoggedinUser } from "../helpers/api_helper";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -66,11 +66,12 @@ const Navdata = () => {
 
   const userLogin = getLoggedinUser();
   const userData = useSelector((state) => state.Login.role);
-  const roleTes = useSelector((state) => state.Login.roleTes);
-  console.log(roleTes);
+  const role = useSelector((state) => state.Login.role);
   useEffect(() => {
     if (userLogin) {
       dispatch(loginSuccess(userLogin.data));
+      // console.log(userLogin.data);
+      dispatch(changeRole(userLogin.data.roles[0]));
     }
   }, [dispatch]);
 
@@ -239,30 +240,36 @@ const Navdata = () => {
     },
   ];
 
-  // const isVendor = userData.includes("vendor");
-  // const filteredMenuItems = menuItems.filter((item) => {
-  //   return isVendor && (item.id === "dashboard" || item.id === "penawaran");
-  // });
-  // return <React.Fragment>{filteredMenuItems}</React.Fragment>;
-
-  // return <React.Fragment>{menuItems}</React.Fragment>;
-
-  // const filteredMenuItems = menuItems.filter((item) => {
-  //   return roleTes == "pengadaan" && item.id != "finance";
-  // });
-  // return <React.Fragment>{roleTes == "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
-
   const filteredMenuItems = menuItems.filter((item) => {
-    return roleTes === "pengadaan" && item.id !== "finance";
+    return role === "pengadaan" && item.id !== "finance";
   });
 
-  if (roleTes === "finance") {
-    const financeItem = menuItems.find((item) => item.id === "finance");
-    const dashboardItem = menuItems.find((item) => item.id === "dashboard");
+  console.log(role);
 
+  const dashboardItem = menuItems.find((item) => item.id === "dashboard");
+  const financeItem = menuItems.find((item) => item.id === "finance");
+  const vendorItem = menuItems.find((item) => item.id === "penawaran");
+
+  const barangItem = menuItems.find((item) => item.id === "barang");
+  const fbpItem = menuItems.find((item) => item.id === "fpb");
+  const molItem = menuItems.find((item) => item.id === "mol");
+  const poItem = menuItems.find((item) => item.id === "po");
+  const reportItem = menuItems.find((item) => item.id === "report");
+
+  if (role === "finance") {
     return <React.Fragment>{financeItem && dashboardItem ? [dashboardItem, financeItem] : null}</React.Fragment>;
+  } else if (role == "vendor") {
+    return <React.Fragment>{vendorItem && dashboardItem ? [dashboardItem, vendorItem] : null}</React.Fragment>;
+  } else if (role == "pengadaan") {
+    return (
+      <React.Fragment>
+        {barangItem && dashboardItem && fbpItem && molItem && poItem && reportItem
+          ? [dashboardItem, barangItem, molItem, fbpItem, poItem, reportItem]
+          : null}
+      </React.Fragment>
+    );
   } else {
-    return <React.Fragment>{roleTes === "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
+    return <React.Fragment>{role === "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
   }
 };
 export default Navdata;
