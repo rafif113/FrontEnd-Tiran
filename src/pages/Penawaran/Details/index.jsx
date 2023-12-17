@@ -16,6 +16,7 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
+import { formatRupiah } from "../../../utils/utils";
 
 import { Link } from "react-router-dom";
 import { getDetailPenawaran as onGetDetailPenawaran, addPricePenawaran as onAddPricePenawaran } from "../../../slices/thunks";
@@ -121,7 +122,9 @@ const DetailPenawaran = () => {
               >
                 {detailPenawaran.map((rowPenawaran, indexPenawaran) => (
                   <Card key={indexPenawaran}>
-                    <CardHeader>Penawaran {rowPenawaran.penawaran_ke}</CardHeader>
+                    <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>
+                      Penawaran Ke-{rowPenawaran.penawaran_ke}
+                    </CardHeader>
                     {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => (
                       <CardBody key={indexDetail}>
                         <div className="table-responsive">
@@ -134,6 +137,7 @@ const DetailPenawaran = () => {
                                 <th scope="col">Part Request Name</th>
                                 <th scope="col">Price Admin</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Qty</th>
                               </tr>
                             </thead>
                             <tbody id="newlink">
@@ -155,13 +159,13 @@ const DetailPenawaran = () => {
                                   </td>
                                   <td className="text-start">
                                     <Input
-                                      type="number"
+                                      type="text"
                                       className="form-control bg-light border-0"
                                       id="productName-1"
                                       placeholder="Price Admin"
                                       name="price_admin"
                                       readOnly
-                                      value={rowPrice.price_admin}
+                                      value={formatRupiah(rowPrice.price_admin)}
                                     />
                                   </td>
                                   <td className="text-start">
@@ -172,7 +176,7 @@ const DetailPenawaran = () => {
                                         id={`productName-${indexPrice}`}
                                         placeholder="Input Price..."
                                         readOnly
-                                        value={rowPrice.price}
+                                        value={formatRupiah(rowPrice.price)}
                                       />
                                     ) : (
                                       <Input
@@ -192,6 +196,17 @@ const DetailPenawaran = () => {
                                         }
                                       />
                                     )}
+                                  </td>
+                                  <td className="text-start">
+                                    <Input
+                                      type="text"
+                                      className="form-control bg-light border-0"
+                                      id="productName-1"
+                                      placeholder="Part Request Name"
+                                      name="qty"
+                                      readOnly
+                                      value={rowPrice.qty}
+                                    />
                                   </td>
                                 </tr>
                               ))}
@@ -223,12 +238,12 @@ const DetailPenawaran = () => {
                 </div>
               </Form>
             </Col>
+            <ModalFileUpload isOpen={modal} toggle={toggle} id={detailPenawaran[0].id_penawaran} />
           </Row>
         )}
         {/*  */}
         <SubmitModal show={showSubmitModal} onSubmitClick={onSubmitClick} onCloseClick={closeSubmitModal} />
         {/*  */}
-        <ModalFileUpload isOpen={modal} toggle={toggle} />
       </Container>
     </div>
   );

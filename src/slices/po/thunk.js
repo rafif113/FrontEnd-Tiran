@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { addPo as addPoApi, getPo as getPoApi } from "../../helpers/backend_helper";
+import { addPo as addPoApi, getPo as getPoApi, getPoLogistik as getPoLogistikApi } from "../../helpers/backend_helper";
 
 export const getPo = createAsyncThunk("po/getPo", async () => {
   try {
@@ -28,6 +28,24 @@ export const addPo = createAsyncThunk("po/addPo", async (po) => {
     return data;
   } catch (error) {
     toast.error("po Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getPoLogistik = createAsyncThunk("po/getPoLogistik", async () => {
+  try {
+    const response = getPoLogistikApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailPoLogistik = createAsyncThunk("po/getDetailPoLogistik", async (data) => {
+  try {
+    const response = getPoLogistikApi(data);
+    return response;
+  } catch (error) {
     return error;
   }
 });

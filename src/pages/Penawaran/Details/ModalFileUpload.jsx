@@ -1,32 +1,35 @@
 import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody, Form, Label, Input, Row, Col, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Form, Label, Input, Row, Col, Button, FormFeedback } from "reactstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { postGcs as onPostGcs } from "../../../slices/thunks";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ModalFileUpload = ({ isOpen, toggle }) => {
+const ModalFileUpload = ({ isOpen, toggle, id }) => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      file: null, // Use null for the file value
+      file: null,
+      keterangan: "",
     },
     validationSchema: Yup.object({
-      file: Yup.mixed().required("File is required"), // Add any other file validation rules
+      file: Yup.mixed().required("File is required"),
+      keterangan: Yup.string().required("Please Enter a Description"),
     }),
     onSubmit: async (values) => {
       try {
         const formData = new FormData();
         formData.append("file", values.file);
+        formData.append("id_penawaran_vendor", id);
+        formData.append("keterangan", values.keterangan);
         await dispatch(onPostGcs(formData));
         history("/penawaran");
       } catch (error) {
-        console.error("An error occurred:", error);
+        console.error("Error Server:", error);
       }
     },
   });
@@ -39,7 +42,7 @@ const ModalFileUpload = ({ isOpen, toggle }) => {
       <ModalBody>
         <Form
           encType="multipart/form-data"
-          className={"needs-validation"}
+          className="needs-validation"
           onSubmit={(e) => {
             e.preventDefault();
             validation.handleSubmit();
@@ -52,7 +55,7 @@ const ModalFileUpload = ({ isOpen, toggle }) => {
               <div className="mb-3">
                 <Label className="form-label">File Upload</Label>
                 <Input
-                  className={"form-control d-block"}
+                  className="form-control d-block"
                   placeholder="Enter File Upload"
                   type="file"
                   name="file"
@@ -64,6 +67,28 @@ const ModalFileUpload = ({ isOpen, toggle }) => {
                 {validation.touched.file && validation.errors.file && (
                   <div className="invalid-feedback d-block">{validation.errors.file}</div>
                 )}
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className="mb-3">
+                <Label className="form-label" htmlFor="description">
+                  Description
+                </Label>
+                <Input
+                  className="form-control d-block"
+                  placeholder="Enter Description"
+                  type="text"
+                  name="keterangan"
+                  id="keterangan"
+                  autoComplete="off"
+                  value={validation.values.keterangan || ""}
+                  onBlur={validation.handleBlur}
+                  onChange={validation.handleChange}
+                  invalid={validation.errors.keterangan && validation.touched.keterangan ? true : false}
+                />
+                {validation.errors.keterangan && validation.touched.keterangan ? (
+                  <FormFeedback type="invalid-feedback d-block">{validation.errors.keterangan}</FormFeedback>
+                ) : null}
               </div>
             </Col>
           </Row>

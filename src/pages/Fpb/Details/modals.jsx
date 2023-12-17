@@ -1,5 +1,9 @@
+import { formatRupiah } from "../../../utils/utils";
+
 const { useState } = require("react");
 const { Modal, ModalHeader, Button, ModalBody, Col, Input } = require("reactstrap");
+
+// import withRouter from './utils';
 
 const Modals = ({ data, isModalOpen, setIsModalOpen }) => {
   console.log(data);
@@ -11,7 +15,7 @@ const Modals = ({ data, isModalOpen, setIsModalOpen }) => {
       }}
     >
       <ModalHeader>
-        <h5 className="modal-title">Referensi Price</h5>
+        <h5 className="modal-title">Price Reference</h5>
         {/* <Button
           type="button"
           onClick={() => {
@@ -29,7 +33,23 @@ const Modals = ({ data, isModalOpen, setIsModalOpen }) => {
                 <label htmlFor="firstName" className="form-label">
                   Price
                 </label>
-                <Input type="text" className="form-control" value={data.price} placeholder="Price" />
+                <Input type="text" className="form-control" value={formatRupiah(data.price)} placeholder="Price" />
+              </div>
+            </Col>
+            <Col xxl={12}>
+              <div>
+                <label htmlFor="firstName" className="form-label">
+                  Vendor
+                </label>
+                <Input type="text" className="form-control" value={data.vendor} placeholder="Price" />
+              </div>
+            </Col>
+            <Col xxl={12}>
+              <div>
+                <label htmlFor="firstName" className="form-label">
+                  Transaction Date
+                </label>
+                <Input type="text" className="form-control" value={data.tanggal_pembelian} placeholder="Price" />
               </div>
             </Col>
             <div className="col-lg-12">

@@ -22,6 +22,7 @@ export const GET_MOL = "/get/mol";
 export const ADD_MOL = "/store/mol";
 export const GET_COMPONENT_GROUP = "/get/master/componen_group";
 export const ADD_COMPONENT_GROUP = "/store/master/componen_group";
+export const ADD_MOL_FUEL_TIRE = "/post/request/ar";
 
 export const GET_PENGELUARAN = "/get/mol/pengeluaran";
 export const ADD_PENGELUARAN = "/sote/mol/pengeluaran";
@@ -69,7 +70,14 @@ export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
 
 // GCS
-export const POST_GCS = "/get/report/gcs";
+export const POST_GCS = "/post/do/vendor/gcs";
+
+// KTT
+export const GET_KTT_PO = "/post/ktt/po";
+export const APPROVE_KTT_PO = "/post/ktt/approve";
+
+// LOGISTIK
+export const GET_PO_LOGISTIK = "/get/po/logistik";
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";

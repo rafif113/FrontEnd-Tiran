@@ -95,6 +95,7 @@ const DetailMol = () => {
 
   // handle form input
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedButton, setSelectedButton] = useState(null);
 
   const handleCheckboxChange = (itemId) => {
     if (selectedItems.includes(itemId)) {
@@ -104,7 +105,14 @@ const DetailMol = () => {
     }
   };
 
-  const [selectedButton, setSelectedButton] = useState(null);
+  const handleButtonClick = (buttonType) => {
+    if (selectedItems.length === 0) {
+      alert("Please select items before proceeding.");
+    } else {
+      setSelectedButton(buttonType);
+    }
+  };
+
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {},
@@ -682,10 +690,10 @@ const DetailMol = () => {
                   </Card>
 
                   <div className="text-end mb-3">
-                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => setSelectedButton("pengeluaran")}>
+                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
                       Pengeluaran
                     </button>
-                    <button type="submit" className="btn btn-success w-sm" onClick={() => setSelectedButton("fpb")}>
+                    <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
                       Create FPB
                     </button>
                   </div>

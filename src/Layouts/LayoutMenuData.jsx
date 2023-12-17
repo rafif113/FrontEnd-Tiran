@@ -21,6 +21,8 @@ const Navdata = () => {
 
   const [isReport, setIsReport] = useState(false);
 
+  const [isKtt, setIsKtt] = useState(false);
+
   const [iscurrentState, setIscurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
@@ -62,15 +64,16 @@ const Navdata = () => {
     if (iscurrentState !== "Report") {
       setIsReport(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance, isReport]);
+    if (iscurrentState !== "Ktt") {
+      setIsKtt(false);
+    }
+  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance, isReport, isKtt]);
 
   const userLogin = getLoggedinUser();
-  const userData = useSelector((state) => state.Login.role);
   const role = useSelector((state) => state.Login.role);
   useEffect(() => {
     if (userLogin) {
       dispatch(loginSuccess(userLogin.data));
-      // console.log(userLogin.data);
       dispatch(changeRole(userLogin.data.roles[0]));
     }
   }, [dispatch]);
@@ -107,7 +110,7 @@ const Navdata = () => {
     },
     {
       id: "barang",
-      label: "Master Barang",
+      label: "Master Data",
       icon: "ri-layout-grid-line",
       link: "/#",
       click: function (e) {
@@ -120,6 +123,9 @@ const Navdata = () => {
       subItems: [
         { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
         { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
+        { id: "unit", label: "Unit", link: "/unit", parentId: "barang" },
+        { id: "carrier", label: "Carrier", link: "/carrier", parentId: "barang" },
+        { id: "buyer", label: "Buyer", link: "/buyer", parentId: "barang" },
       ],
     },
     {
@@ -138,6 +144,7 @@ const Navdata = () => {
         { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
         { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
         { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
+        { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
       ],
     },
     {
@@ -168,7 +175,28 @@ const Navdata = () => {
       },
       stateVariables: isPo,
 
-      subItems: [{ id: "listpo", label: "List PO", link: "/po", parentId: "po" }],
+      subItems: [
+        { id: "listpo", label: "List PO", link: "/po", parentId: "po" },
+        { id: "listpologistik", label: "List PO Logistik", link: "/po-logistik", parentId: "po" },
+      ],
+    },
+    {
+      id: "ktt",
+      label: "KTT",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsKtt(!isKtt);
+        setIscurrentState("Ktt");
+        updateIconSidebar(e);
+      },
+      stateVariables: isKtt,
+
+      subItems: [
+        { id: "listkttpo", label: "List PO", link: "/po-ktt", parentId: "ktt" },
+        { id: "listkttporutin", label: "List Rutin", link: "/po-ktt-rutin", parentId: "ktt" },
+      ],
     },
     {
       id: "penawaran",
@@ -240,12 +268,6 @@ const Navdata = () => {
     },
   ];
 
-  const filteredMenuItems = menuItems.filter((item) => {
-    return role === "pengadaan" && item.id !== "finance";
-  });
-
-  console.log(role);
-
   const dashboardItem = menuItems.find((item) => item.id === "dashboard");
   const financeItem = menuItems.find((item) => item.id === "finance");
   const vendorItem = menuItems.find((item) => item.id === "penawaran");
@@ -269,7 +291,7 @@ const Navdata = () => {
       </React.Fragment>
     );
   } else {
-    return <React.Fragment>{role === "admin" ? menuItems : filteredMenuItems}</React.Fragment>;
+    return <React.Fragment>{menuItems}</React.Fragment>;
   }
 };
 export default Navdata;

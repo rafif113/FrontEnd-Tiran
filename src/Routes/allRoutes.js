@@ -18,6 +18,7 @@ import Mol from "../pages/Mol/List";
 import CreateMol from "../pages/Mol/Create";
 import CetakMol from "../pages/Mol/Details";
 import DetailMol from "../pages/Mol/Details/detail";
+import CreateFuelTire from "../pages/Mol/CreateFuelTire";
 
 import CreatePengeluaran from "../pages/Mol/Pengeluaran/create";
 import ListPengeluaran from "../pages/Mol/Pengeluaran/list";
@@ -33,6 +34,8 @@ import Po from "../pages/Po/List";
 import CreatePo from "../pages/Po/Create";
 import CetakPo from "../pages/Po/Cetak";
 import DetailPo from "../pages/Po/Detail";
+import PoLogistik from "../pages/PoLogistik/List";
+import DetailPoLogistik from "../pages/PoLogistik/Detail";
 // PENAWARAN
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
@@ -51,6 +54,17 @@ import ReportUnit from "../pages/Report/Unit";
 import ReportBarangOut from "../pages/Report/BarangKeluar";
 import ReportBarangIn from "../pages/Report/BarangMasuk";
 
+// Report
+import Carrier from "../pages/Carrier";
+import Buyer from "../pages/Buyer";
+import Unit from "../pages/Unit";
+
+// KTT
+import KttPo from "../pages/Ktt/Po/List";
+import KttPoDetail from "../pages/Ktt/Po/Detail";
+import KttPoRutin from "../pages/Ktt/Rutin/List";
+import KttPoDetailRutin from "../pages/Ktt/Rutin/Detail";
+
 const authProtectedRoutes = [
   // User Profile
   { path: "/profile", component: <UserProfile /> },
@@ -65,6 +79,7 @@ const authProtectedRoutes = [
   { path: "/mol/create", component: <CreateMol /> },
   { path: "/mol/cetak", component: <CetakMol /> },
   { path: "/mol/detail", component: <DetailMol /> },
+  { path: "/mol/fuel-tire", component: <CreateFuelTire /> },
 
   { path: "/mol/pengeluaran", component: <ListPengeluaran /> },
   { path: "/mol/pengeluaran/create", component: <CreatePengeluaran /> },
@@ -79,6 +94,8 @@ const authProtectedRoutes = [
   { path: "/po/create", component: <CreatePo /> },
   { path: "/po/cetak", component: <CetakPo /> },
   { path: "/po/detail", component: <DetailPo /> },
+  { path: "/po-logistik", component: <PoLogistik /> },
+  { path: "/po-logistik/detail", component: <DetailPoLogistik /> },
   // PENAWARAN
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
@@ -95,6 +112,15 @@ const authProtectedRoutes = [
   { path: "/report/unit", component: <ReportUnit /> },
   { path: "/report/barang-keluar", component: <ReportBarangOut /> },
   { path: "/report/barang-masuk", component: <ReportBarangIn /> },
+  // Master
+  { path: "/carrier", component: <Carrier /> },
+  { path: "/buyer", component: <Buyer /> },
+  { path: "/unit", component: <Unit /> },
+  // PO KTT
+  { path: "/po-ktt", component: <KttPo /> },
+  { path: "/po-ktt/detail", component: <KttPoDetail /> },
+  { path: "/po-ktt-rutin", component: <KttPoRutin /> },
+  { path: "/po-ktt-rutin/detail", component: <KttPoDetailRutin /> },
 
   {
     path: "/",

@@ -83,6 +83,7 @@ export const addPengeluaran = (data) => api.create(url.ADD_PENGELUARAN, data);
 export const addComponentGroup = (data) => api.create(url.ADD_COMPONENT_GROUP, data);
 export const addMaterialType = (data) => api.create(url.ADD_MATERIAL_TYPE, data);
 export const addCostCode = (data) => api.create(url.ADD_COST_CODE, data);
+export const addMolFuelTire = (data) => api.create(url.ADD_MOL_FUEL_TIRE, data);
 
 // FPB
 export const getFpb = (data) => api.create(url.GET_FPB, data);
@@ -122,6 +123,12 @@ export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE
 
 // GCS
 export const postGcs = (data) => api.create(url.POST_GCS, data);
+
+// KTT
+export const getKttPo = (data) => api.create(url.GET_KTT_PO, data);
+export const postKttApprove = (data) => api.create(url.APPROVE_KTT_PO, data);
+// LOGISTIK
+export const getPoLogistik = (data) => api.create(url.GET_PO_LOGISTIK, data);
 
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);

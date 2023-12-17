@@ -22,6 +22,8 @@ import PenawaranReducer from "./penawaran/reducer";
 // FINANCE
 import FinanceReducer from "./finance/reducer";
 import ReportReducer from "./report/reducer";
+// KTT
+import KttReducer from "./ktt/reducer";
 // Dashboard Ecommerce
 import DashboardEcommerceReducer from "./dashboardEcommerce/reducer";
 
@@ -36,6 +38,7 @@ const rootReducer = combineReducers({
   Penawaran: PenawaranReducer,
   Finance: FinanceReducer,
   Report: ReportReducer,
+  Ktt: KttReducer,
   Account: AccountReducer,
   ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,

@@ -138,8 +138,8 @@ const Mol = () => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      no_document: "",
-      mol_no: "",
+      // no_document: "",
+      // mol_no: "",
       unit_name: "",
       engine_model: "",
       unit_code: "",
@@ -160,8 +160,8 @@ const Mol = () => {
       orderForSelected: [],
     },
     validationSchema: Yup.object({
-      no_document: Yup.string().required("Please Enter a No Document"),
-      mol_no: Yup.string().required("Please Enter a Mol No"),
+      // no_document: Yup.string().required("Please Enter a No Document"),
+      // mol_no: Yup.string().required("Please Enter a Mol No"),
       unit_name: Yup.string().required("Please Enter a Unit Name"),
       engine_model: Yup.string().required("Please Enter a Engine Model"),
       unit_code: Yup.string().required("Please Enter a Unit Code"),
@@ -195,8 +195,8 @@ const Mol = () => {
     }),
     onSubmit: (values) => {
       const newMol = {
-        no_document: values.no_document,
-        mol_no: values.mol_no,
+        // no_document: values.no_document,
+        // mol_no: values.mol_no,
         unit_name: values.unit_name,
         engine_model: values.engine_model,
         unit_code: values.unit_code,
@@ -270,7 +270,7 @@ const Mol = () => {
                 <CardHeader>Specification Unit : </CardHeader>
                 <CardBody>
                   <Row>
-                    <Col lg={6}>
+                    {/* <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="no-document">
                           No Document
@@ -311,7 +311,7 @@ const Mol = () => {
                           <FormFeedback type="invalid">{validation.errors.mol_no}</FormFeedback>
                         ) : null}
                       </div>
-                    </Col>
+                    </Col> */}
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="unit-name">
