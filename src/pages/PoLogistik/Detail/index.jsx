@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 import { clearDetailPo, setLoadingDetail as setLoadingPoDetail } from "../../../slices/po/reducer";
 import SubmitModal from "../../../Components/Common/SubmitModal";
+import { formatRupiah } from "../../../utils/utils";
 
 const DetailPo = () => {
   document.title = "Detail PO | PT Tiran";
@@ -313,7 +314,7 @@ const DetailPo = () => {
                                       placeholder="Price"
                                       name="product_name"
                                       readOnly
-                                      value={rowPrice.price}
+                                      value={formatRupiah(rowPrice.price)}
                                     />
                                   </td>
                                 </tr>

@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addFinanceTongkangDown as onAddFinanceTongkangDown } from "../../../../../slices/thunks";
+import { formatRupiah } from "../../../../../utils/utils";
+
 const FinalAmountTab = ({ detailTongkang }) => {
   return (
     <Row>
@@ -70,7 +72,7 @@ const FinalAmountTab = ({ detailTongkang }) => {
             id="Final Price"
             name="Final Price"
             placeholder="Enter Final Price"
-            value={detailTongkang.tongkang_final_amount ? detailTongkang.tongkang_final_amount.final_price : ""}
+            value={detailTongkang.tongkang_final_amount ? formatRupiah(detailTongkang.tongkang_final_amount.final_price) : ""}
             readOnly={detailTongkang.tongkang_final_amount === null ? false : true}
             autoComplete="off"
           />

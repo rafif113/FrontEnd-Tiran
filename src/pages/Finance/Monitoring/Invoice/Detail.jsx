@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
 import SubmitModal from "../../../../Components/Common/SubmitModal";
+import { formatRupiah } from "../../../../utils/utils";
 
 import { getDetailFinancePo as onGetDetailFinancePo } from "../../../../slices/thunks";
 import { clearDetailInvoicePo, setLoading } from "../../../../slices/finance/reducer";
@@ -92,9 +93,8 @@ const DetailInvoicePo = () => {
                     {detailInvoicePo.penawarandetail.map((rowPenawaran, indexPenawaran) => (
                       <Card key={indexPenawaran}>
                         <CardHeader>Penawaran : {indexPenawaran + 1}</CardHeader>
-                        {/* <CardHeader>Price : {rowPenawaran.price}</CardHeader> */}
                         <CardBody>
-                          <CardHeader>Price : {rowPenawaran.price}</CardHeader>
+                          <CardHeader>Price : {formatRupiah(rowPenawaran.price)}</CardHeader>
 
                           <div className="table-responsive">
                             <Table className="invoice-table table-borderless table-nowrap mb-0">

@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SubmitModal from "../../../Components/Common/SubmitModal";
+import { formatRupiah } from "../../../utils/utils";
 
 const CreateFpb = () => {
   document.title = "Create PO | PT Tiran";
@@ -257,7 +258,7 @@ const CreateFpb = () => {
                                 placeholder="Product Name"
                                 name="product_name"
                                 readOnly
-                                value={row.price}
+                                value={formatRupiah(row.price)}
                               />
                             </td>
                             <td className="text-start">
@@ -268,7 +269,7 @@ const CreateFpb = () => {
                                 placeholder="Product Name"
                                 name="product_name"
                                 readOnly
-                                value={row.qty * row.price}
+                                value={formatRupiah(row.qty * row.price)}
                               />
                             </td>
                           </tr>

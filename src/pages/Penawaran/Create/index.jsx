@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback, Label, CardHeader } from "reactstrap";
 import Select from "react-select";
+import { formatRupiah } from "../../../utils/utils";
 
 import { Link } from "react-router-dom";
 import {
@@ -383,7 +384,7 @@ const CreatePenawaran = () => {
                                         placeholder="Price"
                                         name="product_name"
                                         readOnly
-                                        value={rowPrice.price}
+                                        value={formatRupiah(rowPrice.price)}
                                       />
                                     </td>
                                   </tr>

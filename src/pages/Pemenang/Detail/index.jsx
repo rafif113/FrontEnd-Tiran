@@ -17,6 +17,7 @@ import {
   Form,
   Table,
 } from "reactstrap";
+import { formatRupiah } from "../../../utils/utils";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -198,7 +199,7 @@ const Pemenang = () => {
                                     className="form-control form-control-sm bg-light border-0"
                                     placeholder="Description"
                                     name="description"
-                                    value={row.price}
+                                    value={formatRupiah(row.price)}
                                     readOnly
                                   />
                                 </td>
@@ -220,7 +221,7 @@ const Pemenang = () => {
                                     className="form-control form-control-sm bg-light border-0"
                                     placeholder="Unit"
                                     name="unit"
-                                    value={row.qty * row.price}
+                                    value={formatRupiah(row.qty * row.price)}
                                     readOnly
                                   />
                                 </td>
