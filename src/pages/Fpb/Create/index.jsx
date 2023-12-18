@@ -67,7 +67,7 @@ const CreateFpb = () => {
         title: values.title,
         date: values.date,
         tujuan: values.tujuan,
-        desc: values.desc,
+        note: values.desc,
         id_mol: selectedPartRequest[0].id_mol,
         id_part_request: selectedPartRequestIds,
       };
