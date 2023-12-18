@@ -55,7 +55,7 @@ const ReactTable = () => {
       buyer: Yup.string().required("Please Enter a Buyer"),
       category: Yup.string().required("Please Enter a Category"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newTongkang = {
         bl_no: values.bl_no,
         bl_date: values.bl_date,
@@ -64,10 +64,11 @@ const ReactTable = () => {
         buyer: values.buyer,
         category: values.category,
       };
-      console.log(newTongkang);
-      dispatch(onAddFinanceTongkang(newTongkang));
-      history("/mol");
-      // validation.resetForm();
+      await dispatch(onAddFinanceTongkang(newTongkang));
+      // history("/finance/monitoring/tongkang");
+      window.location.reload(); // Reload the page upon successful dispatch
+
+      validation.resetForm();
     },
   });
 

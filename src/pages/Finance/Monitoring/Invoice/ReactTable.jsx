@@ -14,12 +14,12 @@ const InvoicePoFinanceTable = () => {
   const history = useNavigate();
 
   const handleDetailClick = (id, kelengkapan) => {
-    if (kelengkapan.flag == "tidak komplit") {
-      const keteranganText = kelengkapan.keterangan.join("\n");
-      alert(keteranganText);
-    } else {
-      history(`/finance/monitoring/invoice/detail?id=${id}`);
-    }
+    // if (kelengkapan.flag == "tidak komplit") {
+    // const keteranganText = kelengkapan.keterangan.join("\n");
+    // alert(keteranganText);
+    // } else {
+    history(`/finance/monitoring/invoice/detail?id=${id}`);
+    // }
   };
 
   const InvoicePoData = createSelector(

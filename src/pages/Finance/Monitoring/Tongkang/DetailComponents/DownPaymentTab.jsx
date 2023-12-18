@@ -40,7 +40,7 @@ const DownPaymentTab = ({ detailTongkang }) => {
       total_dp: Yup.string().required("Please Enter a Total Dp"),
       date: Yup.string().required("Please Enter a Date"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newDpTab = {
         id_tongkang: idTongkang,
         dp: values.dp,
@@ -51,9 +51,11 @@ const DownPaymentTab = ({ detailTongkang }) => {
         date: values.date,
       };
       // console.log(newDpTab);
-      dispatch(onAddFinanceTongkangDown(newDpTab));
-      history("/monitoring/tongkang");
-      validation.resetForm();
+      await dispatch(onAddFinanceTongkangDown(newDpTab));
+      window.location.reload(); // Reload the page upon successful dispatch
+
+      // history("/monitoring/tongkang");
+      // validation.resetForm();
     },
   });
 

@@ -49,7 +49,7 @@ const FinalPaymentTab = ({ detailTongkang }) => {
       total_final_inv: Yup.string().required("Please Enter a DP"),
       payment_recive: Yup.string().required("Please Enter a DP"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newDpTab = {
         id_tongkang: idTongkang,
         first_inv: values.first_inv,
@@ -61,9 +61,12 @@ const FinalPaymentTab = ({ detailTongkang }) => {
         total_final_inv: values.total_final_inv,
         payment_recive: values.payment_recive,
       };
-      // console.log(newDpTab);
-      dispatch(onAddFinanceTongkangPayment(newDpTab));
-      history("/monitoring/tongkang");
+      console.log(newDpTab);
+      await dispatch(onAddFinanceTongkangPayment(newDpTab));
+      window.location.reload(); // Reload the page upon successful dispatch
+
+      // history("/monitoring/tongkang");
+      // window.location.reload(); // Refresh the page
       validation.resetForm();
     },
   });
@@ -273,8 +276,8 @@ const FinalPaymentTab = ({ detailTongkang }) => {
               id="Sisa Pembayaran"
               name="Sisa Pembayaran"
               placeholder="Enter Sisa Pembayaran"
-              value={detailTongkang.tongkang_final_payment ? detailTongkang.tongkang_final_payment : ""}
-              readOnly={detailTongkang.tongkang_final_payment === null ? false : true}
+              value={""}
+              readOnly={true}
               autoComplete="off"
             />
           </div>

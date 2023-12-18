@@ -41,7 +41,7 @@ const SpecificationTab = ({ detailTongkang }) => {
       co: Yup.string().required("Please Enter a DP"),
       surveyor: Yup.string().required("Please Enter a DP"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newSdPort = {
         id_tongkang: idTongkang,
         ni: values.ni,
@@ -52,9 +52,8 @@ const SpecificationTab = ({ detailTongkang }) => {
         surveyor: values.surveyor,
       };
       // console.log(newSdPort);
-      dispatch(onAddFinanceTongkangPort(newSdPort));
-      history("/monitoring/tongkang");
-      validation.resetForm();
+      await dispatch(onAddFinanceTongkangPort(newSdPort));
+      window.location.reload(); // Reload the page upon successful dispatch
     },
   });
 
