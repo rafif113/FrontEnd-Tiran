@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFpb, getFpb, getDetailFpb } from "./thunk";
+import { addFpb, getFpb, getDetailFpb, getDetailPq } from "./thunk";
 export const initialState = {
   fpb: [],
   detailFpb: [],
+  detailPq: [],
   loading: true,
+  loadingPq: true,
   selectedFpbList: [],
   error: {},
 };
@@ -17,6 +19,12 @@ const FpbSlice = createSlice({
     },
     clearDetailFpb: (state) => {
       state.detailFpb = null;
+    },
+    setLoadingPq: (state, action) => {
+      state.loadingPq = action.payload;
+    },
+    clearDetailPq: (state) => {
+      state.detailPq = null;
     },
     setSelectedFpbList: (state, action) => {
       state.selectedFpbList = action.payload;
@@ -39,6 +47,10 @@ const FpbSlice = createSlice({
       state.detailFpb = action.payload.data;
     });
 
+    builder.addCase(getDetailPq.fulfilled, (state, action) => {
+      state.detailPq = action.payload.data;
+    });
+
     // builder.addCase(getDetailFpb.rejected, (state, action) => {
     //   state.error = action.payload.error || null;
     // });
@@ -53,6 +65,7 @@ const FpbSlice = createSlice({
     // End FPB reducer
   },
 });
-export const { clearDetailFpb, clearSelectedFpbList, setLoading, setSelectedFpbList } = FpbSlice.actions;
+export const { clearDetailFpb, clearSelectedFpbList, setLoading, setSelectedFpbList, clearDetailPq, setLoadingPq } =
+  FpbSlice.actions;
 
 export default FpbSlice.reducer;

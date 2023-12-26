@@ -29,6 +29,7 @@ import Fpb from "../pages/Fpb/List";
 import DetailFpb from "../pages/Fpb/Details";
 import CreateFpb from "../pages/Fpb/Create";
 import CetakFpb from "../pages/Fpb/Cetak";
+import CetakPq from "../pages/Fpb/Pq/Cetak";
 // PO
 import Po from "../pages/Po/List";
 import CreatePo from "../pages/Po/Create";
@@ -89,6 +90,7 @@ const authProtectedRoutes = [
   { path: "/fpb/detail", component: <DetailFpb /> },
   { path: "/fpb/create", component: <CreateFpb /> },
   { path: "/fpb/cetak", component: <CetakFpb /> },
+  { path: "/fpb/pq/cetak", component: <CetakPq /> },
   // PO
   { path: "/po", component: <Po /> },
   { path: "/po/create", component: <CreatePo /> },

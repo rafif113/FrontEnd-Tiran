@@ -88,6 +88,8 @@ export const addMolFuelTire = (data) => api.create(url.ADD_MOL_FUEL_TIRE, data);
 // FPB
 export const getFpb = (data) => api.create(url.GET_FPB, data);
 export const addFpb = (data) => api.create(url.ADD_FPB, data);
+export const addPq = (data) => api.create(url.ADD_PQ, data);
+export const getPq = (data) => api.create(url.GET_PQ, data);
 
 // PO
 export const getPo = (data) => api.create(url.GET_PO, data);
@@ -129,6 +131,9 @@ export const getKttPo = (data) => api.create(url.GET_KTT_PO, data);
 export const postKttApprove = (data) => api.create(url.APPROVE_KTT_PO, data);
 // LOGISTIK
 export const getPoLogistik = (data) => api.create(url.GET_PO_LOGISTIK, data);
+// MASTER DATA
+export const getMasterPart = () => api.get(url.GET_MASTER_PART);
+export const getMasterAlat = () => api.get(url.GET_MASTER_ALAT);
 
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);

@@ -40,34 +40,34 @@ const CreateFpb = () => {
     enableReinitialize: true,
     initialValues: {
       site: "",
-      nomor: "",
+      // nomor: "",
       pengajuan: "",
       diajukan_oleh: "",
       title: "",
-      date: "",
+      date: new Date().toISOString().split("T")[0],
       tujuan: "",
-      desc: "",
+      note: "",
     },
     validationSchema: Yup.object({
       site: Yup.string().required("Please Enter a site"),
-      nomor: Yup.string().required("Please Enter a nomor"),
+      // nomor: Yup.string().required("Please Enter a nomor"),
       pengajuan: Yup.string().required("Please Enter a pengajuan"),
       diajukan_oleh: Yup.string().required("Please Enter a diajukan"),
       title: Yup.string().required("Please Enter a title"),
       date: Yup.string().required("Please Enter a date"),
       tujuan: Yup.string().required("Please Enter a tujuan"),
-      desc: Yup.string().required("Please Enter a desc"),
+      note: Yup.string().required("Please Enter a note"),
     }),
     onSubmit: (values) => {
       const newFpb = {
         site: values.site,
-        nomor: values.nomor,
+        // nomor: values.nomor,
         pengajuan: values.pengajuan,
         diajukan_oleh: values.diajukan_oleh,
         title: values.title,
         date: values.date,
         tujuan: values.tujuan,
-        note: values.desc,
+        note: values.note,
         id_mol: selectedPartRequest[0].id_mol,
         id_part_request: selectedPartRequestIds,
       };
@@ -127,7 +127,7 @@ const CreateFpb = () => {
                         ) : null}
                       </div>
                     </Col>
-                    <Col lg={6}>
+                    {/* <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="nomor">
                           Nomor
@@ -147,7 +147,7 @@ const CreateFpb = () => {
                           <FormFeedback type="invalid">{validation.errors.nomor}</FormFeedback>
                         ) : null}
                       </div>
-                    </Col>
+                    </Col> */}
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="pengajuan">
@@ -211,12 +211,13 @@ const CreateFpb = () => {
                         ) : null}
                       </div>
                     </Col>
-                    <Col lg={6}>
+                    {/* <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="date">
                           Date
                         </label>
                         <Input
+                          disabled
                           type="date"
                           className="form-control"
                           id="date"
@@ -231,7 +232,7 @@ const CreateFpb = () => {
                           <FormFeedback type="invalid">{validation.errors.date}</FormFeedback>
                         ) : null}
                       </div>
-                    </Col>
+                    </Col> */}
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="title">
@@ -261,14 +262,14 @@ const CreateFpb = () => {
                           className="form-control"
                           id="message-text"
                           rows="4"
-                          name="desc"
-                          value={validation.values.desc || ""}
+                          name="note"
+                          value={validation.values.note || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
-                          invalid={validation.errors.desc && validation.touched.desc ? true : false}
+                          invalid={validation.errors.note && validation.touched.note ? true : false}
                         ></textarea>
-                        {validation.errors.desc && validation.touched.desc ? (
-                          <FormFeedback type="invalid">{validation.errors.desc}</FormFeedback>
+                        {validation.errors.note && validation.touched.note ? (
+                          <FormFeedback type="invalid">{validation.errors.note}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>

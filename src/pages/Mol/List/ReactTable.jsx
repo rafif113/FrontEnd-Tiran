@@ -56,6 +56,12 @@ const PaginationTable = () => {
         },
       },
       {
+        Header: "Description",
+        accessor: "keterangan",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
         Header: "Status",
         accessor: () => {
           return <>Approved</>;
@@ -117,7 +123,7 @@ const PaginationTable = () => {
           isGlobalSearch={true}
           iscustomPageSize={true}
           isBordered={true}
-          customPageSize={5}
+          customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"

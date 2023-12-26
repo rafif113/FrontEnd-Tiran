@@ -371,9 +371,9 @@ const CetakFpb = () => {
                     <Col lg={12}>
                       <CardBody className="p-4">
                         <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                          <Link to="#" onClick={printInvoice} className="btn btn-success">
+                          <button onClick={printInvoice} className="btn btn-success">
                             <i className="ri-printer-line align-bottom me-1"></i> Print
-                          </Link>
+                          </button>
                           <button className="btn btn-primary" onClick={handleApproveClick}>
                             <i className="ri-send-plane-fill align-bottom me-1"></i> Approve
                           </button>

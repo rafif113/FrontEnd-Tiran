@@ -31,5 +31,8 @@ export * from "./gcs/thunk";
 // GCS
 export * from "./ktt/thunk";
 
+// MASTER
+export * from "./master/thunk";
+
 // Dashboard Ecommerce
 export * from "./dashboardEcommerce/thunk";

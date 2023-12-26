@@ -26,6 +26,8 @@ import {
   getMaterialType as onGetMaterialType,
   getCostCode as onGetCostCode,
   addMol as onAddMol,
+  getMasterAlat as onGetMasterAlat,
+  getMasterPart as onGetMasterPart,
 } from "../../../slices/thunks";
 
 import classnames from "classnames";
@@ -81,11 +83,14 @@ const Mol = () => {
   fetchDataIfNeeded((state) => state.Mol.componentGroup, onGetComponentGroup);
   fetchDataIfNeeded((state) => state.Mol.costCode, onGetCostCode);
   fetchDataIfNeeded((state) => state.Mol.materialType, onGetMaterialType);
+  fetchDataIfNeeded((state) => state.Master.part, onGetMasterPart);
+  fetchDataIfNeeded((state) => state.Master.alat, onGetMasterAlat);
 
   const componentGroup = useSelector((state) => state.Mol.componentGroup);
   const costCode = useSelector((state) => state.Mol.costCode);
   const materialType = useSelector((state) => state.Mol.materialType);
-
+  const masterPart = useSelector((state) => state.Master.part);
+  const masterAlat = useSelector((state) => state.Master.alat);
   // Handle new part barang request
   const [rows, setRows] = useState([
     {
@@ -134,6 +139,12 @@ const Mol = () => {
     setRows(updatedRows);
   };
 
+  function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
   // handle form input
   const validation = useFormik({
     enableReinitialize: true,
@@ -146,8 +157,8 @@ const Mol = () => {
       engine_serial: "",
       hm_km: "",
       engine_number: "",
-      time: "",
-      date: "",
+      time: getCurrentTime(),
+      date: new Date().toISOString().split("T")[0],
       transmission_model: "",
       transmission_sn: "",
       location: "",
@@ -158,10 +169,9 @@ const Mol = () => {
       costCodeSelected: [],
       materialTypeSelected: [],
       orderForSelected: [],
+      keterangan: "",
     },
     validationSchema: Yup.object({
-      // no_document: Yup.string().required("Please Enter a No Document"),
-      // mol_no: Yup.string().required("Please Enter a Mol No"),
       unit_name: Yup.string().required("Please Enter a Unit Name"),
       engine_model: Yup.string().required("Please Enter a Engine Model"),
       unit_code: Yup.string().required("Please Enter a Unit Code"),
@@ -172,6 +182,7 @@ const Mol = () => {
       date: Yup.string().required("Please Enter a Date"),
       transmission_model: Yup.string().required("Please Enter a Transmission Model"),
       transmission_sn: Yup.string().required("Please Enter a Transmission S/N"),
+      keterangan: Yup.string().required("Please Enter a Keterangan"),
       location: Yup.string().required("Please Enter a Location"),
       machine_serial: Yup.string().required("Please Enter a Machine Serial"),
       workshop_req: Yup.string().required("Please Enter a Workshop Req"),
@@ -216,8 +227,10 @@ const Mol = () => {
         material_type: JSON.stringify(values.materialTypeSelected),
         order_for: JSON.stringify(values.orderForSelected),
         part_request: rows,
-        id_fpb: 0,
+        // id_fpb: 0,
+        keterangan: values.keterangan,
       };
+      console.log(newMol);
       dispatch(onAddMol(newMol));
       history("/mol");
       validation.resetForm();
@@ -248,6 +261,12 @@ const Mol = () => {
     setShowSubmitModal(false);
   };
 
+  const descArray = ["Urgent", "Sangat Urgent", "Biasa"];
+
+  const handleDescription = (value) => {
+    validation.setFieldValue("keterangan", value);
+  };
+
   const onSubmitClick = () => {
     validation.handleSubmit();
     closeSubmitModal();
@@ -265,53 +284,49 @@ const Mol = () => {
                 e.preventDefault();
                 openSubmitModal();
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                }
+              }}
             >
               <Card>
                 <CardHeader>Specification Unit : </CardHeader>
                 <CardBody>
                   <Row>
-                    {/* <Col lg={6}>
+                    <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="no-document">
-                          No Document
+                        <label className="form-label" htmlFor="unit-code">
+                          Unit Code
                         </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="no-document"
-                          name="no_document"
-                          placeholder="Enter no document"
-                          value={validation.values.no_document || ""}
+                        <Select
+                          placeholder="Unit Code"
+                          name="unit_code"
+                          value={masterAlat.find((detail) => detail.id === validation.values.unit_code)}
+                          options={masterAlat.map((detail) => ({
+                            label: detail.new_plat_number,
+                            value: detail.id,
+                          }))}
                           onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.no_document && validation.touched.no_document ? true : false}
+                          onChange={(selectedOption) => {
+                            console.log(selectedOption.value);
+                            validation.setFieldValue("unit_code", selectedOption.label);
+                            const selectedDetail = masterAlat.find((detail) => detail.id === selectedOption.value);
+                            if (selectedDetail) {
+                              validation.setFieldValue("unit_name", selectedDetail.type);
+                              validation.setFieldValue("engine_model", selectedDetail.model);
+                              validation.setFieldValue("transmission_model", selectedDetail.brand);
+                              validation.setFieldValue("location", selectedDetail.location);
+                            }
+                          }}
+                          invalid={validation.errors.unit_code && validation.touched.unit_code ? true : false}
                         />
-                        {validation.errors.no_document && validation.touched.no_document ? (
-                          <FormFeedback type="invalid">{validation.errors.no_document}</FormFeedback>
+
+                        {validation.errors.unit_code && validation.touched.unit_code ? (
+                          <FormFeedback type="invalid">{validation.errors.unit_code}</FormFeedback>
                         ) : null}
                       </div>
                     </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="mol-no">
-                          Mol No
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="mol-no"
-                          name="mol_no"
-                          placeholder="Enter Mol No"
-                          value={validation.values.mol_no || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.mol_no && validation.touched.mol_no ? true : false}
-                        />
-                        {validation.errors.mol_no && validation.touched.mol_no ? (
-                          <FormFeedback type="invalid">{validation.errors.mol_no}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col> */}
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="unit-name">
@@ -354,27 +369,7 @@ const Mol = () => {
                         ) : null}
                       </div>
                     </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="unit-code">
-                          Unit Code
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="unit-code"
-                          name="unit_code"
-                          placeholder="Enter Unit Code"
-                          value={validation.values.unit_code || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.unit_code && validation.touched.unit_code ? true : false}
-                        />
-                        {validation.errors.unit_code && validation.touched.unit_code ? (
-                          <FormFeedback type="invalid">{validation.errors.unit_code}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
+
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="engine-serial-no">
@@ -444,6 +439,7 @@ const Mol = () => {
                           Time
                         </label>
                         <Input
+                          disabled
                           type="text"
                           className="form-control"
                           id="time"
@@ -486,6 +482,7 @@ const Mol = () => {
                           Date
                         </label>
                         <Input
+                          disabled
                           type="date"
                           className="form-control"
                           id="date"
@@ -620,7 +617,9 @@ const Mol = () => {
                           <th scope="col" style={{ width: "50px" }}>
                             No.
                           </th>
-                          <th scope="col">Part Number</th>
+                          <th scope="col" style={{ width: "100%" }}>
+                            Part Number
+                          </th>
                           <th scope="col">Description</th>
                           <th scope="col">Qty</th>
                           <th scope="col">Unit</th>
@@ -634,91 +633,93 @@ const Mol = () => {
                       <tbody>
                         {rows.map((row) => (
                           <tr key={row.id} className="product">
-                            <th scope="row" className="product-id">
-                              {row.id}
+                            <th scope="row" className="product-id text-center">
+                              <div className="pt-2">{row.id}</div>
                             </th>
-                            <td className="text-start">
-                              <Input
-                                style={{ minWidth: "100px" }}
-                                type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                            <td className="text-start" style={{ minWidth: "200px" }}>
+                              <Select
+                                // className=" bg-light border-0"
                                 placeholder="Part Number"
                                 name="part_number"
-                                value={row.part_number}
-                                onChange={(e) => handleInputChange(e, row.id, "part_number")}
+                                value={masterPart.find((part) => part.value === row.part_number)}
+                                options={masterPart.map((detail) => ({
+                                  label: detail.part_number,
+                                  value: detail.id,
+                                }))}
+                                isSearchable={true}
+                                menuPlacement="auto"
+                                onChange={(selectedOption) => {
+                                  const selectedPart = masterPart.find((part) => part.id === selectedOption.value);
+                                  handleInputChange({ target: { value: selectedPart.part_number } }, row.id, "part_number");
+                                  handleInputChange({ target: { value: selectedPart.part_name } }, row.id, "description");
+                                  handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
+                                }}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Description"
                                 name="description"
                                 value={row.description}
                                 onChange={(e) => handleInputChange(e, row.id, "description")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="number"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Quantity"
                                 name="qty"
                                 value={row.qty}
                                 onChange={(e) => handleInputChange(e, row.id, "qty")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Unit"
                                 name="unit"
                                 value={row.unit}
                                 onChange={(e) => handleInputChange(e, row.id, "unit")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Group"
                                 name="group"
                                 value={row.group}
                                 onChange={(e) => handleInputChange(e, row.id, "group")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="number"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Page Image"
                                 name="page_image"
                                 value={row.page_image}
                                 onChange={(e) => handleInputChange(e, row.id, "page_image")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Page Desc"
                                 name="page_desc"
                                 value={row.page_desc}
                                 onChange={(e) => handleInputChange(e, row.id, "page_desc")}
                               />
                             </td>
-                            <td className="text-start">
+                            <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
-                                style={{ minWidth: "100px" }}
                                 type="text"
-                                className="form-control form-control-sm bg-light border-0"
+                                className="form-control"
                                 placeholder="Remarks"
                                 name="remarks"
                                 value={row.remarks}
@@ -806,6 +807,19 @@ const Mol = () => {
                         }}
                       >
                         Material Type
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        style={{ cursor: "pointer" }}
+                        className={classnames({
+                          active: customActiveTab === "5",
+                        })}
+                        onClick={() => {
+                          toggleCustom("5");
+                        }}
+                      >
+                        Description
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -976,12 +990,38 @@ const Mol = () => {
                         <div className="text-danger">{validation.errors.materialTypeSelected}</div>
                       ) : null}
                     </TabPane>
+
+                    {/* Tab Pane Keterangan */}
+                    <TabPane id="keterangan" tabId="5">
+                      <Row>
+                        {descArray.map((description, index) => (
+                          <Col lg={4} md={4} key={index}>
+                            <div className="mb-3">
+                              <div className="form-check mb-2">
+                                <Input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="keterangan"
+                                  value={description}
+                                  onBlur={validation.handleBlur}
+                                  id={`keterangan_${index}`}
+                                  onChange={(e) => handleDescription(e.target.value)}
+                                />
+                                <Label className="form-check-label" for={`keterangan_${index}`}>
+                                  {description}
+                                </Label>
+                              </div>
+                            </div>
+                          </Col>
+                        ))}
+                      </Row>
+                    </TabPane>
                   </TabContent>
                 </CardBody>
               </Card>
 
               <div className="text-end mb-3">
-                <button type="submit" className="btn btn-success w-sm">
+                <button type="submit" className="btn btn-primary w-sm">
                   Submit
                 </button>
               </div>

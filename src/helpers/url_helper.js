@@ -29,6 +29,8 @@ export const ADD_PENGELUARAN = "/sote/mol/pengeluaran";
 // FPB
 export const GET_FPB = "/get/fpb";
 export const ADD_FPB = "/store/fpb";
+export const ADD_PQ = "/store/fpb/pq";
+export const GET_PQ = "/get/detail/pq";
 
 // PO
 export const GET_PO = "/get/po";
@@ -82,6 +84,10 @@ export const GET_PO_LOGISTIK = "/get/po/logistik";
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile";
 export const POST_EDIT_PROFILE = "/user";
+
+// MASTER DATA
+export const GET_MASTER_PART = "/get/master/part";
+export const GET_MASTER_ALAT = "/get/master/alatberat";
 
 // Calendar
 export const GET_EVENTS = "/events";

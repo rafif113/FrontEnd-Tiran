@@ -1,0 +1,39 @@
+.table-container {
+  border: 1px solid black;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+table {
+  width: 100%;
+}
+
+table,
+tr,
+td {
+  vertical-align: top;
+}
+
+table,
+tr {
+  page-break-inside: auto;
+}
+
+table,
+thead,
+tr {
+  page-break-inside: auto;
+}
+
+table,
+tbody,
+tr {
+  page-break-inside: auto;
+}
+
+table,
+tfoot,
+tr {
+  page-break-inside: auto;
+}

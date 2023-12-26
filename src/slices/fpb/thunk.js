@@ -1,6 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { addFpb as addFpbApi, getFpb as getFpbApi, getReferensiPart as getReferensiPartApi } from "../../helpers/backend_helper";
+import {
+  addFpb as addFpbApi,
+  addPq as addPqApi,
+  getFpb as getFpbApi,
+  getPq as getPqApi,
+  getReferensiPart as getReferensiPartApi,
+} from "../../helpers/backend_helper";
 
 export const getFpb = createAsyncThunk("fpb/getFpb", async () => {
   try {
@@ -35,6 +41,27 @@ export const addFpb = createAsyncThunk("fpb/addFpb", async (fpb) => {
 export const getReferensiPart = createAsyncThunk("fpb/getReferensiPart", async (data) => {
   try {
     const response = getReferensiPartApi(data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const addPq = createAsyncThunk("fpb/addPq", async (pq) => {
+  try {
+    const response = addPqApi(pq);
+    const data = await response;
+    toast.success("pq Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("pq Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getDetailPq = createAsyncThunk("fpb/getDetailPq", async (data) => {
+  try {
+    const response = getPqApi(data);
     return response;
   } catch (error) {
     return error;

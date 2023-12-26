@@ -24,6 +24,8 @@ import FinanceReducer from "./finance/reducer";
 import ReportReducer from "./report/reducer";
 // KTT
 import KttReducer from "./ktt/reducer";
+// MASTER
+import MasterReducer from "./master/reducer";
 // Dashboard Ecommerce
 import DashboardEcommerceReducer from "./dashboardEcommerce/reducer";
 
@@ -39,6 +41,7 @@ const rootReducer = combineReducers({
   Finance: FinanceReducer,
   Report: ReportReducer,
   Ktt: KttReducer,
+  Master: MasterReducer,
   Account: AccountReducer,
   ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,
