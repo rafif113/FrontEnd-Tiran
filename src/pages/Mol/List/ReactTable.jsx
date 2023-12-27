@@ -121,7 +121,7 @@ const PaginationTable = () => {
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
-          iscustomPageSize={true}
+          isCustomPageSize={true}
           isBordered={true}
           customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"

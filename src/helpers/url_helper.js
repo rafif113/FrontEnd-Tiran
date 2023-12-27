@@ -48,7 +48,8 @@ export const GET_VENDOR = "/vendor";
 export const ADD_DO = "/get/request/do";
 
 // PENAWARAN
-export const GET_PENAWARAN = "/get/penawaran/vendor";
+// '/get/fpb/pq
+export const GET_PENAWARAN = "/get/fpb/pq";
 export const POST_PENAWARAN = "/store/penawaran";
 export const TAMBAH_PENAWARAN = "/add/po/penawaran";
 export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";

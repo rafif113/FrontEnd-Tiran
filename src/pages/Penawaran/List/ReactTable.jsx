@@ -13,9 +13,7 @@ const PaginationTable = () => {
   const handleDetailsClick = (id) => {
     history(`/penawaran/detail?id=${id}`);
   };
-  const handleCetakClick = (id) => {
-    history(`/mol/cetak?id=${id}`);
-  };
+
   const columns = useMemo(
     () => [
       {
@@ -26,26 +24,26 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "No PO",
-        accessor: "penawaran_po.po.nomor_po",
+        Header: "No FPB",
+        accessor: "no_fpb",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "No PR",
-        accessor: "penawaran_po.po.nomor_pr",
+        Header: "PQ",
+        accessor: "pq_ke",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Special Instruction",
-        accessor: "penawaran_po.po.spesial_intruksi",
+        Header: "Total Part PQ",
+        accessor: "jumlah_part_pq",
         disableFilters: true,
         filterable: false,
       },
       {
         Header: "Status",
-        accessor: "keterangan_do",
+        accessor: "status",
         disableFilters: true,
         filterable: false,
       },
@@ -56,7 +54,7 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.penawaran_po.id)} className="btn btn-sm btn-light">
+              <button onClick={() => handleDetailsClick(cellProps.id_pq)} className="btn btn-sm btn-light">
                 Details
               </button>
             </>

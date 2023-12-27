@@ -28,7 +28,7 @@ const PenawaranSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getPenawaran.fulfilled, (state, action) => {
-      state.penawaran = action.payload.data;
+      state.penawaran = action.payload;
     });
 
     builder.addCase(getDetailPenawaran.fulfilled, (state, action) => {
