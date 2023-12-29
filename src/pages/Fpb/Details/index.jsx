@@ -62,42 +62,13 @@ const DetailFpb = () => {
     });
   }, []);
 
-  // const [prices, setPrices] = useState({});
   const [checkedRows, setCheckedRows] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
-
-  // const handlePriceChange = (e, rowId) => {
-  //   const { value } = e.target;
-  //   setPrices((prevPrices) => ({
-  //     ...prevPrices,
-  //     [rowId]: value,
-  //   }));
-
-  //   if (value) {
-  //     showCheckbox(rowId);
-  //   } else {
-  //     hideCheckbox(rowId);
-  //   }
-  // };
 
   const handleCheckboxChange = (e, rowId) => {
     const { checked } = e.target;
     toggleRow(rowId, checked);
   };
-
-  // const showCheckbox = (rowId) => {
-  //   setCheckedRows((prevCheckedRows) => ({
-  //     ...prevCheckedRows,
-  //     [rowId]: false,
-  //   }));
-  // };
-
-  // const hideCheckbox = (rowId) => {
-  //   setCheckedRows((prevCheckedRows) => {
-  //     const { [rowId]: deleted, ...newCheckedRows } = prevCheckedRows;
-  //     return newCheckedRows;
-  //   });
-  // };
 
   const toggleRow = (rowId, checked) => {
     setCheckedRows((prevCheckedRows) => ({
@@ -295,10 +266,10 @@ const DetailFpb = () => {
                       <Alert color="success">
                         {customActiveTab === "2"
                           ? "Kembali ke form part request."
-                          : "Request PQ sudah terbuat, klik bagian ini untuk melihat detail."}
+                          : "Request PQ sudah terbuat, klik button dibawah ini untuk melihat detail."}
                       </Alert>
-                      <span
-                        className="mb-3"
+                      <button
+                        className="btn btn-secondary mb-3"
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           const newTab = customActiveTab === "2" ? "1" : "2";
@@ -306,7 +277,7 @@ const DetailFpb = () => {
                         }}
                       >
                         {customActiveTab === "2" ? "Form Part Request" : "List PQ"}
-                      </span>
+                      </button>
                     </Col>
                   </Row>
                 )}

@@ -50,10 +50,12 @@ export const ADD_DO = "/get/request/do";
 // PENAWARAN
 // '/get/fpb/pq
 export const GET_PENAWARAN = "/get/fpb/pq";
+// export const POST_PRICE_PQ = "/store/pq/price";
 export const POST_PENAWARAN = "/store/penawaran";
 export const TAMBAH_PENAWARAN = "/add/po/penawaran";
 export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";
-export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
+// export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
+export const POST_PRICE_PENAWARAN = "/store/pq/price";
 
 // FINANCE
 export const GET_FINANCE_PO = "/get/finance/po/validate";
@@ -89,6 +91,10 @@ export const POST_EDIT_PROFILE = "/user";
 // MASTER DATA
 export const GET_MASTER_PART = "/get/master/part";
 export const GET_MASTER_ALAT = "/get/master/alatberat";
+
+// Deliver
+export const GET_VENDOR_KENDARI = "/get/delive/vendorkendari";
+export const POST_CEK_VENDOR_KENDARI = "/post/cek/vendorkendari";
 
 // Calendar
 export const GET_EVENTS = "/events";

@@ -13,6 +13,7 @@ const Navdata = () => {
   const [isBarang, setIsBarang] = useState(false);
   const [isMol, setIsMol] = useState(false);
   const [isFpb, setIsFpb] = useState(false);
+  const [isDeliver, setIsDeliver] = useState(false);
   const [isPo, setIsPo] = useState(false);
   const [isPenawaran, setIsPenawaran] = useState(false);
 
@@ -23,7 +24,7 @@ const Navdata = () => {
 
   const [isKtt, setIsKtt] = useState(false);
 
-  const [iscurrentState, setIscurrentState] = useState("Dashboard");
+  const [isCurrentState, setIsCurrentState] = useState("Dashboard");
 
   function updateIconSidebar(e) {
     if (e && e.target && e.target.getAttribute("subitems")) {
@@ -40,34 +41,37 @@ const Navdata = () => {
 
   useEffect(() => {
     document.body.classList.remove("twocolumn-panel");
-    if (iscurrentState !== "Dashboard") {
+    if (isCurrentState !== "Dashboard") {
       setIsDashboard(false);
     }
-    if (iscurrentState !== "Barang") {
+    if (isCurrentState !== "Barang") {
       setIsBarang(false);
     }
-    if (iscurrentState !== "Mol") {
+    if (isCurrentState !== "Mol") {
       setIsMol(false);
     }
-    if (iscurrentState !== "Fpb") {
+    if (isCurrentState !== "Fpb") {
       setIsFpb(false);
     }
-    if (iscurrentState !== "Po") {
+    if (isCurrentState !== "Deliver") {
+      setIsDeliver(false);
+    }
+    if (isCurrentState !== "Po") {
       setIsPo(false);
     }
-    if (iscurrentState !== "Penawaran") {
+    if (isCurrentState !== "Penawaran") {
       setIsPenawaran(false);
     }
-    if (iscurrentState !== "Finance") {
+    if (isCurrentState !== "Finance") {
       setIsFinance(false);
     }
-    if (iscurrentState !== "Report") {
+    if (isCurrentState !== "Report") {
       setIsReport(false);
     }
-    if (iscurrentState !== "Ktt") {
+    if (isCurrentState !== "Ktt") {
       setIsKtt(false);
     }
-  }, [history, iscurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance, isReport, isKtt]);
+  }, [history, isCurrentState, isDashboard, isBarang, isMol, isFpb, isPo, isPenawaran, isFinance, isReport, isKtt, isDeliver]);
 
   const userLogin = getLoggedinUser();
   const role = useSelector((state) => state.Login.role);
@@ -92,7 +96,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsDashboard(!isDashboard);
-        setIscurrentState("Dashboard");
+        setIsCurrentState("Dashboard");
         updateIconSidebar(e);
       },
       subItems: [
@@ -116,7 +120,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsBarang(!isBarang);
-        setIscurrentState("Barang");
+        setIsCurrentState("Barang");
         updateIconSidebar(e);
       },
       stateVariables: isBarang,
@@ -136,7 +140,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsMol(!isMol);
-        setIscurrentState("Mol");
+        setIsCurrentState("Mol");
         updateIconSidebar(e);
       },
       stateVariables: isMol,
@@ -155,12 +159,30 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsFpb(!isFpb);
-        setIscurrentState("Fpb");
+        setIsCurrentState("Fpb");
         updateIconSidebar(e);
       },
       stateVariables: isFpb,
 
       subItems: [{ id: "listfpb", label: "List FPB", link: "/fpb", parentId: "fpb" }],
+    },
+    {
+      id: "deliver",
+      label: "Deliver",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+      click: function (e) {
+        e.preventDefault();
+        setIsDeliver(!isDeliver);
+        setIsCurrentState("Deliver");
+        updateIconSidebar(e);
+      },
+      stateVariables: isDeliver,
+
+      subItems: [
+        { id: "vendorkendari", label: "Vendor - Kendari", link: "/deliver/vendor", parentId: "deliver" },
+        { id: "vendorsite", label: "Site - Kendari", link: "/deliver/site", parentId: "deliver" },
+      ],
     },
     {
       id: "po",
@@ -170,7 +192,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsPo(!isPo);
-        setIscurrentState("Po");
+        setIsCurrentState("Po");
         updateIconSidebar(e);
       },
       stateVariables: isPo,
@@ -188,7 +210,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsKtt(!isKtt);
-        setIscurrentState("Ktt");
+        setIsCurrentState("Ktt");
         updateIconSidebar(e);
       },
       stateVariables: isKtt,
@@ -206,7 +228,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsPenawaran(!isPenawaran);
-        setIscurrentState("Penawaran");
+        setIsCurrentState("Penawaran");
         updateIconSidebar(e);
       },
       stateVariables: isPenawaran,
@@ -221,7 +243,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsFinance(!isFinance);
-        setIscurrentState("Finance");
+        setIsCurrentState("Finance");
         updateIconSidebar(e);
       },
       stateVariables: isFinance,
@@ -240,9 +262,9 @@ const Navdata = () => {
           parentId: "finance",
           stateVariables: isFinanceMonitoring,
           childItems: [
-            { id: 1, label: "List PO", link: "/finance/monitoring/po", parentId: "monitoringFinance" },
-            { id: 1, label: "Invoice PO", link: "/finance/monitoring/invoice", parentId: "monitoringFinance" },
             { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
+            { id: 1, label: "Procurement List", link: "/finance/monitoring/procurement-list", parentId: "monitoringFinance" },
+            { id: 3, label: "Payment Request", link: "/finance/monitoring/payment-request", parentId: "monitoringFinance" },
           ],
         },
       ],
@@ -255,7 +277,7 @@ const Navdata = () => {
       click: function (e) {
         e.preventDefault();
         setIsReport(!isReport);
-        setIscurrentState("Report");
+        setIsCurrentState("Report");
         updateIconSidebar(e);
       },
       stateVariables: isReport,

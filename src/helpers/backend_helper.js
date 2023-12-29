@@ -135,6 +135,10 @@ export const getPoLogistik = (data) => api.create(url.GET_PO_LOGISTIK, data);
 export const getMasterPart = () => api.get(url.GET_MASTER_PART);
 export const getMasterAlat = () => api.get(url.GET_MASTER_ALAT);
 
+// DELIVER
+export const getVendorKendari = (data) => api.create(url.GET_VENDOR_KENDARI, data);
+export const postCekVendorKendari = (data) => api.create(url.POST_CEK_VENDOR_KENDARI, data);
+
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);
 

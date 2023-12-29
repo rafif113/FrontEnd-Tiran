@@ -1,42 +1,37 @@
-import React, { useEffect, useMemo, useState } from "react";
-import TableContainer from "../../../../Components/Common/TableContainerReactTable";
+import React, { useEffect, useMemo } from "react";
+import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
-import { getPo as onGetPo, getFinancePo as onGetInvoicePo } from "../../../../slices/thunks";
-import { clearDetailPo, setLoading } from "../../../../slices/finance/reducer";
+import { getVendorKendari as onGetVendorKendari } from "../../../slices/thunks";
+import { setLoadingVendorKendari } from "../../../slices/deliver/reducer";
 
-const InvoicePoFinanceTable = () => {
+const VendorKendariTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const handleDetailClick = (id, kelengkapan) => {
-    // if (kelengkapan.flag == "tidak komplit") {
-    // const keteranganText = kelengkapan.keterangan.join("\n");
-    // alert(keteranganText);
-    // } else {
-    history(`/finance/monitoring/procurement-list/detail?id=${id}`);
-    // }
+  const handleDetailClick = (id) => {
+    console.log(id);
+    history(`/deliver/vendor/detail?id=${id}`);
   };
 
-  const InvoicePoData = createSelector(
-    (state) => state.Finance.invoicePo,
-    (invoicePo) => invoicePo
+  const vendorKendariData = createSelector(
+    (state) => state.Deliver.vendorKendari,
+    (vendorKendari) => vendorKendari
   );
-  const invoicePo = useSelector(InvoicePoData);
-  const loading = useSelector((state) => state.Finance.loading);
+  const vendorKendari = useSelector(vendorKendariData);
+  const loading = useSelector((state) => state.Deliver.loadingVendorKendari);
 
   useEffect(() => {
-    dispatch(setLoading(true));
-    dispatch(onGetInvoicePo()).then(() => {
-      dispatch(setLoading(false));
+    dispatch(setLoadingVendorKendari(true));
+    dispatch(onGetVendorKendari()).then(() => {
+      dispatch(setLoadingVendorKendari(false));
     });
   }, []);
 
-  console.log(invoicePo);
+  console.log(vendorKendari);
 
   const columns = useMemo(
     () => [
@@ -48,26 +43,26 @@ const InvoicePoFinanceTable = () => {
         filterable: false,
       },
       {
-        Header: "Nomor PO",
-        accessor: "po.nomor_po",
+        Header: "NO FPB",
+        accessor: "no_fpb",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Nomor PR ",
-        accessor: "po.nomor_pr",
+        Header: "PQ Ke",
+        accessor: "pq_ke",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Special Instruction",
-        accessor: "po.spesial_intruksi",
+        Header: "Status",
+        accessor: "status",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Penawaran",
-        accessor: "keterangan",
+        Header: "Total",
+        accessor: "total",
         disableFilters: true,
         filterable: false,
       },
@@ -78,10 +73,7 @@ const InvoicePoFinanceTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button
-                onClick={() => handleDetailClick(cellProps.penawaran_vendor.id, cellProps.kelengkapan_dok)}
-                className="btn btn-sm btn-light"
-              >
+              <button onClick={() => handleDetailClick(cellProps.id_pq)} className="btn btn-sm btn-light">
                 Detail
               </button>
             </>
@@ -99,7 +91,7 @@ const InvoicePoFinanceTable = () => {
       {!loading ? (
         <TableContainer
           columns={columns || []}
-          data={invoicePo || []}
+          data={vendorKendari || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -109,7 +101,7 @@ const InvoicePoFinanceTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari PO..."
+          SearchPlaceholder="Cari Barang Masuk..."
         />
       ) : (
         <div className="text-center">
@@ -120,4 +112,4 @@ const InvoicePoFinanceTable = () => {
   );
 };
 
-export { InvoicePoFinanceTable };
+export { VendorKendariTable };

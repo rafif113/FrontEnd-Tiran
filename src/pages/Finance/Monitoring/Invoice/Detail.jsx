@@ -14,7 +14,7 @@ import { formatRupiah } from "../../../../utils/utils";
 import { getDetailFinancePo as onGetDetailFinancePo } from "../../../../slices/thunks";
 import { clearDetailInvoicePo, setLoading } from "../../../../slices/finance/reducer";
 const DetailInvoicePo = () => {
-  document.title = "Detail Invoice PO | PT Tiran";
+  document.title = "Detail Procurement List | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
 
@@ -63,7 +63,7 @@ const DetailInvoicePo = () => {
                       </div>
                     ))}
                   </Alert>
-                  Kembali Ke Halaman <Link to="/finance/monitoring/invoice">Invoice Po</Link>
+                  Kembali Ke Halaman <Link to="/finance/monitoring/invoice">Procurement List</Link>
                 </Col>
               </Row>
             ) : (

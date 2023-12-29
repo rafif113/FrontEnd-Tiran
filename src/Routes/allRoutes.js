@@ -66,6 +66,10 @@ import KttPoDetail from "../pages/Ktt/Po/Detail";
 import KttPoRutin from "../pages/Ktt/Rutin/List";
 import KttPoDetailRutin from "../pages/Ktt/Rutin/Detail";
 
+// KTT
+import VendorKendari from "../pages/Deliver/ListVendorKendari";
+import DetailVendorKendari from "../pages/Deliver/Details";
+
 const authProtectedRoutes = [
   // User Profile
   { path: "/profile", component: <UserProfile /> },
@@ -106,8 +110,8 @@ const authProtectedRoutes = [
   // Finance
   { path: "/finance/piutang", component: <FinancePiutang /> },
   { path: "/finance/monitoring/po", component: <FinanceMonitoringPo /> },
-  { path: "/finance/monitoring/invoice", component: <FinanceMonitoringInvoice /> },
-  { path: "/finance/monitoring/invoice/detail", component: <FinanceMonitoringDetailInvoice /> },
+  { path: "/finance/monitoring/procurement-list", component: <FinanceMonitoringInvoice /> },
+  { path: "/finance/monitoring/procurement-list/detail", component: <FinanceMonitoringDetailInvoice /> },
   { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
   { path: "/finance/monitoring/tongkang/detail", component: <FinanceMonitoringDetailTongkang /> },
   // Report
@@ -123,6 +127,10 @@ const authProtectedRoutes = [
   { path: "/po-ktt/detail", component: <KttPoDetail /> },
   { path: "/po-ktt-rutin", component: <KttPoRutin /> },
   { path: "/po-ktt-rutin/detail", component: <KttPoDetailRutin /> },
+
+  // DELIVER
+  { path: "/deliver/vendor", component: <VendorKendari /> },
+  { path: "/deliver/vendor/detail", component: <DetailVendorKendari /> },
 
   {
     path: "/",
