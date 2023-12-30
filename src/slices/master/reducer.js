@@ -3,13 +3,18 @@ import { getMasterAlat, getMasterPart } from "./thunk";
 export const initialState = {
   alat: [],
   part: [],
+  loadingAlat: true,
   error: {},
 };
 
 const MasterSlice = createSlice({
   name: "MasterSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setLoadingALat: (state, action) => {
+      state.loadingAlat = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getMasterAlat.fulfilled, (state, action) => {
       state.alat = action.payload;
@@ -19,6 +24,6 @@ const MasterSlice = createSlice({
     });
   },
 });
-// export const { setLoading, setLoadingDetail, clearDetailKttPo } = MasterSlice.actions;
+export const { setLoadingALat } = MasterSlice.actions;
 
 export default MasterSlice.reducer;

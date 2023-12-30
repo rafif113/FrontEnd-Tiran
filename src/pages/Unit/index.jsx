@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
-import { PaginationTable, PiutangFinanceTable } from "./ReactTable";
+import { UnitTable } from "./ReactTable";
 
 const ReactTable = () => {
   document.title = "List Unit | PT Tiran";
@@ -14,7 +14,9 @@ const ReactTable = () => {
                 <CardHeader className="d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">List Unit</h5>
                 </CardHeader>
-                <CardBody>{/* <PiutangFinanceTable /> */}</CardBody>
+                <CardBody>
+                  <UnitTable />
+                </CardBody>
               </Card>
             </Col>
           </Row>

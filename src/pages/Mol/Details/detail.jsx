@@ -73,6 +73,7 @@ const DetailMol = () => {
   const componentGroup = useSelector((state) => state.Mol.componentGroup);
   const costCode = useSelector((state) => state.Mol.costCode);
   const materialType = useSelector((state) => state.Mol.materialType);
+  const descArray = ["Urgent", "Sangat Urgent", "Biasa"];
 
   //   Data detail Mol
   const selectDetailMolData = createSelector(
@@ -576,6 +577,19 @@ const DetailMol = () => {
                             Material Type
                           </NavLink>
                         </NavItem>
+                        <NavItem>
+                          <NavLink
+                            style={{ cursor: "pointer" }}
+                            className={classnames({
+                              active: customActiveTab === "5",
+                            })}
+                            onClick={() => {
+                              toggleCustom("5");
+                            }}
+                          >
+                            Description
+                          </NavLink>
+                        </NavItem>
                       </Nav>
                     </CardHeader>
 
@@ -685,14 +699,41 @@ const DetailMol = () => {
                             })}
                           </Row>
                         </TabPane>
+
+                        {/* Tab Pane Description */}
+                        <TabPane id="material-type" tabId="5">
+                          <Row>
+                            {descArray.map((description, index) => (
+                              <Col lg={4} md={4} key={index}>
+                                <div className="mb-3">
+                                  <div className="form-check mb-2">
+                                    <Input
+                                      className="form-check-input"
+                                      type="radio"
+                                      name="keterangan"
+                                      value={description}
+                                      id={`keterangan_${index}`}
+                                      defaultChecked={description === detailMol.mol.keterangan}
+                                      disabled
+                                    />
+                                    {console.log(detailMol.keterangan)}
+                                    <Label className="form-check-label" for={`keterangan_${index}`}>
+                                      {description}
+                                    </Label>
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                          </Row>
+                        </TabPane>
                       </TabContent>
                     </CardBody>
                   </Card>
 
                   <div className="text-end mb-3">
-                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
+                    {/* <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
                       Pengeluaran
-                    </button>
+                    </button> */}
                     <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
                       Create FPB
                     </button>
