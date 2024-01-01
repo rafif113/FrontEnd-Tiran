@@ -115,7 +115,7 @@ const DetailMol = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {},
     validationSchema: Yup.object({}),
     onSubmit: async () => {
@@ -731,9 +731,9 @@ const DetailMol = () => {
                   </Card>
 
                   <div className="text-end mb-3">
-                    {/* <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
+                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
                       Pengeluaran
-                    </button> */}
+                    </button>
                     <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
                       Create FPB
                     </button>

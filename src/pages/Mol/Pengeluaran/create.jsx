@@ -25,7 +25,7 @@ const CreatePengeluaran = () => {
 
   // handle form input
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       mol_no: "",
       hm: "",

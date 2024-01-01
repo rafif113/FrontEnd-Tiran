@@ -37,7 +37,7 @@ const CreateFpb = () => {
   const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
   // handle form input
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       site: "",
       // nomor: "",
@@ -58,7 +58,7 @@ const CreateFpb = () => {
       tujuan: Yup.string().required("Please Enter a tujuan"),
       note: Yup.string().required("Please Enter a note"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newFpb = {
         site: values.site,
         // nomor: values.nomor,
@@ -71,7 +71,7 @@ const CreateFpb = () => {
         id_mol: selectedPartRequest[0].id_mol,
         id_part_request: selectedPartRequestIds,
       };
-      dispatch(onAddFpb(newFpb));
+      await dispatch(onAddFpb(newFpb));
       history("/fpb");
       validation.resetForm();
     },
@@ -369,7 +369,7 @@ const CreateFpb = () => {
               </Card>
 
               <div className="text-end mb-3">
-                <button type="submit" className="btn btn-success w-sm">
+                <button type="submit" className="btn btn-primary w-sm">
                   Submit
                 </button>
               </div>

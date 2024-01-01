@@ -47,7 +47,7 @@ const Login = (props) => {
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+    // enableReinitialize: true,
 
     initialValues: {
       email: userLogin.email || "dev@dev.com" || "",

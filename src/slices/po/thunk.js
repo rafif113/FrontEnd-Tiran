@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { addPo as addPoApi, getPo as getPoApi, getPoLogistik as getPoLogistikApi } from "../../helpers/backend_helper";
+import {
+  addPo as addPoApi,
+  getPo as getPoApi,
+  getPoLogistik as getPoLogistikApi,
+  getProcurementList as getProcurementListApi,
+} from "../../helpers/backend_helper";
 
 export const getPo = createAsyncThunk("po/getPo", async () => {
   try {
@@ -44,6 +49,24 @@ export const getPoLogistik = createAsyncThunk("po/getPoLogistik", async () => {
 export const getDetailPoLogistik = createAsyncThunk("po/getDetailPoLogistik", async (data) => {
   try {
     const response = getPoLogistikApi(data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getProcurementList = createAsyncThunk("po/getProcurementList", async () => {
+  try {
+    const response = getProcurementListApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailProcurementList = createAsyncThunk("po/getDetailProcurementList", async (data) => {
+  try {
+    const response = getProcurementListApi(data);
     return response;
   } catch (error) {
     return error;

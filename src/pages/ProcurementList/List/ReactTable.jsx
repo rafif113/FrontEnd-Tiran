@@ -1,29 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getPoLogistik as onGetPoLogistik } from "../../../slices/thunks";
-import { setLoadingPoLogistik } from "../../../slices/po/reducer";
+import { getProcurementList as onGetProcurementList } from "../../../slices/thunks";
+import { setLoadingProcurementList } from "../../../slices/po/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
+import { formatRupiah } from "../../../utils/utils";
 
 const PaginationTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const handleCetakClick = (id) => {
-    history(`/po/cetak?id=${id}`);
-  };
-
-  const handlePenawaranClick = (id, keterangan) => {
-    if (keterangan == "selesai") {
-      history(`/penawaran/pemenang?id=${id}`);
-    } else if (keterangan == "detail") {
-      history(`/po/detail?id=${id}`);
-    } else {
-      history(`/penawaran/create?id=${id}`);
-    }
-  };
+  // const handlePenawaranClick = (id, keterangan) => {
+  //   if (keterangan == "selesai") {
+  //     history(`/penawaran/pemenang?id=${id}`);
+  //   } else if (keterangan == "detail") {
+  //     history(`/po/detail?id=${id}`);
+  //   } else {
+  //     history(`/penawaran/create?id=${id}`);
+  //   }
+  // };
 
   const columns = useMemo(
     () => [
@@ -37,25 +34,31 @@ const PaginationTable = () => {
 
       {
         Header: "Nomor PO",
-        accessor: "po.nomor_po",
+        accessor: "no_po",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Nomor PR ",
-        accessor: "po.nomor_pr",
+        Header: "Nomor PR",
+        accessor: "no_pr",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Special Instruction",
-        accessor: "po.spesial_intruksi",
+        Header: "Nama Vendor",
+        accessor: "nama_vendor",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Penawaran",
-        accessor: "keterangan",
+        Header: "Nominal",
+        accessor: (cellProps) => {
+          return formatRupiah(cellProps.nominal);
+        },
+      },
+      {
+        Header: "Description",
+        accessor: "desc",
         disableFilters: true,
         filterable: false,
       },
@@ -90,17 +93,17 @@ const PaginationTable = () => {
 
   // -------------------------------------------
 
-  const SelectPoLogistik = createSelector(
-    (state) => state.Po.poLogistik,
-    (poLogistik) => poLogistik
+  const SelectProcurementList = createSelector(
+    (state) => state.Po.procurementList,
+    (procurementList) => procurementList
   );
-  const poLogistik = useSelector(SelectPoLogistik);
-  const loading = useSelector((state) => state.Po.loadingPoLogistik);
+  const procurementList = useSelector(SelectProcurementList);
+  const loading = useSelector((state) => state.Po.loadingProcurementList);
 
   useEffect(() => {
-    dispatch(setLoadingPoLogistik(true));
-    dispatch(onGetPoLogistik()).then(() => {
-      dispatch(setLoadingPoLogistik(false));
+    dispatch(setLoadingProcurementList(true));
+    dispatch(onGetProcurementList()).then(() => {
+      dispatch(setLoadingProcurementList(false));
     });
   }, []);
 
@@ -111,7 +114,7 @@ const PaginationTable = () => {
       {!loading ? (
         <TableContainer
           columns={columns || []}
-          data={poLogistik || []}
+          data={procurementList || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -121,7 +124,7 @@ const PaginationTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari PO..."
+          SearchPlaceholder="Cari Procurement List..."
         />
       ) : (
         <div className="text-center">

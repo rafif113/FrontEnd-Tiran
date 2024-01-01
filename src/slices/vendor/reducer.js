@@ -23,8 +23,10 @@ const VendorSlice = createSlice({
     builder.addCase(getVendor.fulfilled, (state, action) => {
       return {
         ...state,
-        vendor: action.payload.map((item) => item.user),
-        loading: false, // Set loading to false
+        vendor: action.payload.message.map((item) => ({
+          id: item.id,
+          vendor: item.vendor,
+        })),
       };
     });
 

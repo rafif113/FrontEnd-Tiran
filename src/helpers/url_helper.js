@@ -35,6 +35,7 @@ export const GET_PQ = "/get/detail/pq";
 // PO
 export const GET_PO = "/get/po";
 export const ADD_PO = "/store/po";
+export const GET_PROCUREMENT_LIST = "/get/procurementlist";
 export const REFERENSI_PART = "/referensi/part";
 
 export const GET_MATERIAL_TYPE = "/get/master/material_type";
@@ -44,7 +45,7 @@ export const GET_COST_CODE = "/get/master/cost_code";
 export const ADD_COST_CODE = "/store/master/cost_code";
 
 // VENDOR
-export const GET_VENDOR = "/vendor";
+export const GET_VENDOR = "/get/list/vendor";
 export const ADD_DO = "/get/request/do";
 
 // PENAWARAN

@@ -30,7 +30,7 @@ const DownPaymentTab = ({ detailTongkang }) => {
   }
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: initialValues,
     validationSchema: Yup.object({
       dp: Yup.string().required("Please Enter a DP"),

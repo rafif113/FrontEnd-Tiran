@@ -113,6 +113,8 @@ const TableContainer = ({
     setPageSize(Number(event.target.value));
   };
 
+  const maxDisplayedPages = 5; // Set the maximum number of pages to display in pagination
+
   return (
     <Fragment>
       {(isGlobalSearch || isGlobalFilter) && (
@@ -141,7 +143,7 @@ const TableContainer = ({
         </Row>
       )}
 
-      <div className={divClass}>
+      <div className={`table-responsive ${tableClass}`}>
         <Table hover {...getTableProps()} className={tableClass}>
           <thead className={theadClass}>
             {headerGroups.map((headerGroup) => (
@@ -193,7 +195,7 @@ const TableContainer = ({
                   Previous
                 </Link>
               </li>
-              {pageOptions.map((item, key) => (
+              {pageOptions.slice(pageIndex, pageIndex + maxDisplayedPages).map((item, key) => (
                 <React.Fragment key={key}>
                   <li className="page-item">
                     <Link to="#" className={pageIndex === item ? "page-link active" : "page-link"} onClick={() => gotoPage(item)}>

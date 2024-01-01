@@ -36,7 +36,7 @@ const DetailKttPoRutin = () => {
   }, []);
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     onSubmit: (values) => {
       // dispatch(postKttApprove({ id_penawaran_vendor: idPenawaranVendor }));
       // history("/po");

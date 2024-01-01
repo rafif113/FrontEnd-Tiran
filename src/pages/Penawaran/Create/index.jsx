@@ -81,7 +81,7 @@ const CreatePenawaran = () => {
   const [submitButtonName, setSubmitButtonName] = useState(null);
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       type: "",
       vendorSelected: [],

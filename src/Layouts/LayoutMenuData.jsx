@@ -200,6 +200,7 @@ const Navdata = () => {
       subItems: [
         { id: "listpo", label: "List PO", link: "/po", parentId: "po" },
         { id: "listpologistik", label: "List PO Logistik", link: "/po-logistik", parentId: "po" },
+        { id: "procurementlist", label: "Procurement List", link: "/procurement-list", parentId: "po" },
       ],
     },
     {
@@ -263,8 +264,7 @@ const Navdata = () => {
           stateVariables: isFinanceMonitoring,
           childItems: [
             { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
-            { id: 1, label: "Procurement List", link: "/finance/monitoring/procurement-list", parentId: "monitoringFinance" },
-            { id: 3, label: "Payment Request", link: "/finance/monitoring/payment-request", parentId: "monitoringFinance" },
+            { id: 1, label: "Payment Request", link: "/finance/monitoring/payment-request", parentId: "monitoringFinance" },
           ],
         },
       ],

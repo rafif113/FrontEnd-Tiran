@@ -18,7 +18,7 @@ const InvoicePoFinanceTable = () => {
     // const keteranganText = kelengkapan.keterangan.join("\n");
     // alert(keteranganText);
     // } else {
-    history(`/finance/monitoring/procurement-list/detail?id=${id}`);
+    history(`/finance/monitoring/payment-request/detail?id=${id}`);
     // }
   };
 

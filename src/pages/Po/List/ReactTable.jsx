@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
 import { getPo as onGetPo } from "../../../slices/thunks";
+import { setLoading } from "../../../slices/po/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 const PaginationTable = () => {
@@ -54,7 +54,7 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "Penawaran",
+        Header: "Status",
         accessor: "keterangan",
         disableFilters: true,
         filterable: false,
@@ -66,20 +66,12 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button
-                onClick={() => handlePenawaranClick(cellProps.po.id, cellProps.keterangan)}
-                className="btn btn-sm btn-light"
-              >
-                {cellProps.keterangan == "selesai" ? "Invoice" : "Penawaran"}
-              </button>
               <button onClick={() => handleCetakClick(cellProps.po.id)} className="btn btn-sm btn-light">
                 Cetak
               </button>
-              {cellProps.keterangan == "selesai" ? (
-                <button onClick={() => handlePenawaranClick(cellProps.po.id, "detail")} className="btn btn-sm btn-light">
-                  Detail
-                </button>
-              ) : null}
+              <button onClick={() => handlePenawaranClick(cellProps.po.id, "detail")} className="btn btn-sm btn-light">
+                Detail
+              </button>
             </>
           );
         },
@@ -89,31 +81,25 @@ const PaginationTable = () => {
   );
 
   // -------------------------------------------
-  const [display, setDisplay] = useState(false);
-
   const SelectPoData = createSelector(
     (state) => state.Po.po,
     (po) => po
   );
   const po = useSelector(SelectPoData);
+  const loading = useSelector((state) => state.Po.loading);
 
   useEffect(() => {
-    if (po && !po.length) {
-      dispatch(onGetPo());
-    }
-  }, [dispatch, po]);
-
-  useEffect(() => {
-    if (po && !isEmpty(po)) {
-      setDisplay(true);
-    }
-  }, [po]);
+    dispatch(setLoading(true));
+    dispatch(onGetPo()).then(() => {
+      dispatch(setLoading(false));
+    });
+  }, []);
 
   // ----------------------------------------------
 
   return (
     <React.Fragment>
-      {display ? (
+      {!loading ? (
         <TableContainer
           columns={columns || []}
           data={po || []}

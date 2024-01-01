@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
 import { getPengeluaran as onGetPengeluaran } from "../../../slices/thunks";
+import { setLoadingPengeluaran } from "../../../slices/mol/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 const PengeluaranTable = () => {
@@ -73,32 +73,25 @@ const PengeluaranTable = () => {
     (pengeluaran) => pengeluaran
   );
   const pengeluaran = useSelector(selectPengeluaranData);
+  const loading = useSelector((state) => state.Mol.loadingPengeluaran);
 
   useEffect(() => {
-    if (pengeluaran && !pengeluaran.length) {
-      dispatch(onGetPengeluaran());
-    }
-  }, [dispatch, pengeluaran]);
-  console.log(pengeluaran);
-
-  const [display, setDisplay] = useState(false);
-
-  useEffect(() => {
-    if (pengeluaran && !isEmpty(pengeluaran)) {
-      setDisplay(true);
-    }
-  }, [pengeluaran]);
+    dispatch(setLoadingPengeluaran(true));
+    dispatch(onGetPengeluaran()).then(() => {
+      dispatch(setLoadingPengeluaran(false));
+    });
+  }, []);
 
   return (
     <React.Fragment>
-      {display ? (
+      {!loading ? (
         <TableContainer
           columns={columns || []}
           data={pengeluaran || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
-          iscustomPageSize={true}
+          isCustomPageSize={true}
           isBordered={true}
           customPageSize={5}
           className="custom-header-css table align-middle table-nowrap"

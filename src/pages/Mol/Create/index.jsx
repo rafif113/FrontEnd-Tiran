@@ -147,7 +147,8 @@ const Mol = () => {
   }
   // handle form input
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
+    // validateOnChange: false,
     initialValues: {
       // no_document: "",
       // mol_no: "",
@@ -172,25 +173,25 @@ const Mol = () => {
       keterangan: "",
     },
     validationSchema: Yup.object({
-      unit_name: Yup.string().required("Please Enter a Unit Name"),
-      engine_model: Yup.string().required("Please Enter a Engine Model"),
+      // unit_name: Yup.string().required("Please Enter a Unit Name"),
+      // engine_model: Yup.string().required("Please Enter a Engine Model"),
       unit_code: Yup.string().required("Please Enter a Unit Code"),
-      engine_serial: Yup.string().required("Please Enter a Engine Serial"),
-      hm_km: Yup.string().required("Please Enter a HM/KM"),
-      engine_number: Yup.string().required("Please Enter a Engine Number"),
-      time: Yup.string().required("Please Enter a Time"),
-      date: Yup.string().required("Please Enter a Date"),
-      transmission_model: Yup.string().required("Please Enter a Transmission Model"),
-      transmission_sn: Yup.string().required("Please Enter a Transmission S/N"),
-      keterangan: Yup.string().required("Please Enter a Keterangan"),
-      location: Yup.string().required("Please Enter a Location"),
-      machine_serial: Yup.string().required("Please Enter a Machine Serial"),
-      workshop_req: Yup.string().required("Please Enter a Workshop Req"),
-      machine_type: Yup.string().required("Please Enter a Machine Type"),
-      componentGroupSelected: Yup.array().min(1, "Please select at least one item from Component Group").nullable(),
-      costCodeSelected: Yup.array().min(1, "Please select at least one item from Cost Code").nullable(),
-      materialTypeSelected: Yup.array().min(1, "Please select at least one item from Material Type").nullable(),
-      orderForSelected: Yup.array().min(1, "Please select at least one item from Order For").nullable(),
+      // engine_serial: Yup.string().required("Please Enter a Engine Serial"),
+      // hm_km: Yup.string().required("Please Enter a HM/KM"),
+      // engine_number: Yup.string().required("Please Enter a Engine Number"),
+      // time: Yup.string().required("Please Enter a Time"),
+      // date: Yup.string().required("Please Enter a Date"),
+      // transmission_model: Yup.string().required("Please Enter a Transmission Model"),
+      // transmission_sn: Yup.string().required("Please Enter a Transmission S/N"),
+      // keterangan: Yup.string().required("Please Enter a Keterangan"),
+      // location: Yup.string().required("Please Enter a Location"),
+      // machine_serial: Yup.string().required("Please Enter a Machine Serial"),
+      // workshop_req: Yup.string().required("Please Enter a Workshop Req"),
+      // machine_type: Yup.string().required("Please Enter a Machine Type"),
+      // componentGroupSelected: Yup.array().min(1, "Please select at least one item from Component Group").nullable(),
+      // costCodeSelected: Yup.array().min(1, "Please select at least one item from Cost Code").nullable(),
+      // materialTypeSelected: Yup.array().min(1, "Please select at least one item from Material Type").nullable(),
+      // orderForSelected: Yup.array().min(1, "Please select at least one item from Order For").nullable(),
       // rows: Yup.array().of(
       //   Yup.object().shape({
       //     part_number: Yup.string().required("Please Enter a Part Number"),
@@ -204,7 +205,7 @@ const Mol = () => {
       //   })
       // ),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newMol = {
         // no_document: values.no_document,
         // mol_no: values.mol_no,
@@ -230,10 +231,9 @@ const Mol = () => {
         // id_fpb: 0,
         keterangan: values.keterangan,
       };
-      console.log(newMol);
-      dispatch(onAddMol(newMol));
-      history("/mol");
+      await dispatch(onAddMol(newMol));
       validation.resetForm();
+      history("/mol");
     },
   });
 
@@ -309,12 +309,12 @@ const Mol = () => {
                           }))}
                           onBlur={validation.handleBlur}
                           onChange={(selectedOption) => {
-                            console.log(selectedOption.value);
                             validation.setFieldValue("unit_code", selectedOption.label);
                             const selectedDetail = masterAlat.find((detail) => detail.id === selectedOption.value);
                             if (selectedDetail) {
                               validation.setFieldValue("unit_name", selectedDetail.type);
                               validation.setFieldValue("engine_model", selectedDetail.model);
+                              validation.setFieldValue("engine_number", selectedDetail.serial_number);
                               validation.setFieldValue("transmission_model", selectedDetail.brand);
                               validation.setFieldValue("location", selectedDetail.location);
                             }

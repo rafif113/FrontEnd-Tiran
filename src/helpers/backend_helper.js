@@ -95,9 +95,10 @@ export const getPq = (data) => api.create(url.GET_PQ, data);
 export const getPo = (data) => api.create(url.GET_PO, data);
 export const addPo = (data) => api.create(url.ADD_PO, data);
 export const getReferensiPart = (data) => api.create(url.REFERENSI_PART, data);
+export const getProcurementList = (data) => api.create(url.GET_PROCUREMENT_LIST, data);
 
 // VENDOR
-export const getVendor = (data) => api.create(url.GET_VENDOR, data);
+export const getVendor = () => api.get(url.GET_VENDOR);
 // PENAWARAN
 export const getPenawaran = (data) => api.create(url.GET_PENAWARAN, data);
 export const addPenawaran = (data) => api.create(url.POST_PENAWARAN, data);

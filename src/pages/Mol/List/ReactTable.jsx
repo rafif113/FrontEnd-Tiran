@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
 import { getMol as onGetMol } from "../../../slices/thunks";
+import { setLoadingList } from "../../../slices/mol/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 const PaginationTable = () => {
@@ -97,24 +97,18 @@ const PaginationTable = () => {
     (mol) => mol
   );
   const mol = useSelector(selectMolData);
+  const loading = useSelector((state) => state.Mol.loadingList);
 
   useEffect(() => {
-    if (mol && !mol.length) {
-      dispatch(onGetMol());
-    }
-  }, [dispatch, mol]);
-
-  const [display, setDisplay] = useState(false);
-
-  useEffect(() => {
-    if (mol && !isEmpty(mol)) {
-      setDisplay(true);
-    }
-  }, [mol]);
+    dispatch(setLoadingList(true));
+    dispatch(onGetMol()).then(() => {
+      dispatch(setLoadingList(false));
+    });
+  }, []);
 
   return (
     <React.Fragment>
-      {display ? (
+      {!loading ? (
         <TableContainer
           columns={columns || []}
           data={mol || []}

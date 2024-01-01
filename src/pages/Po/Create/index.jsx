@@ -22,7 +22,7 @@ const CreateFpb = () => {
   const selectedFpbData = selectedFpbList.map((item) => ({ id: item.id, price: item.price }));
   // handle form input
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       nomor_po: "",
       nomor_pr: "",

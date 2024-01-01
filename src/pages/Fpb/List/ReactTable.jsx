@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
 import { getBarang as onGetBarang, getFpb as onGetFpb } from "../../../slices/thunks";
+import { setLoading } from "../../../slices/fpb/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { isEmpty } from "lodash";
@@ -82,26 +83,20 @@ const PaginationTable = () => {
     (fpb) => fpb
   );
   const fpb = useSelector(SelectFpbData);
+  const loading = useSelector((state) => state.Fpb.loading);
 
   useEffect(() => {
-    if (fpb && !fpb.length) {
-      dispatch(onGetFpb());
-    }
-  }, [dispatch, fpb]);
-
-  console.log(fpb);
-
-  useEffect(() => {
-    if (fpb && !isEmpty(fpb)) {
-      setDisplay(true);
-    }
-  }, [fpb]);
+    dispatch(setLoading(true));
+    dispatch(onGetFpb()).then(() => {
+      dispatch(setLoading(false));
+    });
+  }, []);
 
   // ----------------------------------------------
 
   return (
     <React.Fragment>
-      {display ? (
+      {!loading ? (
         <TableContainer
           columns={columns || []}
           data={fpb || []}

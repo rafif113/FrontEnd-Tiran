@@ -11,7 +11,7 @@ const ModalFileUpload = ({ isOpen, toggle, id }) => {
   const history = useNavigate();
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       file: null,
       keterangan: "",

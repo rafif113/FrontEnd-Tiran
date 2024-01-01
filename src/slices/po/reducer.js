@@ -1,13 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addPo, getPo, getDetailPo, getPoLogistik, getDetailPoLogistik } from "./thunk";
+import {
+  addPo,
+  getPo,
+  getDetailPo,
+  getPoLogistik,
+  getDetailPoLogistik,
+  getProcurementList,
+  getDetailProcurementList,
+} from "./thunk";
 export const initialState = {
   po: [],
   detailPo: [],
   poLogistik: [],
   detailPoLogistik: [],
+  procurementList: [],
+  detailProcurementList: [],
   loading: true,
   loadingDetail: true,
+  loadingPoLogistik: true,
   loadingDetailLogistik: true,
+  loadingProcurementList: true,
+  loadingDetailProcurementList: true,
   selectedPoList: [],
   error: {},
 };
@@ -37,9 +50,20 @@ const PoSlice = createSlice({
     clearSelectedPoList: (state) => {
       state.selectedPoList = null;
     },
+    setLoadingPoLogistik: (state, action) => {
+      state.loadingPoLogistik = action.payload;
+    },
+    setLoadingProcurementList: (state, action) => {
+      state.loadingProcurementList = action.payload;
+    },
+    setLoadingDetailProcurementList: (state, action) => {
+      state.loadingDetailProcurementList = action.payload;
+    },
+    clearDetailProcurementList: (state) => {
+      state.detailProcurementList = null;
+    },
   },
   extraReducers: (builder) => {
-    // Start po reducer
     builder.addCase(getPo.fulfilled, (state, action) => {
       state.po = action.payload.data;
     });
@@ -58,6 +82,14 @@ const PoSlice = createSlice({
     builder.addCase(getDetailPoLogistik.fulfilled, (state, action) => {
       state.detailPoLogistik = action.payload.data;
     });
+
+    builder.addCase(getProcurementList.fulfilled, (state, action) => {
+      state.procurementList = action.payload.data;
+    });
+
+    builder.addCase(getDetailProcurementList.fulfilled, (state, action) => {
+      state.detailProcurementList = action.payload.data;
+    });
   },
 });
 export const {
@@ -68,6 +100,10 @@ export const {
   setLoadingDetail,
   setLoadingDetailLogistik,
   clearDetailPoLogistik,
+  clearDetailProcurementList,
+  setLoadingDetailProcurementList,
+  setLoadingProcurementList,
+  setLoadingPoLogistik,
 } = PoSlice.actions;
 
 export default PoSlice.reducer;

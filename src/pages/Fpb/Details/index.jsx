@@ -23,7 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailFpb as onGetDetailFpb, addPq as onAddPq } from "../../../slices/thunks";
 
-import { setLoading, clearDetailFpb, clearSelectedFpbList, setSelectedFpbList } from "../../../slices/fpb/reducer";
+import { setLoadingDetail, clearDetailFpb, clearSelectedFpbList, setSelectedFpbList } from "../../../slices/fpb/reducer";
 import { getReferensiPart as getReferensiPartApi } from "../../../helpers/backend_helper";
 
 import classnames from "classnames";
@@ -49,16 +49,16 @@ const DetailFpb = () => {
     (detailFpb) => detailFpb
   );
   const detailFpb = useSelector(selectDetailFpbData);
-  const loading = useSelector((state) => state.Fpb.loading);
+  const loading = useSelector((state) => state.Fpb.loadingDetail);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_fpb = url.searchParams.get("id");
-    dispatch(setLoading(true));
+    dispatch(setLoadingDetail(true));
     dispatch(clearDetailFpb());
     dispatch(clearSelectedFpbList());
     dispatch(onGetDetailFpb({ id_fpb })).then(() => {
-      dispatch(setLoading(false));
+      dispatch(setLoadingDetail(false));
     });
   }, []);
 
@@ -101,7 +101,7 @@ const DetailFpb = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {},
     validationSchema: Yup.object({}),
     onSubmit: async () => {
@@ -114,24 +114,18 @@ const DetailFpb = () => {
         id_fpb,
         id_part_request: JSON.stringify(idsOnly),
       };
-      await dispatch(onAddPq(newPq));
-      window.location.reload();
+
+      if (idsOnly.length > 0) {
+        await dispatch(onAddPq(newPq));
+        window.location.reload();
+      } else {
+        alert("tidak terdapat part request yang dipilih");
+      }
     },
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [partPrice, setPartPrice] = useState(null);
-
-  const handleModalOpen = async (part_number) => {
-    try {
-      const response = await getReferensiPartApi({ part_number });
-      const data = response.data;
-      setPartPrice(data);
-      setIsModalOpen(true);
-    } catch (error) {
-      console.error("Terjadi kesalahan dalam mengambil data dari API", error);
-    }
-  };
 
   // handle active tab menu
   const [customActiveTab, setCustomActiveTab] = useState("1");
@@ -140,8 +134,6 @@ const DetailFpb = () => {
       setCustomActiveTab(tab);
     }
   };
-
-  console.log(customActiveTab);
 
   const handleCetakClick = (id) => {
     history(`/fpb/pq/cetak?id=${id}`);
@@ -306,8 +298,6 @@ const DetailFpb = () => {
                                   <th scope="col">Merk / Type</th>
                                   <th scope="col">Qty</th>
                                   <th scope="col">Keterangan</th>
-                                  {/* <th scope="col">Price</th>
-                    <th scope="col">Ref Price</th> */}
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>
@@ -372,22 +362,6 @@ const DetailFpb = () => {
                                         value={row.page_desc}
                                       />
                                     </td>
-                                    {/* <td className="text-start">
-                        <Input
-                          disabled={row.flag == 1 ? true : false}
-                          type="number"
-                          className="form-control bg-light border-0"
-                          placeholder="Price"
-                          name={row.id}
-                          value={prices[row.id] || ""}
-                          onChange={(e) => handlePriceChange(e, row.id)}
-                        />
-                      </td>
-                      <td>
-                        <span className="link-primary" onClick={() => handleModalOpen(row.part_number)}>
-                          <i className="ri-eye-line cursor-pointer"></i>
-                        </span>
-                      </td> */}
                                     <td className="text-start">
                                       {!row.id_pq && (
                                         <Input
@@ -398,7 +372,7 @@ const DetailFpb = () => {
                                           onChange={(e) => handleCheckboxChange(e, row.id)}
                                         />
                                       )}
-                                      {row.id_pq ? <Input className="form-check-input" type="checkbox" value checked /> : ""}
+                                      {/* {row.id_pq ? <Input className="form-check-input" type="checkbox" value checked /> : ""} */}
                                     </td>
                                   </tr>
                                 ))}

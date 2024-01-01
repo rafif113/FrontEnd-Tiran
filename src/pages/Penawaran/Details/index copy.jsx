@@ -67,7 +67,7 @@ const DetailPenawaran = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       pricesPenawaran: [],
     },

@@ -101,7 +101,7 @@ const CreateBarang = () => {
   // });
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     // initialValues,
     initialValues: {
       id: "",

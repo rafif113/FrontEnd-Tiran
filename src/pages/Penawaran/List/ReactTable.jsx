@@ -37,7 +37,14 @@ const PaginationTable = () => {
       },
       {
         Header: "Total Part PQ",
-        accessor: "jumlah_part_pq",
+        // accessor: "jumlah_part_pq",
+        accessor: (cellProps) => {
+          return (
+            <div>
+              <b>{cellProps.jumlah_part_pq}</b> (dari {cellProps.total} part request FPB)
+            </div>
+          );
+        },
         disableFilters: true,
         filterable: false,
       },
@@ -78,8 +85,6 @@ const PaginationTable = () => {
     }
   }, [dispatch, penawaran]);
 
-  console.log(penawaran);
-
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
@@ -97,9 +102,9 @@ const PaginationTable = () => {
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
-          iscustomPageSize={true}
+          isCustomPageSize={true}
           isBordered={true}
-          customPageSize={5}
+          customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"

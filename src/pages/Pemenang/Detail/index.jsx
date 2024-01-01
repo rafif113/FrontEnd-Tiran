@@ -76,7 +76,7 @@ const Pemenang = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {},
     validationSchema: Yup.object({}),
     onSubmit: async () => {

@@ -51,7 +51,7 @@ const Mol = () => {
 
   // handle form input
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       nama_barang: "",
       qty: "",

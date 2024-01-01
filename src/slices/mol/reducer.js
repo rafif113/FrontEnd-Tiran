@@ -20,6 +20,8 @@ export const initialState = {
   costCode: [],
   materialType: [],
   loading: true,
+  loadingList: true,
+  loadingPengeluaran: true,
   selectedPartRequest: [],
   pengeluaran: [],
   detailPengeluaran: [],
@@ -35,6 +37,12 @@ const MolSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setLoadingList: (state, action) => {
+      state.loadingList = action.payload;
+    },
+    setLoadingPengeluaran: (state, action) => {
+      state.loadingPengeluaran = action.payload;
     },
     clearDetailMol: (state) => {
       state.detailMol = null;
@@ -164,6 +172,8 @@ export const {
   setSelectedPartRequest,
   clearSelectedPartRequest,
   clearDetailPengeluaran,
+  setLoadingList,
+  setLoadingPengeluaran,
 } = MolSlice.actions;
 
 export default MolSlice.reducer;

@@ -37,6 +37,7 @@ import CetakPo from "../pages/Po/Cetak";
 import DetailPo from "../pages/Po/Detail";
 import PoLogistik from "../pages/PoLogistik/List";
 import DetailPoLogistik from "../pages/PoLogistik/Detail";
+import ProcurementList from "../pages/ProcurementList/List";
 // PENAWARAN
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
@@ -102,6 +103,7 @@ const authProtectedRoutes = [
   { path: "/po/detail", component: <DetailPo /> },
   { path: "/po-logistik", component: <PoLogistik /> },
   { path: "/po-logistik/detail", component: <DetailPoLogistik /> },
+  { path: "/procurement-list", component: <ProcurementList /> },
   // PENAWARAN
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
@@ -110,8 +112,8 @@ const authProtectedRoutes = [
   // Finance
   { path: "/finance/piutang", component: <FinancePiutang /> },
   { path: "/finance/monitoring/po", component: <FinanceMonitoringPo /> },
-  { path: "/finance/monitoring/procurement-list", component: <FinanceMonitoringInvoice /> },
-  { path: "/finance/monitoring/procurement-list/detail", component: <FinanceMonitoringDetailInvoice /> },
+  { path: "/finance/monitoring/payment-request", component: <FinanceMonitoringInvoice /> },
+  { path: "/finance/monitoring/payment-request/detail", component: <FinanceMonitoringDetailInvoice /> },
   { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
   { path: "/finance/monitoring/tongkang/detail", component: <FinanceMonitoringDetailTongkang /> },
   // Report

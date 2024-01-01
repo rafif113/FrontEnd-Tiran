@@ -5,6 +5,7 @@ export const initialState = {
   detailFpb: [],
   detailPq: [],
   loading: true,
+  loadingDetail: true,
   loadingPq: true,
   selectedFpbList: [],
   error: {},
@@ -16,6 +17,9 @@ const FpbSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setLoadingDetail: (state, action) => {
+      state.loadingDetail = action.payload;
     },
     clearDetailFpb: (state) => {
       state.detailFpb = null;
@@ -65,7 +69,14 @@ const FpbSlice = createSlice({
     // End FPB reducer
   },
 });
-export const { clearDetailFpb, clearSelectedFpbList, setLoading, setSelectedFpbList, clearDetailPq, setLoadingPq } =
-  FpbSlice.actions;
+export const {
+  clearDetailFpb,
+  clearSelectedFpbList,
+  setLoading,
+  setSelectedFpbList,
+  clearDetailPq,
+  setLoadingPq,
+  setLoadingDetail,
+} = FpbSlice.actions;
 
 export default FpbSlice.reducer;

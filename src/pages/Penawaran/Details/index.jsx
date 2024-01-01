@@ -34,6 +34,7 @@ import { clearDetailPenawaran, setLoadingDetail as setLoadingPenawaran } from ".
 import SubmitModal from "../../../Components/Common/SubmitModal";
 import ModalFileUpload from "./ModalFileUpload";
 import ReactSelect from "react-select";
+import { NumericFormat } from "react-number-format";
 
 const DetailPenawaran = () => {
   document.title = "Detail Penawaran | PT Tiran";
@@ -52,25 +53,20 @@ const DetailPenawaran = () => {
     (vendor) => vendor
   );
   const vendor = useSelector(selectVendorData);
-  const loadingVendor = useSelector((state) => state.Vendor.loading);
-  useEffect(() => {
-    if (loadingVendor) {
-      dispatch(onGetVendor());
-    }
-  }, [dispatch, loadingVendor]);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_pq = url.searchParams.get("id");
     dispatch(setLoadingPenawaran(true));
     dispatch(clearDetailPenawaran());
+    dispatch(onGetVendor());
     dispatch(onGetDetailPenawaran({ id_pq })).then(() => {
       dispatch(setLoadingPenawaran(false));
     });
   }, []);
 
   const vendorOptions = vendor.map((item) => ({
-    label: item.name,
+    label: item.vendor,
     value: item.id,
   }));
 
@@ -90,16 +86,16 @@ const DetailPenawaran = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       vendorSelected: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const inputValuesArray = Object.values(inputValues).map((input) => ({
         ...input,
         id_vendor: values.vendorSelected,
       }));
-      dispatch(onAddPricePenawaran({ data: inputValuesArray }));
+      await dispatch(onAddPricePenawaran({ data: inputValuesArray }));
       history("/penawaran");
     },
   });
@@ -261,21 +257,24 @@ const DetailPenawaran = () => {
                               <tr>
                                 <td colSpan="3">
                                   <div className="d-flex">
-                                    <Input
-                                      type="text"
-                                      onChange={(e) =>
+                                    <NumericFormat
+                                      thousandSeparator={true}
+                                      prefix={"Rp "}
+                                      placeholder="Enter price"
+                                      customInput={Input}
+                                      className="form-control form-control-sm me-2"
+                                      name="price"
+                                      autoComplete="off"
+                                      onValueChange={(values) =>
                                         handleInputChange(
                                           index,
-                                          e.target.value,
+                                          values.value,
                                           inputValues[index]?.qty || "",
                                           row.id,
                                           1,
                                           row.id_pq
                                         )
                                       }
-                                      className="form-control me-2"
-                                      name="price"
-                                      placeholder="Enter price"
                                     />
                                     <Input
                                       type="text"
@@ -289,9 +288,10 @@ const DetailPenawaran = () => {
                                           row.id_pq
                                         )
                                       }
-                                      className="form-control"
+                                      className="form-control form-control-sm"
                                       name="qty"
                                       placeholder="Enter qty"
+                                      autoComplete="off"
                                     />
                                   </div>
                                 </td>

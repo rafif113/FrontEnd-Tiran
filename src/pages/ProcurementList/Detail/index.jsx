@@ -1,44 +1,45 @@
 import React, { useEffect, useState } from "react";
-import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, CardHeader } from "reactstrap";
 
 import { Link } from "react-router-dom";
-import { getDetailKttPo as onGetDetailKttPo, postKttApprove as postKttApprove } from "../../../../slices/thunks";
+import { getDetailPo as onGetDetailPo, addDo as onAddDo } from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createSelector } from "reselect";
-import { setLoadingDetail, clearDetailKttPo } from "../../../../slices/ktt/reducer";
-import SubmitModal from "../../../../Components/Common/SubmitModal";
+import { clearDetailPo, setLoadingDetail as setLoadingPoDetail } from "../../../slices/po/reducer";
+import SubmitModal from "../../../Components/Common/SubmitModal";
+import { formatRupiah } from "../../../utils/utils";
 
-const DetailKttPo = () => {
-  document.title = "Detail KTT PO | PT Tiran";
+const DetailPo = () => {
+  document.title = "Detail PO | PT Tiran";
   const dispatch = useDispatch();
   const history = useNavigate();
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
-  const selectDetailKttPo = createSelector(
-    (state) => state.Ktt.detailKttPo,
-    (detailKttPo) => detailKttPo
+  const selectDetailPo = createSelector(
+    (state) => state.Po.detailPo,
+    (detailPo) => detailPo
   );
-  const detailKttPo = useSelector(selectDetailKttPo);
-  const loadingKttPo = useSelector((state) => state.Ktt.loadingDetail);
+  const detailPo = useSelector(selectDetailPo);
+  const loadingPo = useSelector((state) => state.Po.loadingDetail);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_po = url.searchParams.get("id");
-    dispatch(setLoadingDetail(true));
-    dispatch(clearDetailKttPo());
-    dispatch(onGetDetailKttPo({ id_po })).then(() => {
-      dispatch(setLoadingDetail(false));
+    dispatch(setLoadingPoDetail(true));
+    dispatch(clearDetailPo());
+    dispatch(onGetDetailPo({ id_po })).then(() => {
+      dispatch(setLoadingPoDetail(false));
     });
   }, []);
 
   const validation = useFormik({
     // enableReinitialize: true,
     onSubmit: (values) => {
-      // dispatch(postKttApprove({ id_penawaran_vendor: idPenawaranVendor }));
+      // dispatch(onAddDo({ id_penawaran_vendor: idPenawaranVendor }));
       // history("/po");
     },
   });
@@ -59,9 +60,9 @@ const DetailKttPo = () => {
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Detail KTT PO" pageTitle="PO" />
+        <BreadCrumb title="Detail Po" pageTitle="Po" />
 
-        {loadingKttPo ? (
+        {loadingPo ? (
           ""
         ) : (
           <Row>
@@ -83,7 +84,7 @@ const DetailKttPo = () => {
                           name="nomor_po"
                           placeholder="Enter No PO"
                           readOnly
-                          value={detailKttPo.po.nomor_po}
+                          value={detailPo.po.nomor_po}
                         />
                       </div>
                     </Col>
@@ -99,7 +100,7 @@ const DetailKttPo = () => {
                           name="nomor_pr"
                           placeholder="Enter No PR"
                           readOnly
-                          value={detailKttPo.po.nomor_pr}
+                          value={detailPo.po.nomor_pr}
                         />
                       </div>
                     </Col>
@@ -115,7 +116,7 @@ const DetailKttPo = () => {
                           name="spesial_intruksi"
                           placeholder="Enter Special Instruction"
                           readOnly
-                          value={detailKttPo.po.spesial_intruksi}
+                          value={detailPo.po.spesial_intruksi}
                         />
                       </div>
                     </Col>
@@ -131,7 +132,7 @@ const DetailKttPo = () => {
                           name="st_name"
                           placeholder="Enter Serah Terima"
                           readOnly
-                          value={detailKttPo.po.st_name}
+                          value={detailPo.po.st_name}
                         />
                       </div>
                     </Col>
@@ -162,7 +163,7 @@ const DetailKttPo = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {detailKttPo.partrequest.map((row, index) => (
+                        {detailPo.partrequest.map((row, index) => (
                           <tr key={row.id} className="product">
                             <th scope="row" className="product-id">
                               {index + 1}
@@ -264,21 +265,99 @@ const DetailKttPo = () => {
               </Card>
               {/* End Part Request */}
 
+              {detailPo.detail.map((rowPenawaran, indexPenawaran) => (
+                <Card key={indexPenawaran}>
+                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>
+                    Penawaran Ke-{rowPenawaran.penawaran_ke}
+                  </CardHeader>
+                  {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => {
+                    return (
+                      <CardBody key={indexDetail}>
+                        <CardHeader style={{ backgroundColor: rowDetail.flag == 1 ? "lightgrey" : "inherit" }}>
+                          Vendor : {rowDetail.vendor} {rowDetail.flag == 1 ? "(Pemenang)" : ""}
+                        </CardHeader>
+                        <div className="table-responsive">
+                          <Table className="invoice-table table-borderless table-nowrap mb-0">
+                            <thead className="align-middle">
+                              <tr className="table-active">
+                                <th scope="col" style={{ width: "50px" }}>
+                                  No.
+                                </th>
+                                <th scope="col">Description and Specification</th>
+                                {/* <th scope="col">Qty</th> */}
+                                <th scope="col">Price</th>
+                                {/* <th scope="col">Total</th> */}
+                              </tr>
+                            </thead>
+                            <tbody id="newlink">
+                              {rowDetail.detail_price.map((rowPrice, indexPrice) => (
+                                <tr key={rowPrice.id} className="product">
+                                  <th scope="row" className="product-id">
+                                    {indexPrice + 1}
+                                  </th>
+                                  <td className="text-start">
+                                    <Input
+                                      type="text"
+                                      className="form-control bg-light border-0"
+                                      id="productName-1"
+                                      placeholder="Part Name"
+                                      name="product_name"
+                                      readOnly
+                                      value={rowPrice.part_request}
+                                    />
+                                  </td>
+                                  <td className="text-start">
+                                    <Input
+                                      type="text"
+                                      className="form-control bg-light border-0"
+                                      id="productName-1"
+                                      placeholder="Price"
+                                      name="product_name"
+                                      readOnly
+                                      value={formatRupiah(rowPrice.price)}
+                                    />
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </div>
+                      </CardBody>
+                    );
+                  })}
+                </Card>
+              ))}
+
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  dispatch(postKttApprove({ id_po: detailKttPo.po.id }));
-                  alert("berhasil");
+
+                  let idPenawaranVendor = null;
+
+                  detailPo.detail.forEach((rowPenawaran) => {
+                    rowPenawaran.detail_penawaran.forEach((rowDetail) => {
+                      if (rowDetail.flag == 1) {
+                        idPenawaranVendor = rowDetail.id_detail;
+                      }
+                    });
+                  });
+
+                  if (idPenawaranVendor !== null) {
+                    dispatch(onAddDo({ id_penawaran_vendor: idPenawaranVendor }));
+                    alert("berhasil");
+                  } else {
+                    console.error("Tidak dapat menemukan id_detail saat flag == 1");
+                  }
                 }}
               >
                 <div className="text-end mb-3">
                   <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                    <button type="button" className="btn btn-danger w-sm">
-                      Reject PO
+                    <button type="submit" name="penawaran" className="btn btn-primary w-sm">
+                      Request DO
                     </button>
-                    <button type="submit" className="btn btn-primary w-sm">
-                      Accept PO
-                    </button>
+                    {/* <button type="submit" name="submit" className="btn btn-success w-sm">
+                      Cek Kesesuaian
+                    </button> */}
                   </div>
                 </div>
               </Form>
@@ -291,4 +370,4 @@ const DetailKttPo = () => {
   );
 };
 
-export default DetailKttPo;
+export default DetailPo;

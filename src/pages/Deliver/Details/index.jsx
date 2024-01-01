@@ -88,7 +88,7 @@ const DetailVendorKendari = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {},
     onSubmit: async () => {
       await dispatch(onPostCekVendorKendari({ data: selectedItems }));

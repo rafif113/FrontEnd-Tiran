@@ -31,7 +31,7 @@ const SpecificationTab = ({ detailTongkang }) => {
   }
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: initialValues,
     validationSchema: Yup.object({
       ni: Yup.string().required("Please Enter a DP"),

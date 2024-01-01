@@ -38,7 +38,7 @@ const ReactTable = () => {
   };
 
   const validation = useFormik({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: {
       bl_no: "",
       bl_date: "",
