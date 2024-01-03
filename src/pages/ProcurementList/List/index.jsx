@@ -1,9 +1,16 @@
 import React from "react";
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import { PaginationTable } from "./ReactTable";
+import { useNavigate } from "react-router-dom";
 
 const ReactTable = () => {
   document.title = "List Procurement | PT Tiran";
+  const history = useNavigate();
+
+  const handleCreateClick = () => {
+    history(`/procurement-list/create`);
+  };
+  // /procurement-list/create
   return (
     <React.Fragment>
       <div className="page-content">
@@ -13,6 +20,9 @@ const ReactTable = () => {
               <Card>
                 <CardHeader className="d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">List Procurement</h5>
+                  <button className="btn btn-sm btn-primary" id="btn-new-event" onClick={handleCreateClick}>
+                    <i className="mdi mdi-plus"></i> Create Procurement
+                  </button>
                 </CardHeader>
                 <CardBody>
                   <PaginationTable />

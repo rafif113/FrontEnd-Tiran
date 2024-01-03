@@ -6,7 +6,7 @@ import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 
 import { getFinanceTongkang as onGetTongkang } from "../../../../slices/thunks";
-import { setLoading } from "../../../../slices/finance/reducer";
+import { setLoadingTongkang as setLoading } from "../../../../slices/finance/reducer";
 
 const TongkangFinanceTable = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const TongkangFinanceTable = () => {
     (tongkang) => tongkang
   );
   const tongkang = useSelector(TongkangData);
-  const loading = useSelector((state) => state.Finance.loading);
+  const loading = useSelector((state) => state.Finance.loadingTongkang);
 
   useEffect(() => {
     dispatch(setLoading(true));

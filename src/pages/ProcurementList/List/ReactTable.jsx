@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 import { formatRupiah } from "../../../utils/utils";
+import FileModal from "./FileModal";
 
 const PaginationTable = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,14 @@ const PaginationTable = () => {
       {
         Header: "Description",
         accessor: "desc",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "File",
+        accessor: (cellProps) => (
+          <FileModal fileInvoice={cellProps.file_invoice} filePO={cellProps.file_po} fileSPB={cellProps.file_spb} />
+        ),
         disableFilters: true,
         filterable: false,
       },

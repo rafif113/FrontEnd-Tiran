@@ -96,6 +96,7 @@ export const getPo = (data) => api.create(url.GET_PO, data);
 export const addPo = (data) => api.create(url.ADD_PO, data);
 export const getReferensiPart = (data) => api.create(url.REFERENSI_PART, data);
 export const getProcurementList = (data) => api.create(url.GET_PROCUREMENT_LIST, data);
+export const getCartProcurementList = (data) => api.create(url.GET_CART_PROCUREMENT_LIST, data);
 
 // VENDOR
 export const getVendor = () => api.get(url.GET_VENDOR);

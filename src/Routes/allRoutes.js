@@ -38,6 +38,7 @@ import DetailPo from "../pages/Po/Detail";
 import PoLogistik from "../pages/PoLogistik/List";
 import DetailPoLogistik from "../pages/PoLogistik/Detail";
 import ProcurementList from "../pages/ProcurementList/List";
+import ProcurementCreate from "../pages/ProcurementList/Create";
 // PENAWARAN
 import CreatePenawaran from "../pages/Penawaran/Create";
 import ListPenawaran from "../pages/Penawaran/List";
@@ -46,6 +47,8 @@ import DetailPenawaranPemenang from "../pages/Pemenang/Detail";
 // Finance
 import FinancePiutang from "../pages/Finance/Piutang";
 import FinanceMonitoringInvoice from "../pages/Finance/Monitoring/Invoice";
+import CartPaymentRequest from "../pages/Finance/Monitoring/CartPaymentRequest";
+import CartPaymentRequestCetak from "../pages/Finance/Monitoring/CartPaymentRequest/Cetak";
 import FinanceMonitoringDetailInvoice from "../pages/Finance/Monitoring/Invoice/Detail";
 import FinanceMonitoringPo from "../pages/Finance/Monitoring/Po";
 import FinanceMonitoringTongkang from "../pages/Finance/Monitoring/Tongkang";
@@ -104,6 +107,7 @@ const authProtectedRoutes = [
   { path: "/po-logistik", component: <PoLogistik /> },
   { path: "/po-logistik/detail", component: <DetailPoLogistik /> },
   { path: "/procurement-list", component: <ProcurementList /> },
+  { path: "/procurement-list/create", component: <ProcurementCreate /> },
   // PENAWARAN
   { path: "/penawaran", component: <ListPenawaran /> },
   { path: "/penawaran/create", component: <CreatePenawaran /> },
@@ -114,6 +118,8 @@ const authProtectedRoutes = [
   { path: "/finance/monitoring/po", component: <FinanceMonitoringPo /> },
   { path: "/finance/monitoring/payment-request", component: <FinanceMonitoringInvoice /> },
   { path: "/finance/monitoring/payment-request/detail", component: <FinanceMonitoringDetailInvoice /> },
+  { path: "/finance/monitoring/cart-payment-request", component: <CartPaymentRequest /> },
+  { path: "/finance/monitoring/cart-payment-request/cetak", component: <CartPaymentRequestCetak /> },
   { path: "/finance/monitoring/tongkang", component: <FinanceMonitoringTongkang /> },
   { path: "/finance/monitoring/tongkang/detail", component: <FinanceMonitoringDetailTongkang /> },
   // Report

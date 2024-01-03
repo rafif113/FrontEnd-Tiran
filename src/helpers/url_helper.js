@@ -36,6 +36,7 @@ export const GET_PQ = "/get/detail/pq";
 export const GET_PO = "/get/po";
 export const ADD_PO = "/store/po";
 export const GET_PROCUREMENT_LIST = "/get/procurementlist";
+export const GET_CART_PROCUREMENT_LIST = "/get/paymentrequestDetail";
 export const REFERENSI_PART = "/referensi/part";
 
 export const GET_MATERIAL_TYPE = "/get/master/material_type";

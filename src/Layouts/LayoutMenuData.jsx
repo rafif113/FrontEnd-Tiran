@@ -265,6 +265,12 @@ const Navdata = () => {
           childItems: [
             { id: 2, label: "Tongkang", link: "/finance/monitoring/tongkang", parentId: "monitoringFinance" },
             { id: 1, label: "Payment Request", link: "/finance/monitoring/payment-request", parentId: "monitoringFinance" },
+            {
+              id: 1,
+              label: "Cart Payment Request",
+              link: "/finance/monitoring/cart-payment-request",
+              parentId: "monitoringFinance",
+            },
           ],
         },
       ],

@@ -82,7 +82,7 @@ const ReactTable = () => {
                 <CardHeader className="d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Tongkang</h5>
                   {/* <Button color="primary">Add Tongkang</Button> */}
-                  <button className="btn btn-primary" id="btn-new-event" onClick={toggle}>
+                  <button className="btn btn-sm btn-primary" id="btn-new-event" onClick={toggle}>
                     <i className="mdi mdi-plus"></i> Create Tongkang
                   </button>
                 </CardHeader>

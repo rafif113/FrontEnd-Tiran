@@ -7,27 +7,21 @@ import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 import { getPo as onGetPo, getFinancePo as onGetInvoicePo } from "../../../../slices/thunks";
-import { clearDetailPo, setLoading } from "../../../../slices/finance/reducer";
+import { clearDetailPo, setLoadingPaymentRequest as setLoading } from "../../../../slices/finance/reducer";
+import FileModal from "../../../ProcurementList/List/FileModal";
+import { formatRupiah } from "../../../../utils/utils";
+import ModalAddPayment from "./ModalAddPayment"; // Adjust the path based on your project structure
 
 const InvoicePoFinanceTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
-
-  const handleDetailClick = (id, kelengkapan) => {
-    // if (kelengkapan.flag == "tidak komplit") {
-    // const keteranganText = kelengkapan.keterangan.join("\n");
-    // alert(keteranganText);
-    // } else {
-    history(`/finance/monitoring/payment-request/detail?id=${id}`);
-    // }
-  };
 
   const InvoicePoData = createSelector(
     (state) => state.Finance.invoicePo,
     (invoicePo) => invoicePo
   );
   const invoicePo = useSelector(InvoicePoData);
-  const loading = useSelector((state) => state.Finance.loading);
+  const loading = useSelector((state) => state.Finance.loadingPaymentRequest);
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -35,8 +29,19 @@ const InvoicePoFinanceTable = () => {
       dispatch(setLoading(false));
     });
   }, []);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedPo, setSelectedPo] = useState(null);
 
-  console.log(invoicePo);
+  const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
+
+  const handlePaymentClick = (id, po) => {
+    setSelectedId(id);
+    setSelectedPo(po);
+    toggleModal();
+  };
 
   const columns = useMemo(
     () => [
@@ -47,27 +52,42 @@ const InvoicePoFinanceTable = () => {
         disableFilters: true,
         filterable: false,
       },
+
       {
         Header: "Nomor PO",
-        accessor: "po.nomor_po",
+        accessor: "no_po",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Nomor PR ",
-        accessor: "po.nomor_pr",
+        Header: "Nomor PR",
+        accessor: "no_pr",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Special Instruction",
-        accessor: "po.spesial_intruksi",
+        Header: "Nama Vendor",
+        accessor: "nama_vendor",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Penawaran",
-        accessor: "keterangan",
+        Header: "Nominal",
+        accessor: (cellProps) => {
+          return formatRupiah(cellProps.nominal);
+        },
+      },
+      {
+        Header: "Description",
+        accessor: "desc",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "File",
+        accessor: (cellProps) => (
+          <FileModal fileInvoice={cellProps.file_invoice} filePO={cellProps.file_po} fileSPB={cellProps.file_spb} />
+        ),
         disableFilters: true,
         filterable: false,
       },
@@ -78,11 +98,8 @@ const InvoicePoFinanceTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button
-                onClick={() => handleDetailClick(cellProps.penawaran_vendor.id, cellProps.kelengkapan_dok)}
-                className="btn btn-sm btn-light"
-              >
-                Detail
+              <button onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)} className="btn btn-sm btn-info">
+                +
               </button>
             </>
           );
@@ -97,25 +114,28 @@ const InvoicePoFinanceTable = () => {
   return (
     <React.Fragment>
       {!loading ? (
-        <TableContainer
-          columns={columns || []}
-          data={invoicePo || []}
-          isPagination={true}
-          isGlobalFilter={true}
-          isGlobalSearch={true}
-          isCustomPageSize={true}
-          isBordered={true}
-          customPageSize={5}
-          className="custom-header-css table align-middle table-nowrap"
-          tableClassName="table-centered align-middle table-nowrap mb-0"
-          theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari PO..."
-        />
+        <>
+          <TableContainer
+            columns={columns || []}
+            data={invoicePo || []}
+            isPagination={true}
+            isGlobalFilter={true}
+            isGlobalSearch={true}
+            isCustomPageSize={true}
+            isBordered={true}
+            customPageSize={5}
+            className="custom-header-css table align-middle table-nowrap"
+            tableClassName="table-centered align-middle table-nowrap mb-0"
+            theadClassName="text-muted table-light"
+            SearchPlaceholder="Cari PO..."
+          />
+        </>
       ) : (
         <div className="text-center">
           <Spinner animation="border" variant="primary" />
         </div>
       )}
+      <ModalAddPayment isOpen={modalIsOpen} toggle={toggleModal} selectedId={selectedId} selectedPo={selectedPo} />
     </React.Fragment>
   );
 };

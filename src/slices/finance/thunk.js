@@ -7,11 +7,22 @@ import {
   postFinanceTongkangDown as postFinanceTongkangDownApi,
   postFinanceTongkangPayment as postFinanceTongkangPaymentApi,
   postFinanceTongkangPort as postFinanceTongkangPortApi,
+  getProcurementList as getProcurementListApi,
+  getCartProcurementList as getCartProcurementListApi,
 } from "../../helpers/backend_helper";
 
 export const getFinancePo = createAsyncThunk("finance/getFinancePo", async () => {
   try {
-    const response = getFinancePoApi();
+    const response = getProcurementListApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getCartProcurementList = createAsyncThunk("finance/getCartProcurementList", async () => {
+  try {
+    const response = getCartProcurementListApi();
     return response;
   } catch (error) {
     return error;
