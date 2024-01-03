@@ -9,6 +9,8 @@ import {
   postFinanceTongkangPort as postFinanceTongkangPortApi,
   getProcurementList as getProcurementListApi,
   getCartProcurementList as getCartProcurementListApi,
+  postPaymentRequest as postPaymentRequestApi,
+  postRecapCart as postRecapCartApi,
 } from "../../helpers/backend_helper";
 
 export const getFinancePo = createAsyncThunk("finance/getFinancePo", async () => {
@@ -102,6 +104,30 @@ export const addFinanceTongkangPort = createAsyncThunk("finance/addFinanceTongka
     return data;
   } catch (error) {
     toast.error("Tongkang Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const postPaymentRequest = createAsyncThunk("finance/postPaymentRequest", async (pr) => {
+  try {
+    const response = postPaymentRequestApi(pr);
+    const data = await response;
+    toast.success("PR Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("PR Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const postRecapCart = createAsyncThunk("finance/postRecapCart", async (cart) => {
+  try {
+    const response = postRecapCartApi(cart);
+    const data = await response;
+    toast.success("PR Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("PR Added Failed", { autoClose: 3000 });
     return error;
   }
 });

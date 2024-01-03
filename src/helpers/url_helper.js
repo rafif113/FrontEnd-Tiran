@@ -36,6 +36,7 @@ export const GET_PQ = "/get/detail/pq";
 export const GET_PO = "/get/po";
 export const ADD_PO = "/store/po";
 export const GET_PROCUREMENT_LIST = "/get/procurementlist";
+export const POST_PROCUREMENT_LIST = "/post/procurementlist";
 export const GET_CART_PROCUREMENT_LIST = "/get/paymentrequestDetail";
 export const REFERENSI_PART = "/referensi/part";
 
@@ -67,6 +68,8 @@ export const POST_FINANCE_TONGKANG = "/post/finance/tongkang";
 export const POST_FINANCE_TONGKANG_DOWN = "/post/finance/tongkang/down_p";
 export const POST_FINANCE_TONGKANG_PAYMENT = "/post/finance/tongkang/final_payment";
 export const POST_FINANCE_TONGKANG_PORT = "/post/finance/tongkang/sd_port";
+export const POST_PAYMENT_REQUEST = "/post/paymentrequest";
+export const POST_RECAP_CART = "/get/recapcart";
 
 // REPORT
 export const GET_REPORT_UNIT = "/get/report/unit";

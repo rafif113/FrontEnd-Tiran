@@ -96,6 +96,7 @@ export const getPo = (data) => api.create(url.GET_PO, data);
 export const addPo = (data) => api.create(url.ADD_PO, data);
 export const getReferensiPart = (data) => api.create(url.REFERENSI_PART, data);
 export const getProcurementList = (data) => api.create(url.GET_PROCUREMENT_LIST, data);
+export const postProcurementList = (data) => api.create(url.POST_PROCUREMENT_LIST, data);
 export const getCartProcurementList = (data) => api.create(url.GET_CART_PROCUREMENT_LIST, data);
 
 // VENDOR
@@ -116,6 +117,9 @@ export const postFinanceTongkang = (data) => api.create(url.POST_FINANCE_TONGKAN
 export const postFinanceTongkangDown = (data) => api.create(url.POST_FINANCE_TONGKANG_DOWN, data);
 export const postFinanceTongkangPayment = (data) => api.create(url.POST_FINANCE_TONGKANG_PAYMENT, data);
 export const postFinanceTongkangPort = (data) => api.create(url.POST_FINANCE_TONGKANG_PORT, data);
+
+export const postPaymentRequest = (data) => api.create(url.POST_PAYMENT_REQUEST, data);
+export const postRecapCart = (data) => api.create(url.POST_RECAP_CART, data);
 
 // REPORT
 export const getReportUnit = () => api.get(url.GET_REPORT_UNIT);

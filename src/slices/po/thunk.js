@@ -5,6 +5,7 @@ import {
   getPo as getPoApi,
   getPoLogistik as getPoLogistikApi,
   getProcurementList as getProcurementListApi,
+  postProcurementList as postProcurementListApi,
 } from "../../helpers/backend_helper";
 
 export const getPo = createAsyncThunk("po/getPo", async () => {
@@ -33,6 +34,18 @@ export const addPo = createAsyncThunk("po/addPo", async (po) => {
     return data;
   } catch (error) {
     toast.error("po Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const postProcurementList = createAsyncThunk("po/postProcurementList", async (pr) => {
+  try {
+    const response = postProcurementListApi(pr);
+    const data = await response;
+    toast.success("PR Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("PR Added Failed", { autoClose: 3000 });
     return error;
   }
 });

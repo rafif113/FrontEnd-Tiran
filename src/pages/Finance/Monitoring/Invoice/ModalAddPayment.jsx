@@ -1,27 +1,16 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Form,
-  FormFeedback,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row,
-} from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { Col, Form, FormFeedback, Input, Label, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoadingModal from "../../../../Components/Common/LoadingModal";
+import { postPaymentRequest as onPostPaymentRequest } from "../../../../slices/thunks";
+import { useNavigate } from "react-router-dom";
 
 const ModalAddPayment = ({ isOpen, toggle, selectedId, selectedPo }) => {
   const [loading, setLoading] = useState(false);
+  const history = useNavigate();
+  const dispatch = useDispatch();
 
   const validation = useFormik({
     initialValues: {
@@ -34,17 +23,15 @@ const ModalAddPayment = ({ isOpen, toggle, selectedId, selectedPo }) => {
     }),
     onSubmit: async (values) => {
       const pr = {
+        id_pl: selectedId,
         termin_pembayaran: values.termin_pembayaran,
         keterangan: values.keterangan,
       };
-      // LoadingModal
       setLoading(true);
+      await dispatch(onPostPaymentRequest(pr));
       setLoading(false);
-
-      console.log(pr);
-      // await dispatch(onAddMol(newMol));
-      // validation.resetForm();
-      // history("/mol");
+      validation.resetForm();
+      history("/finance/monitoring/payment-request");
     },
   });
 
