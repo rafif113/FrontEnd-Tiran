@@ -9,7 +9,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailFpb as onGetDetailFpb } from "../../../slices/thunks";
 
-import { clearDetailFpb, setLoading } from "../../../slices/fpb/reducer";
+import { clearDetailFpb, setLoadingCetak } from "../../../slices/fpb/reducer";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
@@ -28,15 +28,15 @@ const CetakFpb = () => {
     (detailFpb) => detailFpb
   );
   const detailFpb = useSelector(selectDetailFpb);
-  const loading = useSelector((state) => state.Fpb.loading);
+  const loading = useSelector((state) => state.Fpb.loadingCetak);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_fpb = url.searchParams.get("id");
-    dispatch(setLoading(true));
+    dispatch(setLoadingCetak(true));
     dispatch(clearDetailFpb());
     dispatch(onGetDetailFpb({ id_fpb })).then(() => {
-      dispatch(setLoading(false));
+      dispatch(setLoadingCetak(false));
     });
   }, []);
 
@@ -189,8 +189,8 @@ const CetakFpb = () => {
                                 </td>
                               </tr>
                               <tr>
-                                <td style={{ border: "1px solid black", height: "100px" }}>
-                                  <h1>{detailFpb.mol.tujuan}</h1>
+                                <td style={{ border: "1px solid black", height: "75px" }}>
+                                  <b>{detailFpb.mol.tujuan}</b>
                                 </td>
                               </tr>
                               <tr>

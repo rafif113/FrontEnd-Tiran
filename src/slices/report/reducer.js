@@ -30,11 +30,11 @@ const ReportSlice = createSlice({
     });
 
     builder.addCase(getReportBarangIn.fulfilled, (state, action) => {
-      state.barangIn = action.payload.message;
+      state.barangIn = action.payload.data;
     });
 
     builder.addCase(getReportBarangOut.fulfilled, (state, action) => {
-      state.barangOut = action.payload.message;
+      state.barangOut = action.payload.data;
     });
   },
 });

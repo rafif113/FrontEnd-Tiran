@@ -819,7 +819,7 @@ const Mol = () => {
                           toggleCustom("5");
                         }}
                       >
-                        Description
+                        Keterangan
                       </NavLink>
                     </NavItem>
                   </Nav>

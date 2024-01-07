@@ -160,15 +160,15 @@ const DetailPo = () => {
                           <th scope="col" style={{ width: "50px" }}>
                             No.
                           </th>
-                          {/* <th scope="col">Part Number</th>
-                          <th scope="col">Description</th> */}
+                          <th scope="col">Part Number</th>
+                          <th scope="col">Description</th>
                           <th scope="col">Qty</th>
                           <th scope="col">Price</th>
-                          {/* <th scope="col">Unit</th>
+                          <th scope="col">Unit</th>
                           <th scope="col">Group</th>
                           <th scope="col">Page Image</th>
                           <th scope="col">Page Desc</th>
-                          <th scope="col">Remarks</th> */}
+                          <th scope="col">Remarks</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -177,13 +177,13 @@ const DetailPo = () => {
                             <th scope="row" className="product-id">
                               {index + 1}
                             </th>
-                            {/* <td className="text-start">
+                            <td className="text-start">
                               <Input
                                 style={{ minWidth: "100px" }}
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="part_number"
-                                value={row.part_number}
+                                value={row.partrequest.part_number}
                                 readOnly
                               />
                             </td>
@@ -193,10 +193,10 @@ const DetailPo = () => {
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="description"
-                                value={row.desc}
+                                value={row.partrequest.desc}
                                 readOnly
                               />
-                            </td> */}
+                            </td>
                             <td className="text-start">
                               <Input
                                 style={{ minWidth: "100px" }}
@@ -210,20 +210,20 @@ const DetailPo = () => {
                             <td className="text-start">
                               <Input
                                 style={{ minWidth: "100px" }}
-                                type="number"
+                                type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="price"
-                                value={row.price}
+                                value={formatRupiah(row.price)}
                                 readOnly
                               />
                             </td>
-                            {/* <td className="text-start">
+                            <td className="text-start">
                               <Input
                                 style={{ minWidth: "100px" }}
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="unit"
-                                value={row.unit}
+                                value={row.partrequest.unit}
                                 readOnly
                               />
                             </td>
@@ -233,7 +233,7 @@ const DetailPo = () => {
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="group"
-                                value={row.group}
+                                value={row.partrequest.group}
                                 readOnly
                               />
                             </td>
@@ -243,7 +243,7 @@ const DetailPo = () => {
                                 type="number"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="page_image"
-                                value={row.page_image}
+                                value={row.partrequest.page_image}
                                 readOnly
                               />
                             </td>
@@ -253,7 +253,7 @@ const DetailPo = () => {
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="page_desc"
-                                value={row.page_desc}
+                                value={row.partrequest.page_desc}
                                 readOnly
                               />
                             </td>
@@ -263,10 +263,10 @@ const DetailPo = () => {
                                 type="text"
                                 className="form-control form-control-sm bg-light border-0"
                                 name="remarks"
-                                value={row.remarks}
+                                value={row.partrequest.remarks}
                                 readOnly
                               />
-                            </td> */}
+                            </td>
                           </tr>
                         ))}
                       </tbody>

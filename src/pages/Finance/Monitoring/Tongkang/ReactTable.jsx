@@ -107,7 +107,7 @@ const TongkangFinanceTable = () => {
           isGlobalSearch={true}
           isCustomPageSize={true}
           isBordered={true}
-          customPageSize={5}
+          customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"

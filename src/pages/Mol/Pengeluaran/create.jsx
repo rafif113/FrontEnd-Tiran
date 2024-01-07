@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Card, CardBody, Col, Container, Row, Input, Form, Table, FormFeedback } from "reactstrap";
 
@@ -20,38 +20,28 @@ const CreatePengeluaran = () => {
   const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
   const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
 
-  const selectedPartRequestForString = selectedPartRequest.map((item) => item.id);
-  const idPartRequestString = JSON.stringify(selectedPartRequestForString);
+  const detailMol = useSelector((state) => state.Mol.detailMol);
 
   // handle form input
   const validation = useFormik({
     // enableReinitialize: true,
     initialValues: {
       mol_no: "",
-      hm: "",
       unit_id: "",
-      date: "",
     },
     validationSchema: Yup.object({
       mol_no: Yup.string().required("Please Enter a mol_no"),
-      hm: Yup.string().required("Please Enter a hm"),
       unit_id: Yup.string().required("Please Enter a unit_id"),
-      date: Yup.string().required("Please Enter a date"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const newPengeluaran = {
         mol_no: values.mol_no,
-        hm: values.hm,
         unit_id: values.unit_id,
-        date: values.date,
         id_part_request: selectedPartRequestIds,
-        part_request: idPartRequestString,
       };
-      // console.log(newPengeluaran);
-      dispatch(onAddPengeluaran(newPengeluaran));
-
+      await dispatch(onAddPengeluaran(newPengeluaran));
       history("/mol/pengeluaran");
-      //   validation.resetForm();
+      validation.resetForm();
     },
   });
 
@@ -67,6 +57,13 @@ const CreatePengeluaran = () => {
     validation.handleSubmit();
     closeSubmitModal();
   };
+
+  useEffect(() => {
+    validation.setValues({
+      mol_no: detailMol.mol.mol_no,
+      unit_id: detailMol.mol.unit_code,
+    });
+  }, []);
 
   return (
     <div className="page-content">
@@ -105,48 +102,7 @@ const CreatePengeluaran = () => {
                         ) : null}
                       </div>
                     </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="date">
-                          Date
-                        </label>
-                        <Input
-                          type="date"
-                          className="form-control"
-                          id="date"
-                          name="date"
-                          placeholder="Enter date"
-                          value={validation.values.date || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.date && validation.touched.date ? true : false}
-                        />
-                        {validation.errors.date && validation.touched.date ? (
-                          <FormFeedback type="invalid">{validation.errors.date}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="hm">
-                          HM
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="hm"
-                          name="hm"
-                          placeholder="Enter HM"
-                          value={validation.values.hm || ""}
-                          onBlur={validation.handleBlur}
-                          onChange={validation.handleChange}
-                          invalid={validation.errors.hm && validation.touched.hm ? true : false}
-                        />
-                        {validation.errors.hm && validation.touched.hm ? (
-                          <FormFeedback type="invalid">{validation.errors.hm}</FormFeedback>
-                        ) : null}
-                      </div>
-                    </Col>
+
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="unit_id">
@@ -185,6 +141,7 @@ const CreatePengeluaran = () => {
                           <th scope="col">Deskripsi / Nama Barang</th>
                           <th scope="col">Merk / Type</th>
                           <th scope="col">Qty</th>
+                          <th scope="col">Stock</th>
                           <th scope="col">Keterangan</th>
                         </tr>
                       </thead>
@@ -246,6 +203,17 @@ const CreatePengeluaran = () => {
                                 placeholder="Product Name"
                                 name="product_name"
                                 readOnly
+                                value={row.stock}
+                              />
+                            </td>
+                            <td className="text-start">
+                              <Input
+                                type="text"
+                                className="form-control bg-light border-0"
+                                id="productName-1"
+                                placeholder="Product Name"
+                                name="product_name"
+                                readOnly
                                 value={row.page_desc}
                               />
                             </td>
@@ -264,7 +232,7 @@ const CreatePengeluaran = () => {
               </Card>
 
               <div className="text-end mb-3">
-                <button type="submit" className="btn btn-success w-sm">
+                <button type="submit" className="btn btn-primary w-sm">
                   Submit
                 </button>
               </div>

@@ -17,17 +17,19 @@ import {
   Form,
   Table,
   Alert,
+  Spinner,
 } from "reactstrap";
 import { formatRupiah } from "../../../utils/utils";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getDetailVendorKendari as onGetDetailVendorKendari,
+  getDetailVendorSite as onGetDetailVendorSite,
   postCekVendorKendari as onPostCekVendorKendari,
+  postDeliveVendorSite as onPostDeliveVendorSite,
 } from "../../../slices/thunks";
 
-import { clearDetailVendorKendari, setLoadingDetailVendorKendari } from "../../../slices/deliver/reducer";
+import { clearDetailVendorSite, setLoadingDetailVendorSite } from "../../../slices/deliver/reducer";
 
 //formik
 import { useFormik } from "formik";
@@ -37,27 +39,27 @@ import { useEffect } from "react";
 import { createSelector } from "reselect";
 import { Link, useNavigate } from "react-router-dom";
 
-const DetailVendorKendari = () => {
-  document.title = "Detail Deliver Vendor | PT Tiran";
+const DetailVendorSite = () => {
+  document.title = "Detail Site Vendor | PT Tiran";
 
   const dispatch = useDispatch();
   const history = useNavigate();
 
   //   Data detail Mol
-  const detailVendorKendariData = createSelector(
-    (state) => state.Deliver.detailVendorKendari,
-    (detailVendorKendari) => detailVendorKendari
+  const detailVendorSiteData = createSelector(
+    (state) => state.Deliver.detailVendorSite,
+    (detailVendorSite) => detailVendorSite
   );
-  const detailVendorKendari = useSelector(detailVendorKendariData);
-  const loading = useSelector((state) => state.Deliver.loadingDetailVendorKendari);
+  const detailVendorSite = useSelector(detailVendorSiteData);
+  const loading = useSelector((state) => state.Deliver.loadingDetailVendorSite);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_pq = url.searchParams.get("id");
-    dispatch(setLoadingDetailVendorKendari(true));
-    dispatch(clearDetailVendorKendari());
-    dispatch(onGetDetailVendorKendari({ id_pq })).then(() => {
-      dispatch(setLoadingDetailVendorKendari(false));
+    dispatch(setLoadingDetailVendorSite(true));
+    dispatch(clearDetailVendorSite());
+    dispatch(onGetDetailVendorSite({ id_pq })).then(() => {
+      dispatch(setLoadingDetailVendorSite(false));
     });
   }, []);
 
@@ -88,23 +90,92 @@ const DetailVendorKendari = () => {
   };
 
   const validation = useFormik({
-    // enableReinitialize: true,
     initialValues: {},
     onSubmit: async () => {
-      await dispatch(onPostCekVendorKendari({ data: selectedItems }));
-      window.location.reload();
+      try {
+        const url = new URL(window.location.href);
+        const id_pq = url.searchParams.get("id");
+        const id_part_array = selectedItems.map((item) => String(item.id_price_partrequest));
+        const transformedData = {
+          id_pq,
+          id_part: id_part_array,
+        };
+        await dispatch(onPostDeliveVendorSite(transformedData));
+        window.location.reload();
+      } catch (error) {
+        console.error("Error during dispatch:", error);
+        alert("Error during dispatch. Please try again.");
+      }
     },
   });
 
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Deliver Vendor" pageTitle="Deliver" />
+        <BreadCrumb title="Deliver Site" pageTitle="Deliver" />
         {loading ? (
-          ""
+          <div className="text-center">
+            <Spinner animation="border" variant="primary" />
+          </div>
         ) : (
           <Row>
             <Col lg={12}>
+              <Card>
+                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail FPB :</CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="site">
+                          No. FPB
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="site"
+                          name="site"
+                          placeholder="Enter site"
+                          readOnly
+                          value={detailVendorSite.no_fpb}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="site">
+                          No. PO
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="site"
+                          name="site"
+                          placeholder="Enter site"
+                          readOnly
+                          value={detailVendorSite.no_po}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Jumlah Part Request
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.jumlah_part_pq}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -113,7 +184,7 @@ const DetailVendorKendari = () => {
                 }}
               >
                 <Card>
-                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request</CardHeader>
+                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request :</CardHeader>
                   <CardBody>
                     <div className="table-responsive">
                       <Table className="invoice-table table-borderless table-nowrap mb-0">
@@ -136,7 +207,7 @@ const DetailVendorKendari = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {detailVendorKendari.partrequests.map((row, index) => (
+                          {detailVendorSite.partrequests.map((row, index) => (
                             <tr key={row.id} className="product">
                               <th scope="row" className="product-id">
                                 {index + 1}
@@ -236,7 +307,7 @@ const DetailVendorKendari = () => {
                                   className="form-control form-control-sm bg-light border-0"
                                   placeholder="Remarks"
                                   name="remarks"
-                                  value={row.pricepartrequest.qty}
+                                  value={row.qty}
                                   readOnly
                                 />
                               </td>
@@ -247,25 +318,27 @@ const DetailVendorKendari = () => {
                                   className="form-control form-control-sm bg-light border-0"
                                   placeholder="Remarks"
                                   name="remarks"
-                                  value={formatRupiah(row.pricepartrequest.price)}
+                                  value={formatRupiah(row.pricepartrequest ? row.pricepartrequest.price : 0)}
                                   readOnly
                                 />
                               </td>
                               <td className="text-start">
-                                {!row.pricepartrequest.flag && (
+                                {row.pricepartrequest.status_deliver === "to site" && (
                                   <Input
                                     className="form-check-input"
                                     type="checkbox"
-                                    value={row.pricepartrequest.id_part_request}
-                                    checked={checkedRows[row.pricepartrequest.id_part_request] || false}
-                                    onChange={(e) => handleCheckboxChange(e, row.pricepartrequest.id_part_request)}
+                                    value={row.pricepartrequest.id}
+                                    checked={checkedRows[row.pricepartrequest.id] || false}
+                                    onChange={(e) => handleCheckboxChange(e, row.pricepartrequest.id)}
                                   />
                                 )}
-                                {row.pricepartrequest.flag ? (
-                                  <Input className="form-check-input" type="checkbox" value checked />
-                                ) : (
-                                  ""
+
+                                {row.pricepartrequest.status_deliver === "completed cek site" && (
+                                  <Input className="form-check-input" type="checkbox" checked />
                                 )}
+
+                                {row.pricepartrequest.status_deliver !== "to site" &&
+                                  row.pricepartrequest.status_deliver !== "completed cek site" && <></>}
                               </td>
                             </tr>
                           ))}
@@ -275,22 +348,11 @@ const DetailVendorKendari = () => {
                   </CardBody>
                 </Card>
 
-                {/* {detailPenawaran.map((rowPenawaran, indexPenawaran) => (
-              <Card key={indexPenawaran}>
-                <CardHeader>Penawaran {rowPenawaran.penawaran_ke}</CardHeader>
-                {rowPenawaran.detail_penawaran.map((rowDetail, indexDetail) => ( */}
-
                 <div className="text-end mb-3">
                   <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                    {/* {detailPenawaran[0].detail_penawaran[0].flag == 1 ? (
-                  <button type="button" className="btn btn-primary w-sm" onClick={toggle}>
-                    Delivery Order
-                  </button>
-                ) : ( */}
                     <button type="submit" className="btn btn-primary w-sm">
                       Submit
                     </button>
-                    {/*  )} */}
                   </div>
                 </div>
               </Form>
@@ -303,4 +365,4 @@ const DetailVendorKendari = () => {
   );
 };
 
-export default DetailVendorKendari;
+export default DetailVendorSite;

@@ -15,6 +15,7 @@ import { useFormik } from "formik";
 import { loginUser, socialLogin, resetLoginFlag, getMasterAlat, getMasterPart } from "../../slices/thunks";
 
 import logoLight from "../../assets/images/logo-light.png";
+import tiranLogo from "../../assets/images/tiran-logo-new.png";
 import { createSelector } from "reselect";
 //import images
 
@@ -83,7 +84,7 @@ const Login = (props) => {
       }, 3000);
     }
   }, [dispatch, errorMsg]);
-  document.title = "Basic SignIn | PT Tiran";
+  document.title = "SignIn | PT Tiran";
   return (
     <React.Fragment>
       <ParticlesAuth>
@@ -94,10 +95,10 @@ const Login = (props) => {
                 <div className="text-center mt-sm-5 mb-4 text-white-50">
                   <div>
                     <Link to="/" className="d-inline-block auth-logo">
-                      <img src={logoLight} alt="" height="20" />
+                      <img src={tiranLogo} alt="" height="80" />
                     </Link>
                   </div>
-                  <p className="mt-3 fs-15 fw-medium">Pt Tiran</p>
+                  {/* <p className="mt-3 fs-15 fw-medium">Pt Tiran</p> */}
                 </div>
               </Col>
             </Row>
@@ -140,11 +141,11 @@ const Login = (props) => {
                         </div>
 
                         <div className="mb-3">
-                          <div className="float-end">
+                          {/* <div className="float-end">
                             <Link to="/forgot-password" className="text-muted">
                               Forgot password?
                             </Link>
-                          </div>
+                          </div> */}
                           <Label className="form-label" htmlFor="password-input">
                             Password
                           </Label>
@@ -197,7 +198,7 @@ const Login = (props) => {
                           </Button>
                         </div>
 
-                        <div className="mt-4 text-center">
+                        {/* <div className="mt-4 text-center">
                           <div className="signin-other-title">
                             <h5 className="fs-13 mb-4 title">Sign In with</h5>
                           </div>
@@ -229,13 +230,13 @@ const Login = (props) => {
                               <i className="ri-twitter-fill fs-16"></i>
                             </Button>
                           </div>
-                        </div>
+                        </div> */}
                       </Form>
                     </div>
                   </CardBody>
                 </Card>
 
-                <div className="mt-4 text-center">
+                {/* <div className="mt-4 text-center">
                   <p className="mb-0">
                     Don't have an account ?{" "}
                     <Link to="/register" className="fw-semibold text-primary text-decoration-underline">
@@ -243,7 +244,7 @@ const Login = (props) => {
                       Signup{" "}
                     </Link>{" "}
                   </p>
-                </div>
+                </div> */}
               </Col>
             </Row>
           </Container>

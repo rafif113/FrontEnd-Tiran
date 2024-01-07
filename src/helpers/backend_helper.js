@@ -123,8 +123,8 @@ export const postRecapCart = (data) => api.create(url.POST_RECAP_CART, data);
 
 // REPORT
 export const getReportUnit = () => api.get(url.GET_REPORT_UNIT);
-export const getReportBarangIn = () => api.get(url.GET_REPORT_BARANG_IN);
-export const getReportBarangOut = () => api.get(url.GET_REPORT_BARANG_OUT);
+export const getReportBarangIn = (data) => api.create(url.GET_REPORT_BARANG_IN, data);
+export const getReportBarangOut = (data) => api.create(url.GET_REPORT_BARANG_OUT, data);
 
 export const getPenawaranPemenang = (data) => api.create(url.GET_PENAWARAN_PEMENANG, data);
 export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE, data);
@@ -144,6 +144,9 @@ export const getMasterAlat = () => api.get(url.GET_MASTER_ALAT);
 // DELIVER
 export const getVendorKendari = (data) => api.create(url.GET_VENDOR_KENDARI, data);
 export const postCekVendorKendari = (data) => api.create(url.POST_CEK_VENDOR_KENDARI, data);
+export const getVendorSite = (data) => api.create(url.GET_VENDOR_SITE, data);
+export const postDeliveVendorSite = (data) => api.create(url.POST_DELIVE_VENDOR_SITE, data);
+export const postCekVendorSite = (data) => api.create(url.POST_CEK_VENDOR_SITE, data);
 
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);

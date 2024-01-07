@@ -1,24 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import TableContainer from "../../../../Components/Common/TableContainerReactTable";
 import { Input, Spinner } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
 import { getCartProcurementList as onGetCartProcurementList } from "../../../../slices/thunks";
 import { setLoadingCartPaymentRequest as setLoading } from "../../../../slices/finance/reducer";
-import FileModal from "../../../ProcurementList/List/FileModal";
 import { formatRupiah } from "../../../../utils/utils";
 
-const CartPaymentRequestTable = () => {
+const CartPaymentRequestTable = ({ handleCheckboxChange }) => {
   const dispatch = useDispatch();
   const history = useNavigate();
-
-  const handleDetailClick = (id, kelengkapan) => {
-    history(`/finance/monitoring/payment-request/detail?id=${id}`);
-  };
-
   const cartPaymentRequestData = createSelector(
     (state) => state.Finance.cartPaymentRequest,
     (cartPaymentRequest) => cartPaymentRequest
@@ -84,66 +77,38 @@ const CartPaymentRequestTable = () => {
         disableFilters: true,
         filterable: false,
         Cell: ({ row }) => {
-          console.log(row);
-          const numberOfCheckboxes = row.original.datapr[0].termin_pembayaran || 0;
-          const numberOfPayed = row.original.datapadetail.length || 0;
-
-          console.log(numberOfPayed);
           const renderCheckboxes = () => {
             const checkboxes = [];
-            for (let i = 0; i < numberOfCheckboxes; i++) {
-              const isCheckedAndDisabled = i < numberOfPayed;
-              checkboxes.push(
-                <Input
-                  key={i}
-                  className="form-check-input"
-                  style={{ marginRight: "5px" }}
-                  type="checkbox"
-                  checked={isCheckedAndDisabled}
-                  disabled={isCheckedAndDisabled}
-                />
-              );
-            }
+            row.original.datapadetail.map((key, index) => {
+              if (key.flag == 1) {
+                checkboxes.push(
+                  <Input
+                    key={index}
+                    className="form-check-input"
+                    style={{ marginRight: "5px" }}
+                    type="checkbox"
+                    disabled={key.flag == 1}
+                    checked
+                  />
+                );
+              } else {
+                checkboxes.push(
+                  <Input
+                    key={index}
+                    className="form-check-input"
+                    style={{ marginRight: "5px" }}
+                    type="checkbox"
+                    onChange={() => handleCheckboxChange(key)}
+                  />
+                );
+              }
+            });
             return checkboxes;
           };
 
           return <div className="form-check">{renderCheckboxes()}</div>;
         },
       },
-
-      // {
-      //   Header: "File",
-      //   accessor: (cellProps) => (
-      //     <FileModal fileInvoice={cellProps.file_invoice} filePO={cellProps.file_po} fileSPB={cellProps.file_spb} />
-      //   ),
-      //   disableFilters: true,
-      //   filterable: false,
-      // },
-      // {
-      //   Header: "Actions",
-      //   disableFilters: true,
-      //   filterable: true,
-      //   accessor: (cellProps) => {
-      //     return (
-      //       <>
-      //         <button
-      //           onClick={() => handlePenawaranClick(cellProps.po.id, cellProps.keterangan)}
-      //           className="btn btn-sm btn-light"
-      //         >
-      //           {cellProps.keterangan == "selesai" ? "Invoice" : "Penawaran"}
-      //         </button>
-      //         <button onClick={() => handleCetakClick(cellProps.po.id)} className="btn btn-sm btn-light">
-      //           Cetak
-      //         </button>
-      //         {cellProps.keterangan == "selesai" ? (
-      //           <button onClick={() => handlePenawaranClick(cellProps.po.id, "detail")} className="btn btn-sm btn-light">
-      //             Detail
-      //           </button>
-      //         ) : null}
-      //       </>
-      //     );
-      //   },
-      // },
     ],
     []
   );

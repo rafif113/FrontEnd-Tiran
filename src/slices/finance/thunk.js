@@ -123,9 +123,7 @@ export const postPaymentRequest = createAsyncThunk("finance/postPaymentRequest",
 export const postRecapCart = createAsyncThunk("finance/postRecapCart", async (cart) => {
   try {
     const response = postRecapCartApi(cart);
-    const data = await response;
-    toast.success("PR Added Successfully", { autoClose: 3000 });
-    return data;
+    return response;
   } catch (error) {
     toast.error("PR Added Failed", { autoClose: 3000 });
     return error;

@@ -13,6 +13,7 @@ import { setLoading, clearDetailPo } from "../../../slices/po/reducer";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
+import { formatRupiah } from "../../../utils/utils";
 
 const CetakPo = () => {
   //Print the Invoice
@@ -127,15 +128,15 @@ const CetakPo = () => {
                                               </tr>
                                               <tr>
                                                 <td width="20%">DATE</td>
-                                                <td style={{ border: "1px solid black" }}>: 17/10/2023</td>
+                                                <td style={{ border: "1px solid black" }}>: {detailPo.date}</td>
                                               </tr>
                                               <tr>
                                                 <td>PO</td>
-                                                <td style={{ border: "1px solid black" }}>: {detailPo.po.nomor_po}</td>
+                                                <td style={{ border: "1px solid black" }}>: {detailPo.nomor_po}</td>
                                               </tr>
                                               <tr>
                                                 <td>PR</td>
-                                                <td style={{ border: "1px solid black" }}>: {detailPo.po.nomor_pr}</td>
+                                                <td style={{ border: "1px solid black" }}>: {detailPo.nomor_pr}</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -188,7 +189,7 @@ const CetakPo = () => {
                                       </tr>
                                       <tr>
                                         <td style={{ width: "10%" }}>
-                                          PT.BADAK INDO PERKASA <br />
+                                          {detailPo.nama_vendor} <br />
                                           JL VETRAN UTARA NO 266 MAKASSAR <br />
                                           0822 7771 3338( PAK DEDY)
                                         </td>
@@ -227,13 +228,15 @@ const CetakPo = () => {
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr style={{ fontWeight: "bold" }}>
-                                        <td>1</td>
-                                        <td>65-01903-B0003 GASKET TIMMING GEAR CASE</td>
-                                        <td>1 EA</td>
-                                        <td>250,000</td>
-                                        <td style={{ textAlign: "right" }}>Rp 250,000</td>
-                                      </tr>
+                                      {detailPo.partrequest.map((row, index) => (
+                                        <tr key={index} style={{ fontWeight: "bold" }}>
+                                          <td>{index + 1}</td>
+                                          <td>65-01903-B0003 GASKET TIMMING GEAR CASE</td>
+                                          <td>{row.qty} EA</td>
+                                          <td>{formatRupiah(row.price)}</td>
+                                          <td style={{ textAlign: "right" }}>{formatRupiah(parseInt(row.qty) * row.price)}</td>
+                                        </tr>
+                                      ))}
                                     </tbody>
                                     <tfoot>
                                       <tr>
@@ -314,7 +317,7 @@ const CetakPo = () => {
                                             border: "1px solid black",
                                           }}
                                         >
-                                          {detailPo.po.spesial_intruksi}
+                                          {detailPo.spesial_intruksi}
                                         </td>
                                         <td />
                                         <td style={{ width: "50%" }} className="kolom">

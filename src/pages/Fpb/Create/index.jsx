@@ -247,6 +247,7 @@ const CreateFpb = () => {
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
                           invalid={validation.errors.tujuan && validation.touched.tujuan ? true : false}
+                          placeholder="Enter Tujuan"
                         ></textarea>
                         {validation.errors.tujuan && validation.touched.tujuan ? (
                           <FormFeedback type="invalid">{validation.errors.tujuan}</FormFeedback>
@@ -263,6 +264,7 @@ const CreateFpb = () => {
                           id="message-text"
                           rows="4"
                           name="note"
+                          placeholder="Enter Keterangan"
                           value={validation.values.note || ""}
                           onBlur={validation.handleBlur}
                           onChange={validation.handleChange}
@@ -290,6 +292,7 @@ const CreateFpb = () => {
                           <th scope="col">Deskripsi / Nama Barang</th>
                           <th scope="col">Merk / Type</th>
                           <th scope="col">Qty</th>
+                          <th scope="col">Stock</th>
                           <th scope="col">Keterangan</th>
                         </tr>
                       </thead>
@@ -341,6 +344,17 @@ const CreateFpb = () => {
                                 name="product_name"
                                 readOnly
                                 value={row.qty}
+                              />
+                            </td>
+                            <td className="text-start">
+                              <Input
+                                type="text"
+                                className="form-control bg-light border-0"
+                                id="productName-1"
+                                placeholder="Product Name"
+                                name="product_name"
+                                readOnly
+                                value={row.stock}
                               />
                             </td>
                             <td className="text-start">

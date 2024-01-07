@@ -22,7 +22,7 @@ const BarangKeluarTable = () => {
     (barangOut) => barangOut
   );
   const barangOut = useSelector(BarangOutData);
-  const loading = useSelector((state) => state.Finance.loadingBarangOut);
+  const loading = useSelector((state) => state.Report.loadingBarangOut);
 
   useEffect(() => {
     dispatch(setLoadingBarangOut(true));
@@ -40,17 +40,63 @@ const BarangKeluarTable = () => {
         disableFilters: true,
         filterable: false,
       },
+      // {
+      //   Header: "No. FPB",
+      //   accessor: "fpb",
+      //   disableFilters: true,
+      //   filterable: false,
+      // },
       {
-        Header: "Unit Code",
-        accessor: "unit_code",
+        Header: "For",
+        accessor: "for",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Part Number",
+        accessor: "part_number",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      // {
+      //   Header: "Part Name",
+      //   accessor: "part_name",
+      //   disableFilters: true,
+      //   filterable: false,
+      // },
+      {
+        Header: "Date",
+        accessor: "date",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      // {
+      //   Header: "Vendor Pengirim",
+      //   accessor: "vendor_or_pengirim",
+      //   disableFilters: true,
+      //   filterable: false,
+      // },
+      // {
+      //   Header: "Tanggal Pengiriman",
+      //   accessor: "tanggal_pengiriman",
+      //   disableFilters: true,
+      //   filterable: false,
+      // },
+      {
+        Header: "Qty",
+        accessor: "qty",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Total",
-        accessor: "total",
+        Header: "Remarks",
+        accessor: "remaks",
         disableFilters: true,
         filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
       },
 
       // {
@@ -84,11 +130,11 @@ const BarangKeluarTable = () => {
           isGlobalSearch={true}
           isCustomPageSize={true}
           isBordered={true}
-          customPageSize={5}
+          customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari Barang Masuk..."
+          SearchPlaceholder="Cari Barang Keluar..."
         />
       ) : (
         <div className="text-center">

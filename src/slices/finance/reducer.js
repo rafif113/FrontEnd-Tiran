@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailFinancePo, getFinancePo, getFinanceTongkang, getDetailFinanceTongkang, getCartProcurementList } from "./thunk";
+import {
+  getDetailFinancePo,
+  getFinancePo,
+  getFinanceTongkang,
+  getDetailFinanceTongkang,
+  getCartProcurementList,
+  postRecapCart,
+} from "./thunk";
 export const initialState = {
   invoicePo: [],
   cartPaymentRequest: [],
@@ -13,6 +20,7 @@ export const initialState = {
   loadingCartPaymentRequest: true,
   loadingTongkang: true,
   loadingDetailTongkang: true,
+  recapCart: [],
   error: {},
 };
 
@@ -47,14 +55,15 @@ const FinanceSlice = createSlice({
     clearDetailTongkang: (state) => {
       state.detailTongkang = null;
     },
+    clearRecapCart: (state) => {
+      state.recapCart = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getFinancePo.fulfilled, (state, action) => {
       const data = action.payload.data;
       const paymentRequest = data.filter((item) => item.flag == 0);
-      // const cartPaymentRequest = data.filter((item) => item.flag == 1);
       state.invoicePo = paymentRequest;
-      // state.cartPaymentRequest = cartPaymentRequest;
     });
 
     builder.addCase(getCartProcurementList.fulfilled, (state, action) => {
@@ -66,12 +75,15 @@ const FinanceSlice = createSlice({
     });
 
     builder.addCase(getFinanceTongkang.fulfilled, (state, action) => {
-      console.log(action);
       state.tongkang = action.payload.message;
     });
 
     builder.addCase(getDetailFinanceTongkang.fulfilled, (state, action) => {
       state.detailTongkang = action.payload.data;
+    });
+
+    builder.addCase(postRecapCart.fulfilled, (state, action) => {
+      state.recapCart = action.payload.data;
     });
   },
 });
@@ -85,6 +97,7 @@ export const {
   setLoadingTongkang,
   setLoadingDetailTongkang,
   setLoadingCartPaymentRequest,
+  clearRecapCart,
 } = FinanceSlice.actions;
 
 export default FinanceSlice.reducer;

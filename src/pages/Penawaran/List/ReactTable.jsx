@@ -30,7 +30,7 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "PQ",
+        Header: "Part Questions",
         accessor: "pq_ke",
         disableFilters: true,
         filterable: false,

@@ -17,6 +17,7 @@ import {
   Form,
   Table,
   Alert,
+  Spinner,
 } from "reactstrap";
 
 // Redux
@@ -141,12 +142,14 @@ const DetailFpb = () => {
 
   return (
     <React.Fragment>
-      {loading ? (
-        <div></div>
-      ) : (
-        <div className="page-content">
-          <Container fluid>
-            <BreadCrumb title="Detail FPB" pageTitle="Detail" />
+      <div className="page-content">
+        <Container fluid>
+          <BreadCrumb title="Detail FPB" pageTitle="Detail" />
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
             <Row>
               <Col lg={12}>
                 <Card>
@@ -298,6 +301,7 @@ const DetailFpb = () => {
                                   <th scope="col">Merk / Type</th>
                                   <th scope="col">Qty</th>
                                   <th scope="col">Keterangan</th>
+                                  <th scope="col">Stock</th>
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>
@@ -360,6 +364,17 @@ const DetailFpb = () => {
                                         name="product_name"
                                         readOnly
                                         value={row.page_desc}
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        type="text"
+                                        className="form-control bg-light border-0"
+                                        id="productName-1"
+                                        placeholder="Stock"
+                                        name="stock"
+                                        readOnly
+                                        value={row.stock}
                                       />
                                     </td>
                                     <td className="text-start">
@@ -487,9 +502,9 @@ const DetailFpb = () => {
                 </TabContent>
               </Col>
             </Row>
-          </Container>
-        </div>
-      )}
+          )}
+        </Container>
+      </div>
       {/* {isModalOpen && <Modals isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} */}
       {isModalOpen && partPrice && <Modals data={partPrice} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
     </React.Fragment>

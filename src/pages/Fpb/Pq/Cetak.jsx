@@ -106,7 +106,9 @@ const CetakPq = () => {
                                             </tr>
                                             <tr>
                                               <td width="20%">DATE</td>
-                                              <td style={{ border: "1px solid black" }}>: DATE NOW</td>
+                                              <td style={{ border: "1px solid black" }}>
+                                                : {new Date().toISOString().split("T")[0]}
+                                              </td>
                                             </tr>
                                             <tr>
                                               <td>FPB</td>

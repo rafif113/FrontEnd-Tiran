@@ -1,19 +1,34 @@
-import React, { useEffect, useMemo, useState } from "react";
-import TableContainer from "../../../../Components/Common/TableContainerReactTable";
+import React, { useEffect, useMemo } from "react";
+import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getKttPo as onGetKttPo } from "../../../../slices/thunks";
-import { setLoading } from "../../../../slices/ktt/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 
-const KttPoTable = () => {
+import { getVendorSite as onGetVendorSite } from "../../../slices/thunks";
+import { setLoadingVendorSite } from "../../../slices/deliver/reducer";
+
+const VendorSiteTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
   const handleDetailClick = (id) => {
-    history(`/po-ktt/detail?id=${id}`);
+    history(`/deliver/site/detail?id=${id}`);
   };
+
+  const vendorSiteData = createSelector(
+    (state) => state.Deliver.vendorSite,
+    (vendorSite) => vendorSite
+  );
+  const vendorSite = useSelector(vendorSiteData);
+  const loading = useSelector((state) => state.Deliver.loadingVendorSite);
+
+  useEffect(() => {
+    dispatch(setLoadingVendorSite(true));
+    dispatch(onGetVendorSite()).then(() => {
+      dispatch(setLoadingVendorSite(false));
+    });
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -24,22 +39,34 @@ const KttPoTable = () => {
         disableFilters: true,
         filterable: false,
       },
-
       {
-        Header: "Nomor PO",
-        accessor: "po.nomor_po",
+        Header: "NO FPB",
+        accessor: "no_fpb",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Nomor PR ",
-        accessor: "po.nomor_pr",
+        Header: "Part Questions",
+        accessor: "pq_ke",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Special Instruction",
-        accessor: "po.spesial_intruksi",
+        Header: "Status",
+        accessor: "status",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Total Part PQ",
+        // accessor: "total",
+        accessor: (cellProps) => {
+          return (
+            <div>
+              <b>{cellProps.jumlah_part_pq}</b> (dari {cellProps.total} part request FPB)
+            </div>
+          );
+        },
         disableFilters: true,
         filterable: false,
       },
@@ -49,32 +76,17 @@ const KttPoTable = () => {
         filterable: true,
         accessor: (cellProps) => {
           return (
-            <button onClick={() => handleDetailClick(cellProps.po.id)} className="btn btn-sm btn-light">
-              Detail
-            </button>
+            <>
+              <button onClick={() => handleDetailClick(cellProps.id_pq)} className="btn btn-sm btn-light">
+                Detail
+              </button>
+            </>
           );
         },
       },
     ],
     []
   );
-
-  // -------------------------------------------
-  const SelectKttData = createSelector(
-    (state) => state.Ktt.kttPo,
-    (ktt) => ktt
-  );
-  const ktt = useSelector(SelectKttData);
-  const loading = useSelector((state) => state.Ktt.loading);
-
-  useEffect(() => {
-    dispatch(setLoading(true));
-    dispatch(onGetKttPo()).then(() => {
-      dispatch(setLoading(false));
-    });
-  }, []);
-
-  console.log(ktt);
 
   // ----------------------------------------------
 
@@ -83,7 +95,7 @@ const KttPoTable = () => {
       {!loading ? (
         <TableContainer
           columns={columns || []}
-          data={ktt.po || []}
+          data={vendorSite || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -93,7 +105,7 @@ const KttPoTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari PO KTT..."
+          SearchPlaceholder="Cari List Kendari..."
         />
       ) : (
         <div className="text-center">
@@ -104,4 +116,4 @@ const KttPoTable = () => {
   );
 };
 
-export { KttPoTable };
+export { VendorSiteTable };

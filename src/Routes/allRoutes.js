@@ -70,9 +70,11 @@ import KttPoDetail from "../pages/Ktt/Po/Detail";
 import KttPoRutin from "../pages/Ktt/Rutin/List";
 import KttPoDetailRutin from "../pages/Ktt/Rutin/Detail";
 
-// KTT
+// DELIVER
 import VendorKendari from "../pages/Deliver/ListVendorKendari";
-import DetailVendorKendari from "../pages/Deliver/Details";
+import DetailVendorKendari from "../pages/Deliver/DetailsKendari";
+import VendorSite from "../pages/Deliver/ListVendorSite";
+import DetailVendorSite from "../pages/Deliver/DetailsSite";
 
 const authProtectedRoutes = [
   // User Profile
@@ -139,6 +141,8 @@ const authProtectedRoutes = [
   // DELIVER
   { path: "/deliver/vendor", component: <VendorKendari /> },
   { path: "/deliver/vendor/detail", component: <DetailVendorKendari /> },
+  { path: "/deliver/site", component: <VendorSite /> },
+  { path: "/deliver/site/detail", component: <DetailVendorSite /> },
 
   {
     path: "/",

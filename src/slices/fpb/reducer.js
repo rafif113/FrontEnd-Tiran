@@ -6,6 +6,7 @@ export const initialState = {
   detailPq: [],
   loading: true,
   loadingDetail: true,
+  loadingCetak: true,
   loadingPq: true,
   selectedFpbList: [],
   error: {},
@@ -26,6 +27,9 @@ const FpbSlice = createSlice({
     },
     setLoadingPq: (state, action) => {
       state.loadingPq = action.payload;
+    },
+    setLoadingCetak: (state, action) => {
+      state.loadingCetak = action.payload;
     },
     clearDetailPq: (state) => {
       state.detailPq = null;
@@ -77,6 +81,7 @@ export const {
   clearDetailPq,
   setLoadingPq,
   setLoadingDetail,
+  setLoadingCetak,
 } = FpbSlice.actions;
 
 export default FpbSlice.reducer;

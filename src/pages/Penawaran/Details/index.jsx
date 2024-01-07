@@ -15,6 +15,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Spinner,
 } from "reactstrap";
 import { formatRupiah } from "../../../utils/utils";
 
@@ -128,7 +129,9 @@ const DetailPenawaran = () => {
       <Container fluid>
         <BreadCrumb title="Create Penawaran" pageTitle="Penawaran" />
         {loadingPenawaran ? (
-          ""
+          <div className="text-center">
+            <Spinner animation="border" variant="primary" />
+          </div>
         ) : (
           <Row>
             <Col lg={12}>

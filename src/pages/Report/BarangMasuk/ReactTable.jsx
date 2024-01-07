@@ -22,7 +22,7 @@ const BarangMasukTable = () => {
     (barangIn) => barangIn
   );
   const barangIn = useSelector(BarangInData);
-  const loading = useSelector((state) => state.Finance.loadingBarangIn);
+  const loading = useSelector((state) => state.Report.loadingBarangIn);
 
   useEffect(() => {
     dispatch(setLoadingBarangIn(true));
@@ -41,22 +41,66 @@ const BarangMasukTable = () => {
         filterable: false,
       },
       {
-        Header: "Kategori",
-        accessor: "id_kategori",
+        Header: "No. FPB",
+        accessor: "fpb",
         disableFilters: true,
         filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
       },
       {
-        Header: "Quantity",
+        Header: "For",
+        accessor: "for",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Part Number",
+        accessor: "part_number",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Part Name",
+        accessor: "part_name",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Date",
+        accessor: "date",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Vendor Pengirim",
+        accessor: "vendor_or_pengirim",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Tanggal Pengiriman",
+        accessor: "tanggal_pengiriman",
+        disableFilters: true,
+        filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
+      },
+      {
+        Header: "Qty",
         accessor: "qty",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Description",
-        accessor: "desc_barang",
+        Header: "Remarks",
+        accessor: "remaks",
         disableFilters: true,
         filterable: false,
+        Cell: ({ value }) => (value ? value : "-"),
       },
 
       // {
@@ -90,7 +134,7 @@ const BarangMasukTable = () => {
           isGlobalSearch={true}
           isCustomPageSize={true}
           isBordered={true}
-          customPageSize={5}
+          customPageSize={10}
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"

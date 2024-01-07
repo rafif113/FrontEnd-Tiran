@@ -16,6 +16,7 @@ import {
   Label,
   Form,
   Table,
+  Spinner,
 } from "reactstrap";
 
 // Redux
@@ -40,7 +41,7 @@ import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 
 const DetailMol = () => {
-  document.title = "Create Product | PT Tiran";
+  document.title = "Detail MOL | PT Tiran";
 
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -133,13 +134,14 @@ const DetailMol = () => {
 
   return (
     <React.Fragment>
-      {loading ? (
-        <div>1</div>
-      ) : (
-        <div className="page-content">
-          <Container fluid>
-            <BreadCrumb title="Detail MOL" pageTitle="Detail" />
-
+      <div className="page-content">
+        <Container fluid>
+          <BreadCrumb title="Detail MOL" pageTitle="Detail" />
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
             <Row>
               <Col lg={12}>
                 <Form
@@ -399,6 +401,7 @@ const DetailMol = () => {
                               <th scope="col">Page Image</th>
                               <th scope="col">Page Desc</th>
                               <th scope="col">Remarks</th>
+                              <th scope="col">Stock</th>
                               <th scope="col">Action</th>
                             </tr>
                           </thead>
@@ -496,6 +499,17 @@ const DetailMol = () => {
                                     readOnly
                                   />
                                 </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    placeholder="Remarks"
+                                    name="remarks"
+                                    value={row.stock}
+                                    readOnly
+                                  />
+                                </td>
                                 <td className="product-removal">
                                   {/* <Input
                                     className="form-check-input"
@@ -587,7 +601,7 @@ const DetailMol = () => {
                               toggleCustom("5");
                             }}
                           >
-                            Description
+                            Keterangan
                           </NavLink>
                         </NavItem>
                       </Nav>
@@ -741,9 +755,9 @@ const DetailMol = () => {
                 </Form>
               </Col>
             </Row>
-          </Container>
-        </div>
-      )}
+          )}
+        </Container>
+      </div>
     </React.Fragment>
   );
 };

@@ -2,10 +2,28 @@ import React from "react";
 import { CardBody, Row, Col, Card, Container } from "reactstrap";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import "./styles.css";
+import { createSelector } from "reselect";
+import { useDispatch, useSelector } from "react-redux";
+import { formatRupiah } from "../../../../utils/utils";
 
 const CetakPr = () => {
   const printInvoice = () => {
     window.print();
+  };
+
+  const recapCartData = createSelector(
+    (state) => state.Finance.recapCart,
+    (recapCart) => recapCart
+  );
+  const recapCart = useSelector(recapCartData);
+  console.log(recapCart);
+
+  const calculateSubtotal = () => {
+    let subtotal = 0;
+    recapCart.forEach((row) => {
+      subtotal += parseInt(row.rencana_pembayaran);
+    });
+    return subtotal;
   };
 
   return (
@@ -64,24 +82,18 @@ const CetakPr = () => {
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr style={{ backgroundColor: "#E0E0E0" }}>
-                                        <td>PO 483 ANG</td>
-                                        <td>ANAMIA NDOLASOLO GROUP</td>
-                                        <td>SPAREPART</td>
-                                        <td>TAHAP I SOLAR INDUSTRI 100 KL PO 483/PO/PTTI-ANG/XI/2023</td>
-                                        <td>Rp 1,888,610,159</td>
-                                        <td>Rp 944,305,079</td>
-                                        <td></td>
-                                      </tr>
-                                      <tr style={{ backgroundColor: "#ffffff" }}>
-                                        <td>TI23 3133 </td>
-                                        <td>PT CANNE BERNIAGA BERKAH</td>
-                                        <td>SPAREPART</td>
-                                        <td>PERMINTAAN KEBUTUHAN ALL UNIT DT HINO 500 FM 280JD</td>
-                                        <td>Rp 38,250,000</td>
-                                        <td>Rp 38,250,000</td>
-                                        <td></td>
-                                      </tr>
+                                      {recapCart.map((row, index) => (
+                                        <tr key={index} style={{ backgroundColor: "#E0E0E0" }}>
+                                          <td>{row.no_po}</td>
+                                          <td>{row.nama_vendor}</td>
+                                          <td>{row.kategori}</td>
+                                          <td>{row.desc}</td>
+                                          <td>{formatRupiah(row.nominal_ajuan)}</td>
+                                          <td>{formatRupiah(row.rencana_pembayaran)}</td>
+                                          <td>{row.desc}</td>
+                                        </tr>
+                                      ))}
+
                                       <tr>
                                         <td></td>
                                         <td></td>
@@ -89,7 +101,7 @@ const CetakPr = () => {
                                         <td></td>
                                         <td>SUB TOTAL</td>
                                         <td>
-                                          <b>Rp. 982,555,079</b>
+                                          <b>{formatRupiah(calculateSubtotal())}</b>
                                         </td>
                                         <td></td>
                                       </tr>

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getBarang as onGetBarang, getFpb as onGetFpb } from "../../../slices/thunks";
+import { getFpb as onGetFpb } from "../../../slices/thunks";
 import { setLoading } from "../../../slices/fpb/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";

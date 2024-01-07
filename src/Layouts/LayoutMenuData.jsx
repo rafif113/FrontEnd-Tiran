@@ -167,23 +167,21 @@ const Navdata = () => {
       subItems: [{ id: "listfpb", label: "List FPB", link: "/fpb", parentId: "fpb" }],
     },
     {
-      id: "deliver",
-      label: "Deliver",
+      id: "penawaran",
+      label: "Penawaran",
       icon: "ri-file-list-3-line",
       link: "/#",
       click: function (e) {
         e.preventDefault();
-        setIsDeliver(!isDeliver);
-        setIsCurrentState("Deliver");
+        setIsPenawaran(!isPenawaran);
+        setIsCurrentState("Penawaran");
         updateIconSidebar(e);
       },
-      stateVariables: isDeliver,
+      stateVariables: isPenawaran,
 
-      subItems: [
-        { id: "vendorkendari", label: "Vendor - Kendari", link: "/deliver/vendor", parentId: "deliver" },
-        { id: "vendorsite", label: "Site - Kendari", link: "/deliver/site", parentId: "deliver" },
-      ],
+      subItems: [{ id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" }],
     },
+
     {
       id: "po",
       label: "PO",
@@ -199,43 +197,47 @@ const Navdata = () => {
 
       subItems: [
         { id: "listpo", label: "List PO", link: "/po", parentId: "po" },
-        { id: "listpologistik", label: "List PO Logistik", link: "/po-logistik", parentId: "po" },
+        // { id: "listpologistik", label: "List PO Logistik", link: "/po-logistik", parentId: "po" },
         { id: "procurementlist", label: "Procurement List", link: "/procurement-list", parentId: "po" },
       ],
     },
     {
-      id: "ktt",
-      label: "KTT",
+      id: "deliver",
+      label: "Deliver",
       icon: "ri-file-list-3-line",
       link: "/#",
       click: function (e) {
         e.preventDefault();
-        setIsKtt(!isKtt);
-        setIsCurrentState("Ktt");
+        setIsDeliver(!isDeliver);
+        setIsCurrentState("Deliver");
         updateIconSidebar(e);
       },
-      stateVariables: isKtt,
+      stateVariables: isDeliver,
 
       subItems: [
-        { id: "listkttpo", label: "List PO", link: "/po-ktt", parentId: "ktt" },
-        { id: "listkttporutin", label: "List Rutin", link: "/po-ktt-rutin", parentId: "ktt" },
+        { id: "vendorkendari", label: "Kendari", link: "/deliver/vendor", parentId: "deliver" },
+        { id: "vendorsite", label: "Site", link: "/deliver/site", parentId: "deliver" },
       ],
     },
-    {
-      id: "penawaran",
-      label: "Penawaran",
-      icon: "ri-file-list-3-line",
-      link: "/#",
-      click: function (e) {
-        e.preventDefault();
-        setIsPenawaran(!isPenawaran);
-        setIsCurrentState("Penawaran");
-        updateIconSidebar(e);
-      },
-      stateVariables: isPenawaran,
+    // {
+    //   id: "ktt",
+    //   label: "KTT",
+    //   icon: "ri-file-list-3-line",
+    //   link: "/#",
+    //   click: function (e) {
+    //     e.preventDefault();
+    //     setIsKtt(!isKtt);
+    //     setIsCurrentState("Ktt");
+    //     updateIconSidebar(e);
+    //   },
+    //   stateVariables: isKtt,
 
-      subItems: [{ id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" }],
-    },
+    //   subItems: [
+    //     { id: "listkttpo", label: "List PO", link: "/po-ktt", parentId: "ktt" },
+    //     { id: "listkttporutin", label: "List Rutin", link: "/po-ktt-rutin", parentId: "ktt" },
+    //   ],
+    // },
+
     {
       id: "finance",
       label: "Finance",

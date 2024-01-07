@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
 
-import { getFinanceTongkang as onGetTongkang, getMasterAlat as onGetMasterAlat } from "../../slices/thunks";
+import { getMasterAlat as onGetMasterAlat } from "../../slices/thunks";
 import { setLoadingALat } from "../../slices/master/reducer";
 
 const UnitTable = () => {

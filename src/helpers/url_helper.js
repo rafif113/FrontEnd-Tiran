@@ -73,8 +73,8 @@ export const POST_RECAP_CART = "/get/recapcart";
 
 // REPORT
 export const GET_REPORT_UNIT = "/get/report/unit";
-export const GET_REPORT_BARANG_IN = "/get/report/barang/in";
-export const GET_REPORT_BARANG_OUT = "/get/report/barang/out";
+export const GET_REPORT_BARANG_IN = "/get/barangmasuk";
+export const GET_REPORT_BARANG_OUT = "/get/barangkeluar";
 
 export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
@@ -100,6 +100,9 @@ export const GET_MASTER_ALAT = "/get/master/alatberat";
 // Deliver
 export const GET_VENDOR_KENDARI = "/get/delive/vendorkendari";
 export const POST_CEK_VENDOR_KENDARI = "/post/cek/vendorkendari";
+export const GET_VENDOR_SITE = "/get/delive/site";
+export const POST_DELIVE_VENDOR_SITE = "/post/delive/site";
+export const POST_CEK_VENDOR_SITE = "/post/cek/site/barang";
 
 // Calendar
 export const GET_EVENTS = "/events";
