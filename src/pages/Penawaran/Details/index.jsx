@@ -78,7 +78,7 @@ const DetailPenawaran = () => {
       ...prevInputValues,
       [indexPrice]: {
         id_part_request: idPartRequest,
-        price,
+        price: parseFloat(price).toFixed(2),
         id_vendor: idVendor,
         qty,
         id_pq: idPq,
@@ -87,17 +87,19 @@ const DetailPenawaran = () => {
   };
 
   const validation = useFormik({
-    // enableReinitialize: true,
     initialValues: {
       vendorSelected: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const inputValuesArray = Object.values(inputValues).map((input) => ({
         ...input,
         id_vendor: values.vendorSelected,
       }));
-      await dispatch(onAddPricePenawaran({ data: inputValuesArray }));
-      history("/penawaran");
+      dispatch(onAddPricePenawaran({ data: inputValuesArray }))
+        .then(() => history.push("/penawaran"))
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   });
 
@@ -263,6 +265,7 @@ const DetailPenawaran = () => {
                                     <NumericFormat
                                       thousandSeparator={true}
                                       prefix={"Rp "}
+                                      decimalScale={2} // Add this line to set the decimal places
                                       placeholder="Enter price"
                                       customInput={Input}
                                       className="form-control form-control-sm me-2"

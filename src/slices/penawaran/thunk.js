@@ -9,6 +9,7 @@ import {
   getPenawaranPemenang as getPenawaranPemenangApi,
   addPemenangInvoice as addPemenangInvoiceApi,
   addDo as addDoApi,
+  getPenawaranPq as getPenawaranPqApi,
 } from "../../helpers/backend_helper";
 
 export const addPenawaran = createAsyncThunk("penawaran/addPenawaran", async (penawaran) => {
@@ -106,6 +107,15 @@ export const addDo = createAsyncThunk("penawaran/addDo", async (penawaran) => {
     return data;
   } catch (error) {
     toast.error("do Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getPenawaranPq = createAsyncThunk("penawaran/getPenawaranPq", async () => {
+  try {
+    const response = getPenawaranPqApi();
+    return response;
+  } catch (error) {
     return error;
   }
 });

@@ -59,6 +59,7 @@ export const TAMBAH_PENAWARAN = "/add/po/penawaran";
 export const TUNJUK_PENAWARAN = "/tunjuk/po/penawaran";
 // export const POST_PRICE_PENAWARAN = "/store/penawaran/venodr/price";
 export const POST_PRICE_PENAWARAN = "/store/pq/price";
+export const GET_PENAWARAN_PQ = "/get/list/penawaranpq";
 
 // FINANCE
 export const GET_FINANCE_PO = "/get/finance/po/validate";

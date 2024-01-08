@@ -109,6 +109,8 @@ export const tunjukPenawaran = (data) => api.create(url.TUNJUK_PENAWARAN, data);
 export const postPricePenawaran = (data) => api.create(url.POST_PRICE_PENAWARAN, data);
 
 export const addDo = (data) => api.create(url.ADD_DO, data);
+
+export const getPenawaranPq = (data) => api.create(url.GET_PENAWARAN_PQ, data);
 // FINANCE
 export const getFinancePo = (data) => api.create(url.GET_FINANCE_PO, data);
 export const getFinanceTongkang = (data) => api.create(url.GET_FINANCE_TONGKANG, data);

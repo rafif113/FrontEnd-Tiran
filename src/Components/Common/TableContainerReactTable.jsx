@@ -10,6 +10,7 @@ import {
   usePagination,
   useRowSelect,
 } from "react-table";
+
 import { Table, Row, Col, Button, Input, CardBody } from "reactstrap";
 import { DefaultColumnFilter } from "./filters";
 import { Link } from "react-router-dom";
@@ -62,6 +63,8 @@ const TableContainer = ({
   thClass,
   divClass,
   SearchPlaceholder,
+  toggleRowExpanded,
+  renderExpandedRowContent, // Tambahkan prop untuk konten ekspansi baris
 }) => {
   const {
     getTableProps,
@@ -79,7 +82,7 @@ const TableContainer = ({
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, expanded },
   } = useTable(
     {
       columns,
@@ -173,6 +176,11 @@ const TableContainer = ({
                       );
                     })}
                   </tr>
+                  {row.isExpanded ? (
+                    <tr>
+                      <td colSpan={columns.length}>{renderExpandedRowContent && renderExpandedRowContent(row)}</td>
+                    </tr>
+                  ) : null}
                 </Fragment>
               );
             })}

@@ -179,7 +179,10 @@ const Navdata = () => {
       },
       stateVariables: isPenawaran,
 
-      subItems: [{ id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" }],
+      subItems: [
+        { id: "listpenawaran", label: "List Penawaran", link: "/penawaran", parentId: "penawaran" },
+        { id: "listpenawaranpq", label: "List Penawaran PQ", link: "/penawaran-pq", parentId: "penawaran" },
+      ],
     },
 
     {
