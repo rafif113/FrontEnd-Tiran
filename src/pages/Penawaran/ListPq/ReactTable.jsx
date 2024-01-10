@@ -94,28 +94,108 @@ const PaginationTable = () => {
     useExpanded
   );
 
-  const [checkedRows, setCheckedRows] = useState([]);
+  // const [checkedRows, setCheckedRows] = useState([]);
 
-  const handleCheckboxChange = (e, row, fpb) => {
+  // const handleCheckboxChange = (e, row, fpb) => {
+  //   const isChecked = e.target.checked;
+
+  //   setCheckedRows((prevCheckedRows) => {
+  //     if (isChecked) {
+  //       // Checkbox dicentang, tambahkan objek ke array
+  //       return [
+  //         ...prevCheckedRows,
+  //         {
+  //           desc: row.desc,
+  //           id: row.id,
+  //           id_fpb: row.id_fpb,
+  //           page_desc: row.page_desc,
+  //           page_image: row.page_image,
+  //           part_number: row.part_number,
+  //           qty: row.qty,
+  //           remarks: row.remarks,
+  //           stock: row.stock,
+  //           unit: row.unit,
+
+  //           nomor: fpb.nomor,
+  //           note: fpb.note,
+  //           pengajuan: fpb.pengajuan,
+  //           sifat: fpb.sifat,
+  //           site: fpb.site,
+  //           tujuan: fpb.tujuan,
+  //         },
+  //       ];
+  //     } else {
+  //       // Checkbox tidak dicentang, hapus objek dari array berdasarkan id
+  //       return prevCheckedRows.filter((item) => item.id !== row.id);
+  //     }
+  //   });
+  // };
+
+  const [checkedRows, setCheckedRows] = useState([]);
+  const [isCheckAll, setIsCheckAll] = useState([]);
+
+  useEffect(() => {
+    setIsCheckAll(
+      penawaranPq.map((value) => ({
+        id: value.datafpb.id,
+        isChecked: false,
+      }))
+    );
+  }, [penawaranPq]);
+
+  const handleCheckAllChange = (e, row) => {
+    const isChecked = e.target.checked;
+    setIsCheckAll((prevCheckAll) =>
+      prevCheckAll.map((item) => (item.id === row.original.datafpb.id ? { ...item, isChecked } : item))
+    );
+
+    if (isChecked) {
+      const newCheckedRows = row.original.datafpb.partrequest
+        .filter((value) => !value.id_pq)
+        .map((value) => ({
+          desc: value.desc,
+          id: value.id,
+          id_fpb: value.id_fpb,
+          page_desc: value.page_desc,
+          page_image: value.page_image,
+          part_number: value.part_number,
+          qty: value.qty,
+          remarks: value.remarks,
+          stock: value.stock,
+          unit: value.unit,
+          nomor: row.original.datafpb.nomor,
+          note: row.original.datafpb.note,
+          pengajuan: row.original.datafpb.pengajuan,
+          sifat: row.original.datafpb.sifat,
+          site: row.original.datafpb.site,
+          tujuan: row.original.datafpb.tujuan,
+        }));
+      setCheckedRows((prevCheckedRows) => [...prevCheckedRows, ...newCheckedRows]);
+    } else {
+      setCheckedRows((prevCheckedRows) =>
+        prevCheckedRows.filter((item) => !row.original.datafpb.partrequest.some((value) => value.id === item.id))
+      );
+    }
+  };
+
+  const handleCheckboxChange = (e, value, fpb) => {
     const isChecked = e.target.checked;
 
     setCheckedRows((prevCheckedRows) => {
       if (isChecked) {
-        // Checkbox dicentang, tambahkan objek ke array
         return [
           ...prevCheckedRows,
           {
-            desc: row.desc,
-            id: row.id,
-            id_fpb: row.id_fpb,
-            page_desc: row.page_desc,
-            page_image: row.page_image,
-            part_number: row.part_number,
-            qty: row.qty,
-            remarks: row.remarks,
-            stock: row.stock,
-            unit: row.unit,
-
+            desc: value.desc,
+            id: value.id,
+            id_fpb: value.id_fpb,
+            page_desc: value.page_desc,
+            page_image: value.page_image,
+            part_number: value.part_number,
+            qty: value.qty,
+            remarks: value.remarks,
+            stock: value.stock,
+            unit: value.unit,
             nomor: fpb.nomor,
             note: fpb.note,
             pengajuan: fpb.pengajuan,
@@ -125,8 +205,7 @@ const PaginationTable = () => {
           },
         ];
       } else {
-        // Checkbox tidak dicentang, hapus objek dari array berdasarkan id
-        return prevCheckedRows.filter((item) => item.id !== row.id);
+        return prevCheckedRows.filter((item) => item.id !== value.id);
       }
     });
   };
@@ -143,7 +222,15 @@ const PaginationTable = () => {
             <th style={{ fontWeight: 450 }}>Qty</th>
             <th style={{ fontWeight: 450 }}>Keterangan</th>
             <th style={{ fontWeight: 450 }}>Stock</th>
-            <th style={{ fontWeight: 450 }}>Action</th>
+            <th style={{ fontWeight: 450 }}>
+              <input
+                id="check-all"
+                className="form-check-input"
+                type="checkbox"
+                checked={isCheckAll[row.id].isChecked}
+                onChange={(e) => handleCheckAllChange(e, row)}
+              />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -176,6 +263,9 @@ const PaginationTable = () => {
                     className="form-check-input"
                     type="checkbox"
                     value={value.id}
+                    // checked={checkedRows.some((item) => item.id === value.id)}
+                    // onChange={(e) => handleCheckboxChange(e, value, row.original.datafpb)}
+
                     checked={checkedRows.some((item) => item.id === value.id)}
                     onChange={(e) => handleCheckboxChange(e, value, row.original.datafpb)}
                   />
@@ -191,6 +281,10 @@ const PaginationTable = () => {
   // ----------------------------------------------
 
   const handleClickCreate = () => {
+    if (checkedRows.length == 0) {
+      return alert("Tidak terdapat data yang di check");
+    }
+
     const groupedData = checkedRows.reduce((result, item) => {
       const { id_fpb, ...rest } = item;
       if (!result[id_fpb]) {

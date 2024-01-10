@@ -103,6 +103,7 @@ const Mol = () => {
       page_image: "",
       page_desc: "",
       remarks: "",
+      ids: "",
     },
   ]);
 
@@ -133,6 +134,10 @@ const Mol = () => {
       setRows(updatedRows);
     }
   };
+
+  useEffect(() => {
+    console.log(rows);
+  }, [rows]);
 
   const handleDeleteItem = (id) => {
     const updatedRows = rows.filter((row) => row.id !== id);
@@ -640,7 +645,7 @@ const Mol = () => {
                               <Select
                                 placeholder="Part Number"
                                 name="part_number"
-                                value={masterPart.find((part) => part.value === row.part_number)}
+                                value={masterPart.find((part) => part.id === row.id)}
                                 options={masterPart.map((detail) => ({
                                   label: detail.part_number,
                                   value: detail.id,
@@ -650,16 +655,18 @@ const Mol = () => {
                                 onChange={(selectedOption) => {
                                   const selectedPart = masterPart.find((part) => part.id === selectedOption.value);
                                   handleInputChange({ target: { value: selectedPart.part_number } }, row.id, "part_number");
+                                  handleInputChange({ target: { value: selectedOption.value } }, row.id, "ids");
                                   handleInputChange({ target: { value: selectedPart.part_name } }, row.id, "description");
                                   handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
                                 }}
                               />
                             </td>
                             <td className="text-start" style={{ minWidth: "200px" }}>
-                              <Select
+                              {/* <Select
                                 placeholder="Description"
                                 name="description"
-                                value={masterPart.find((part) => part.value === row.description)}
+                                value={masterPart.find((part) => part.id === row.id)}
+                                // defaultValue={row.part_number ? { label: row.description, value: row.ids } : null}
                                 options={masterPart.map((detail) => ({
                                   label: detail.part_name,
                                   value: detail.id,
@@ -672,16 +679,17 @@ const Mol = () => {
                                   handleInputChange({ target: { value: selectedPart.part_name } }, row.id, "description");
                                   handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
                                 }}
-                              />
-                            </td>
-                            {/* <Input
+                              /> */}
+                              <Input
                                 type="text"
                                 className="form-control"
                                 placeholder="Description"
                                 name="description"
                                 value={row.description}
                                 onChange={(e) => handleInputChange(e, row.id, "description")}
-                              /> */}
+                              />
+                            </td>
+
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="number"

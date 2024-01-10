@@ -32,38 +32,39 @@ const DetailPq = () => {
   const detailPq = useSelector((state) => state.Penawaran.detailPenawaranPq);
   const loading = useSelector((state) => state.Penawaran.loadingDetailPenawaranPq);
 
-  //   const onSubmitHandler = () => {
-  //     detailPq.map((value) => {
-  //       const idsOnly = value.detail.map((item) => item.id);
+  const onSubmitHandler = () => {
+    const combinedIds = detailPq.reduce((result, value) => {
+      const idsOnly = value.detail.map((item) => item.id);
+      return result.concat(idsOnly);
+    }, []);
 
-  //       const newPq = {
-  //         id_fpb: value.id_fpb,
-  //         id_part_request: JSON.stringify(idsOnly),
-  //       };
+    const newPq = {
+      id_part_request: JSON.stringify(combinedIds),
+    };
 
-  //       dispatch(onAddPq(newPq));
-  //     });
-  //     history("/penawaran");
-  //   };
-
-  const onSubmitHandler = async () => {
-    try {
-      await Promise.all(
-        detailPq.map(async (value) => {
-          const idsOnly = value.detail.map((item) => item.id);
-          const newPq = {
-            id_fpb: value.id_fpb,
-            id_part_request: JSON.stringify(idsOnly),
-          };
-          await dispatch(onAddPq(newPq));
-        })
-      );
-
+    dispatch(onAddPq(newPq)).then(() => {
       history("/penawaran");
-    } catch (error) {
-      console.error("Error during dispatch:", error);
-    }
+    });
   };
+
+  // const onSubmitHandler = async () => {
+  //   try {
+  //     await Promise.all(
+  //       detailPq.map(async (value) => {
+  //         const idsOnly = value.detail.map((item) => item.id);
+  //         const newPq = {
+  //           id_fpb: value.id_fpb,
+  //           id_part_request: JSON.stringify(idsOnly),
+  //         };
+  //         await dispatch(onAddPq(newPq));
+  //       })
+  //     );
+
+  //     history("/penawaran");
+  //   } catch (error) {
+  //     console.error("Error during dispatch:", error);
+  //   }
+  // };
 
   return (
     <React.Fragment>
@@ -86,7 +87,7 @@ const DetailPq = () => {
                       <div className="table-responsive">
                         <Table className="invoice-table table-borderless table-nowrap mb-0">
                           <thead className="align-middle">
-                            <tr className="table-active">
+                            <tr className="table-active" key={index}>
                               <th scope="col" style={{ width: "50px" }}>
                                 No.
                               </th>
@@ -176,7 +177,6 @@ const DetailPq = () => {
           )}
         </Container>
       </div>
-      {/* {isModalOpen && partPrice && <Modals data={partPrice} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} */}
     </React.Fragment>
   );
 };

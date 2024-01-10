@@ -24,27 +24,28 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "No FPB",
-        accessor: "no_fpb",
+        Header: "No PR",
+        accessor: "no_pr",
+        disableFilters: true,
+        filterable: false,
+      },
+
+      {
+        Header: "Total Part PR",
+        accessor: "jumlah_part_pr",
+        // accessor: (cellProps) => {
+        //   return (
+        //     <div>
+        //       <b>{cellProps.jumlah_part_pq}</b> (dari {cellProps.total} part request FPB)
+        //     </div>
+        //   );
+        // },
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Part Questions",
-        accessor: "pq_ke",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "Total Part PQ",
-        // accessor: "jumlah_part_pq",
-        accessor: (cellProps) => {
-          return (
-            <div>
-              <b>{cellProps.jumlah_part_pq}</b> (dari {cellProps.total} part request FPB)
-            </div>
-          );
-        },
+        Header: "Status PQ",
+        accessor: "status_pq",
         disableFilters: true,
         filterable: false,
       },

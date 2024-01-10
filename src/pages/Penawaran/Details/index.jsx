@@ -73,15 +73,16 @@ const DetailPenawaran = () => {
 
   const [inputValues, setInputValues] = useState([]);
 
-  const handleInputChange = (indexPrice, price, qty, idPartRequest, idVendor, idPq) => {
+  const handleInputChange = (indexPrice, price, qty, idPartRequest) => {
+    const url = new URL(window.location.href);
+    const id_pq = url.searchParams.get("id");
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
       [indexPrice]: {
         id_part_request: idPartRequest,
         price: parseFloat(price).toFixed(2),
-        id_vendor: idVendor,
         qty,
-        id_pq: idPq,
+        id_pq,
       },
     }));
   };
@@ -89,17 +90,16 @@ const DetailPenawaran = () => {
   const validation = useFormik({
     initialValues: {
       vendorSelected: "",
+      deliverto: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const inputValuesArray = Object.values(inputValues).map((input) => ({
         ...input,
         id_vendor: values.vendorSelected,
+        deliverto: values.deliverto,
       }));
-      dispatch(onAddPricePenawaran({ data: inputValuesArray }))
-        .then(() => history.push("/penawaran"))
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      await dispatch(onAddPricePenawaran({ data: inputValuesArray }));
+      history.push("/penawaran");
     },
   });
 
@@ -129,7 +129,7 @@ const DetailPenawaran = () => {
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Create Penawaran" pageTitle="Penawaran" />
+        <BreadCrumb title="Detail Penawaran" pageTitle="Penawaran" />
         {loadingPenawaran ? (
           <div className="text-center">
             <Spinner animation="border" variant="primary" />
@@ -144,188 +144,236 @@ const DetailPenawaran = () => {
                 }}
               >
                 <Card>
-                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request</CardHeader>
+                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail Part Questions : </CardHeader>
                   <CardBody>
-                    <div className="table-responsive">
-                      <Table className="invoice-table table-borderless table-nowrap mb-0">
-                        <thead className="align-middle">
-                          <tr className="table-active">
-                            <th scope="col" style={{ width: "50px" }}>
-                              No.
-                            </th>
-                            <th scope="col">Part Number</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Group</th>
-                            <th scope="col">Page Image</th>
-                            <th scope="col">Page Desc</th>
-                            <th scope="col">Remarks</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {detailPenawaran.partrequests.map((row, index) => (
-                            <React.Fragment key={index}>
-                              <tr key={row.id} className="product">
-                                <th scope="row" className="product-id">
-                                  {index + 1}
-                                </th>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Part Number"
-                                    name="part_number"
-                                    value={row.part_number}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Description"
-                                    name="description"
-                                    value={row.desc}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="number"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Quantity"
-                                    name="qty"
-                                    value={row.qty}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Unit"
-                                    name="unit"
-                                    value={row.unit}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Group"
-                                    name="group"
-                                    value={row.group}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="number"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Page Image"
-                                    name="page_image"
-                                    value={row.page_image}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Page Desc"
-                                    name="page_desc"
-                                    value={row.page_desc}
-                                    readOnly
-                                  />
-                                </td>
-                                <td className="text-start">
-                                  <Input
-                                    style={{ minWidth: "100px" }}
-                                    type="text"
-                                    className="form-control form-control-sm bg-light border-0"
-                                    placeholder="Remarks"
-                                    name="remarks"
-                                    value={row.remarks}
-                                    readOnly
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colSpan="3">
-                                  <div className="d-flex">
-                                    <NumericFormat
-                                      thousandSeparator={true}
-                                      prefix={"Rp "}
-                                      decimalScale={2} // Add this line to set the decimal places
-                                      placeholder="Enter price"
-                                      customInput={Input}
-                                      className="form-control form-control-sm me-2"
-                                      name="price"
-                                      autoComplete="off"
-                                      onValueChange={(values) =>
-                                        handleInputChange(
-                                          index,
-                                          values.value,
-                                          inputValues[index]?.qty || "",
-                                          row.id,
-                                          1,
-                                          row.id_pq
-                                        )
-                                      }
-                                    />
-                                    <Input
-                                      type="text"
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          index,
-                                          inputValues[index]?.price || "",
-                                          e.target.value,
-                                          row.id,
-                                          1,
-                                          row.id_pq
-                                        )
-                                      }
-                                      className="form-control form-control-sm"
-                                      name="qty"
-                                      placeholder="Enter qty"
-                                      autoComplete="off"
-                                    />
-                                  </div>
-                                </td>
-                              </tr>
-                            </React.Fragment>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </div>
+                    <Row>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="unit-name">
+                            NO. PR
+                          </label>
+                          <Input
+                            type="text"
+                            className="form-control"
+                            id="unit-name"
+                            name="unit_name"
+                            readOnly
+                            value={detailPenawaran.no_pr}
+                          />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="engine-model">
+                            Jumlah Part PQ
+                          </label>
+                          <Input
+                            type="text"
+                            className="form-control"
+                            id="engine-model"
+                            name="engine_model"
+                            readOnly
+                            value={detailPenawaran.jumlah_part_pq}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
                   </CardBody>
                 </Card>
+
+                {Object.keys(detailPenawaran.datafpbpartrequest).map((key) => {
+                  const parts = detailPenawaran.datafpbpartrequest[key];
+                  return (
+                    <Card key={key}>
+                      <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>No : {key}</CardHeader>
+                      <CardBody>
+                        <div className="table-responsive">
+                          <Table className="invoice-table table-borderless table-nowrap mb-0">
+                            <thead className="align-middle">
+                              <tr className="table-active">
+                                <th scope="col" style={{ width: "50px" }}>
+                                  No.
+                                </th>
+                                <th scope="col">Part Number</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Unit</th>
+                                <th scope="col">Group</th>
+                                <th scope="col">Page Image</th>
+                                <th scope="col">Page Desc</th>
+                                <th scope="col">Remarks</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {parts.map((row, index) => (
+                                <React.Fragment key={index}>
+                                  <tr key={row.id} className="product">
+                                    <th scope="row" className="product-id">
+                                      {index + 1}
+                                    </th>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Part Number"
+                                        name="part_number"
+                                        value={row.part_number}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Description"
+                                        name="description"
+                                        value={row.desc}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="number"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Quantity"
+                                        name="qty"
+                                        value={row.qty}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Unit"
+                                        name="unit"
+                                        value={row.unit}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Group"
+                                        name="group"
+                                        value={row.group}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="number"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Page Image"
+                                        name="page_image"
+                                        value={row.page_image}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Page Desc"
+                                        name="page_desc"
+                                        value={row.page_desc}
+                                        readOnly
+                                      />
+                                    </td>
+                                    <td className="text-start">
+                                      <Input
+                                        style={{ minWidth: "100px" }}
+                                        type="text"
+                                        className="form-control form-control-sm bg-light border-0"
+                                        placeholder="Remarks"
+                                        name="remarks"
+                                        value={row.remarks}
+                                        readOnly
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colSpan="3">
+                                      <div className="d-flex">
+                                        <NumericFormat
+                                          thousandSeparator={true}
+                                          prefix={"Rp "}
+                                          decimalScale={2}
+                                          placeholder="Enter price"
+                                          customInput={Input}
+                                          className="form-control form-control-sm me-2"
+                                          name="price"
+                                          autoComplete="off"
+                                          onValueChange={(values) =>
+                                            handleInputChange(row.id, values.value, inputValues[row.id]?.qty || "", row.id, 1)
+                                          }
+                                        />
+                                        <Input
+                                          type="text"
+                                          onChange={(e) =>
+                                            handleInputChange(row.id, inputValues[row.id]?.price || "", e.target.value, row.id, 1)
+                                          }
+                                          className="form-control form-control-sm"
+                                          name="qty"
+                                          placeholder="Enter qty"
+                                          autoComplete="off"
+                                        />
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </React.Fragment>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  );
+                })}
 
                 <Card>
                   <CardBody>
                     <Row>
-                      <div className="mb-3">
-                        <label className="form-label">Select Vendor</label>
-                      </div>
+                      <Col lg={6}>
+                        <div className="mb-2">
+                          <label className="form-label">Select Vendor</label>
+                        </div>
 
-                      <ReactSelect
-                        value={vendorOptions.find((option) => option.value === validation.values.vendorSelected)}
-                        onChange={(selectedOption) => {
-                          validation.setFieldValue("vendorSelected", selectedOption.value);
-                        }}
-                        options={vendorOptions}
-                        name="choices-publish-visibility-input"
-                        classNamePrefix="select2-selection form-select"
-                      />
+                        <ReactSelect
+                          value={vendorOptions.find((option) => option.value === validation.values.vendorSelected)}
+                          onChange={(selectedOption) => {
+                            validation.setFieldValue("vendorSelected", selectedOption.value);
+                          }}
+                          options={vendorOptions}
+                          name="choices-publish-visibility-input"
+                          classNamePrefix="select2-selection form-select"
+                        />
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-2">
+                          <label className="form-label">Select To</label>
+                        </div>
+
+                        <ReactSelect
+                          onChange={(selectedOption) => {
+                            validation.setFieldValue("deliverto", selectedOption.value);
+                          }}
+                          options={[
+                            { value: "site", label: "Site" },
+                            { value: "kendari", label: "Kendari" },
+                          ]}
+                          name="choices-publish-visibility-input"
+                          classNamePrefix="select2-selection form-select"
+                        />
+                      </Col>
                     </Row>
                   </CardBody>
                 </Card>
