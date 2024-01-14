@@ -90,6 +90,8 @@ export const getFpb = (data) => api.create(url.GET_FPB, data);
 export const addFpb = (data) => api.create(url.ADD_FPB, data);
 export const addPq = (data) => api.create(url.ADD_PQ, data);
 export const getPq = (data) => api.create(url.GET_PQ, data);
+export const postSpb = (data) => api.create(url.POST_SPB, data);
+export const postSpbSite = (data) => api.create(url.POST_SPB_SITE, data);
 
 // PO
 export const getPo = (data) => api.create(url.GET_PO, data);
@@ -149,7 +151,10 @@ export const postCekVendorKendari = (data) => api.create(url.POST_CEK_VENDOR_KEN
 export const getVendorSite = (data) => api.create(url.GET_VENDOR_SITE, data);
 export const postDeliveVendorSite = (data) => api.create(url.POST_DELIVE_VENDOR_SITE, data);
 export const postCekVendorSite = (data) => api.create(url.POST_CEK_VENDOR_SITE, data);
+export const postDeliveVendorParsial = (data) => api.create(url.POST_DELIVE_VENDOR_PARSIAL, data);
 
+export const getPartSpb = (data) => api.create(url.GET_PART_SPB, data);
+export const getListSpb = (data) => api.create(url.GET_LIST_SPB, data);
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);
 

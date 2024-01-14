@@ -1,43 +1,38 @@
 import React from "react";
-import { CardBody, Row, Col, Card, Container } from "reactstrap";
+import { CardBody, Row, Col, Card, Container, Spinner } from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link } from "react-router-dom";
 
 import Ttd from "../../../assets/images/dummy/download.png";
-import "./styles.css";
+// import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailFpb as onGetDetailFpb } from "../../../slices/thunks";
+import { getDetailSpb as onGetDetailSpb } from "../../../slices/thunks";
 
-import { clearDetailFpb, setLoadingCetak } from "../../../slices/fpb/reducer";
+import { clearDetailSpb, setLoadingDetailSpb } from "../../../slices/deliver/reducer";
 
 import { useEffect } from "react";
-import { createSelector } from "reselect";
 import { useState } from "react";
 import logo from "../../../assets/images/tiran-logo.png";
 
-const CetakFpb = () => {
-  //Print the Invoice
+const Cetak = () => {
   const printInvoice = () => {
     window.print();
   };
 
   const dispatch = useDispatch();
-  //   Data detail Mol
-  const selectDetailFpb = createSelector(
-    (state) => state.Fpb.detailFpb,
-    (detailFpb) => detailFpb
-  );
-  const detailFpb = useSelector(selectDetailFpb);
-  const loading = useSelector((state) => state.Fpb.loadingCetak);
+
+  const detailSpb = useSelector((state) => state.Deliver.detailSpb);
+  const loading = useSelector((state) => state.Deliver.loadingDetailSpb);
 
   useEffect(() => {
+    document.title = "SPB Cetak | PT Tiran";
     const url = new URL(window.location.href);
-    const id_fpb = url.searchParams.get("id");
-    dispatch(setLoadingCetak(true));
-    dispatch(clearDetailFpb());
-    dispatch(onGetDetailFpb({ id_fpb })).then(() => {
-      dispatch(setLoadingCetak(false));
+    const id_spb = url.searchParams.get("id");
+    dispatch(setLoadingDetailSpb(true));
+    dispatch(clearDetailSpb());
+    dispatch(onGetDetailSpb({ id_spb })).then(() => {
+      dispatch(setLoadingDetailSpb(false));
     });
   }, []);
 
@@ -45,16 +40,18 @@ const CetakFpb = () => {
   const handleApproveClick = () => {
     setIsHide(false); // Ketika tombol "Approve" diklik, atur isHide menjadi false
   };
-  document.title = "FPB Cetak | PT Tiran";
+  let rowNumber = 1; // Gunakan let atau var untuk menghindari "Assignment to constant variable"
 
   return (
     <React.Fragment>
-      {loading ? (
-        <div>1</div>
-      ) : (
-        <div className="page-content">
-          <Container fluid>
-            <BreadCrumb title="FPB Cetak" pageTitle="FPB" />
+      <div className="page-content">
+        <Container fluid>
+          <BreadCrumb title="SPB Cetak" pageTitle="FPB" />
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : (
             <Row className="justify-content-center">
               <Col>
                 <Card>
@@ -67,7 +64,7 @@ const CetakFpb = () => {
                               <tr>
                                 <td width="100%;" style={{ fontSize: 32, border: "0px solid black" }}>
                                   <center>
-                                    <strong>FORM PERMINTAAN BARANG</strong>
+                                    <strong> SPB</strong>
                                   </center>
                                 </td>
                               </tr>
@@ -93,13 +90,37 @@ const CetakFpb = () => {
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td style={{ border: "0px solid black" }}>PT. TIRAN INDONESIA</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Pengajuan Non Rutin / Khusus</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Site : {detailFpb.mol.site}</td>
+                                                <td>
+                                                  <table
+                                                    width="100%"
+                                                    style={{
+                                                      border: "0px solid black",
+                                                      borderCollapse: "collapse",
+                                                      fontSize: 12,
+                                                    }}
+                                                    cellPadding={5}
+                                                    cellSpacing={5}
+                                                  >
+                                                    <tbody>
+                                                      <tr>
+                                                        <td width="30%" style={{ border: "1px solid black" }}>
+                                                          NO SPB
+                                                        </td>
+                                                        <td style={{ border: "1px solid black" }}>: 12345</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td width="20%" style={{ border: "1px solid black" }}>
+                                                          PENGIRIM
+                                                        </td>
+                                                        <td style={{ border: "1px solid black" }}>: SAYA</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style={{ border: "1px solid black" }}>PENERIMA</td>
+                                                        <td style={{ border: "1px solid black" }}>: KAMI</td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -117,42 +138,20 @@ const CetakFpb = () => {
                                             cellSpacing={5}
                                           >
                                             <tbody>
+                                              {Array.from({ length: 12 }).map((_, index) => (
+                                                <tr key={index}>
+                                                  <td />
+                                                </tr>
+                                              ))}
                                               <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td />
-                                              </tr>
-                                              <tr>
-                                                <td width="30%" style={{ border: "0px solid black" }}>
-                                                  Tanggal
+                                                <td width="20%" style={{ border: "1px solid black" }}>
+                                                  DATE
                                                 </td>
-                                                <td style={{ border: "0px solid black" }}>: 17/10/2023</td>
+                                                <td style={{ border: "1px solid black" }}>: 17/10/2023</td>
                                               </tr>
                                               <tr>
-                                                <td width="20%" style={{ border: "0px solid black" }}>
-                                                  Nomor
-                                                </td>
-                                                <td style={{ border: "0px solid black" }}>: {detailFpb.mol.nomor}</td>
-                                              </tr>
-                                              <tr>
-                                                <td style={{ border: "0px solid black" }}>Sifat</td>
-                                                <td style={{ border: "0px solid black" }}>: URGENT</td>
+                                                <td style={{ border: "1px solid black" }}>BLOK</td>
+                                                <td style={{ border: "1px solid black" }}>: BLOK 4</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -160,33 +159,6 @@ const CetakFpb = () => {
                                       </tr>
                                     </tbody>
                                   </table>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td style={{ border: "1px solid black" }}>
-                                  <h1>&nbsp;</h1>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td style={{ border: "0px solid black" }}>
-                                  Diajukan Oleh : {detailFpb.mol.diajukan_oleh}
-                                  <br />
-                                  Departemen : {detailFpb.mol.department}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <h1>&nbsp;</h1>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td style={{ border: "0px solid black" }}>
-                                  <b>TUJUAN</b>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td style={{ border: "1px solid black", height: "75px" }}>
-                                  <b>{detailFpb.mol.tujuan}</b>
                                 </td>
                               </tr>
                               <tr>
@@ -203,34 +175,37 @@ const CetakFpb = () => {
                                   >
                                     <thead className="head_table" style={{ backgroundColor: "#8585FF" }}>
                                       <tr>
-                                        <th style={{ width: "3%" }}>NO</th>
-                                        <th style={{ width: "30%" }}>PART NUMBER</th>
-                                        <th style={{ width: "25%" }}>DESKRIPSI / NAMA BARANG</th>
-                                        <th style={{ width: "15%" }}> MERK/TYPE</th>
-                                        <th style={{ width: "10%" }} colSpan={2}>
-                                          QTY
-                                        </th>
-                                        <th style={{ width: "15%" }}>Keterangan</th>
+                                        <th style={{ width: "5%" }}>NO</th>
+                                        <th style={{ width: "20%" }}>NAMA BARANG</th>
+                                        <th style={{ width: "20%" }}>NO.FPB</th>
+                                        <th style={{ width: "20%" }}>KEBUTUHAN</th>
+                                        <th style={{ width: "5%" }}>QTY</th>
+                                        <th style={{ width: "5%" }}>SATUAN</th>
+                                        <th style={{ width: "20%" }}>DEPT</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {detailFpb.mol.partrequest.map((row, index) => (
-                                        <tr style={{ fontWeight: "bold" }} key={index}>
-                                          <td>{index + 1}</td>
-                                          <td>{row.part_number}</td>
-                                          <td>{row.desc}</td>
-                                          <td style={{ width: "5%" }}>{row.unit}</td>
-                                          <td style={{ width: "5%" }}>EA</td>
-                                          <td>{row.qty}</td>
-                                          <td>{row.remarks}</td>
-                                        </tr>
-                                      ))}
+                                      {Object.keys(detailSpb).map((key, outerIndex) =>
+                                        detailSpb[key].map((item, innerIndex) => {
+                                          // let no = outerIndex * Object.keys(detailSpb).length + innerIndex + 1;
+                                          const no = rowNumber++;
+
+                                          return (
+                                            <tr key={no} style={{ fontWeight: "bold" }}>
+                                              <td>{no}</td>
+                                              <td>{item.nama_part}</td>
+                                              <td>{item.no_fpb}</td>
+                                              <td>{item.kebutuhan}</td>
+                                              <td>{item.qty}</td>
+                                              <td>{item.kebutuhan}</td>
+                                              <td>{item.dept}</td>
+                                            </tr>
+                                          );
+                                        })
+                                      )}
                                     </tbody>
                                   </table>
                                 </td>
-                              </tr>
-                              <tr>
-                                <td style={{ border: "0px solid black" }}>Note :</td>
                               </tr>
                               <tr>
                                 <td style={{ border: "0px solid black" }}>
@@ -250,11 +225,12 @@ const CetakFpb = () => {
                                             textTransform: "uppercase",
                                             verticalAlign: "top",
                                             border: "1px solid black",
+                                            width: "30%", // Sesuaikan lebar kolom
                                           }}
                                         >
                                           <center>
                                             <strong>
-                                              <span>REQUEST BY</span>
+                                              <span>Pengirim</span>
                                             </strong>
                                           </center>
                                         </td>
@@ -263,10 +239,11 @@ const CetakFpb = () => {
                                             textTransform: "uppercase",
                                             verticalAlign: "top",
                                             border: "1px solid black",
+                                            width: "30%", // Sesuaikan lebar kolom
                                           }}
                                         >
                                           <center>
-                                            <strong>APPROVED BY</strong>
+                                            <strong>PENGANTAR / DRIVER</strong>
                                           </center>
                                         </td>
                                         <td
@@ -274,85 +251,46 @@ const CetakFpb = () => {
                                             textTransform: "uppercase",
                                             verticalAlign: "top",
                                             border: "1px solid black",
+                                            width: "30%", // Sesuaikan lebar kolom
                                           }}
                                         >
-                                          <strong></strong>
                                           <center>
-                                            <strong>APPROVED BY</strong>
+                                            <strong>
+                                              <span>Penerima / File Office Site</span>
+                                            </strong>
                                           </center>
                                         </td>
                                       </tr>
                                       <tr>
                                         <td
                                           style={{
-                                            width: "30%",
+                                            width: "30%", // Sesuaikan lebar kolom
                                             textTransform: "uppercase",
                                             verticalAlign: "top",
                                             border: "1px solid black",
                                           }}
+                                        ></td>
+                                        <td
+                                          style={{
+                                            width: "30%", // Sesuaikan lebar kolom
+                                            verticalAlign: "top",
+                                            border: "1px solid black",
+                                          }}
+                                          className="kolom"
                                         >
-                                          <center>
-                                            <img
-                                              src={Ttd}
-                                              style={{
-                                                display: isHide ? "none" : "block",
-                                              }}
-                                              className="card-logo card-logo-dark"
-                                              alt="logo dark"
-                                              height="90"
-                                            />
-                                          </center>
+                                          <h1>&nbsp;</h1>
+                                          <h1>&nbsp;</h1>
                                         </td>
                                         <td
                                           style={{
-                                            width: "30%",
-                                            textTransform: "uppercase",
+                                            width: "30%", // Sesuaikan lebar kolom
                                             verticalAlign: "top",
                                             border: "1px solid black",
                                           }}
+                                          className="kolom"
                                         >
-                                          <center>
-                                            {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
-                                          </center>
-                                        </td>
-                                        <td
-                                          style={{
-                                            width: "30%",
-                                            textTransform: "uppercase",
-                                            verticalAlign: "top",
-                                            border: "1px solid black",
-                                          }}
-                                        >
-                                          <center>
-                                            {/* <img src={Ttd} className="card-logo card-logo-dark" alt="logo dark" height="90" /> */}
-                                          </center>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>Tanggal :</td>
-                                        <td>Tanggal :</td>
-                                        <td>Tanggal :</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Nama :</td>
-                                        <td>Nama :</td>
-                                        <td>Nama :</td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <center>
-                                            <b>Officer Logistic</b>
-                                          </center>
-                                        </td>
-                                        <td>
-                                          <center>
-                                            <b>Supervisor Logistic &amp; Purchasing</b>
-                                          </center>
-                                        </td>
-                                        <td>
-                                          <center>
-                                            <b>Kepala Teknik Tambang</b>
-                                          </center>
+                                          <h1>&nbsp;</h1>
+                                          <h1>&nbsp;</h1>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -380,11 +318,11 @@ const CetakFpb = () => {
                 </Card>
               </Col>
             </Row>
-          </Container>
-        </div>
-      )}
+          )}
+        </Container>
+      </div>
     </React.Fragment>
   );
 };
 
-export default CetakFpb;
+export default Cetak;

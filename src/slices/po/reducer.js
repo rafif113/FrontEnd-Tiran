@@ -17,6 +17,7 @@ export const initialState = {
   detailProcurementList: [],
   loading: true,
   loadingDetail: true,
+  loadingCetak: true,
   loadingPoLogistik: true,
   loadingDetailLogistik: true,
   loadingProcurementList: true,
@@ -62,6 +63,9 @@ const PoSlice = createSlice({
     clearDetailProcurementList: (state) => {
       state.detailProcurementList = null;
     },
+    setLoadingCetak: (state, action) => {
+      state.loadingCetak = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPo.fulfilled, (state, action) => {
@@ -104,6 +108,7 @@ export const {
   setLoadingDetailProcurementList,
   setLoadingProcurementList,
   setLoadingPoLogistik,
+  setLoadingCetak,
 } = PoSlice.actions;
 
 export default PoSlice.reducer;

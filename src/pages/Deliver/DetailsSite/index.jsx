@@ -23,11 +23,7 @@ import { formatRupiah } from "../../../utils/utils";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDetailVendorSite as onGetDetailVendorSite,
-  postCekVendorKendari as onPostCekVendorKendari,
-  postDeliveVendorSite as onPostDeliveVendorSite,
-} from "../../../slices/thunks";
+import { getDetailVendorSite as onGetDetailVendorSite, postSpbSite as onPostSpbSite } from "../../../slices/thunks";
 
 import { clearDetailVendorSite, setLoadingDetailVendorSite } from "../../../slices/deliver/reducer";
 
@@ -52,24 +48,29 @@ const DetailVendorSite = () => {
   );
   const detailVendorSite = useSelector(detailVendorSiteData);
   const loading = useSelector((state) => state.Deliver.loadingDetailVendorSite);
+  const userLogin = useSelector((state) => state.Login.userData);
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const id_pq = url.searchParams.get("id");
+    const id_spb = url.searchParams.get("id");
     dispatch(setLoadingDetailVendorSite(true));
     dispatch(clearDetailVendorSite());
-    dispatch(onGetDetailVendorSite({ id_pq })).then(() => {
+    dispatch(onGetDetailVendorSite({ id_spb })).then(() => {
       dispatch(setLoadingDetailVendorSite(false));
     });
   }, []);
 
+  const [expandedRowsTabTwo, setExpandedRowsTabTwo] = useState({});
+
+  const toggleRowExpandTabTwo = (rowId) => {
+    setExpandedRowsTabTwo((prevExpandedRows) => {
+      const isExpanded = prevExpandedRows[rowId] || false;
+      return { ...prevExpandedRows, [rowId]: !isExpanded };
+    });
+  };
+
   const [checkedRows, setCheckedRows] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
-
-  const handleCheckboxChange = (e, rowId) => {
-    const { checked } = e.target;
-    toggleRow(rowId, checked);
-  };
 
   const toggleRow = (rowId, checked) => {
     setCheckedRows((prevCheckedRows) => ({
@@ -81,33 +82,32 @@ const DetailVendorSite = () => {
       setSelectedItems((prevItems) => [
         ...prevItems,
         {
-          id_price_partrequest: rowId,
+          id: rowId,
         },
       ]);
     } else {
-      setSelectedItems((prevItems) => prevItems.filter((item) => item.id_price_partrequest !== rowId));
+      setSelectedItems((prevItems) => prevItems.filter((item) => item.id !== rowId));
     }
   };
 
-  const validation = useFormik({
-    initialValues: {},
-    onSubmit: async () => {
-      try {
-        const url = new URL(window.location.href);
-        const id_pq = url.searchParams.get("id");
-        const id_part_array = selectedItems.map((item) => String(item.id_price_partrequest));
-        const transformedData = {
-          id_pq,
-          id_part: id_part_array,
-        };
-        await dispatch(onPostDeliveVendorSite(transformedData));
-        window.location.reload();
-      } catch (error) {
-        console.error("Error during dispatch:", error);
-        alert("Error during dispatch. Please try again.");
-      }
-    },
-  });
+  const handleCheckboxChange = (e, rowId) => {
+    const { checked } = e.target;
+    toggleRow(rowId, checked);
+  };
+
+  const handleSubmitBtn = async () => {
+    if (selectedItems.length == 0) {
+      alert("Data tidak ada yang dipilih");
+    } else {
+      const id_part_request = selectedItems.map((item) => item.id);
+      const data = {
+        id_part: JSON.stringify(id_part_request),
+        id_user: userLogin.id,
+      };
+      await dispatch(onPostSpbSite(data));
+      window.location.reload();
+    }
+  };
 
   return (
     <div className="page-content">
@@ -121,13 +121,13 @@ const DetailVendorSite = () => {
           <Row>
             <Col lg={12}>
               <Card>
-                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail FPB :</CardHeader>
+                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail SPB :</CardHeader>
                 <CardBody>
                   <Row>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          No. FPB
+                          No. SPB
                         </label>
                         <Input
                           type="text"
@@ -136,14 +136,14 @@ const DetailVendorSite = () => {
                           name="site"
                           placeholder="Enter site"
                           readOnly
-                          value={detailVendorSite.no_fpb}
+                          value={detailVendorSite.dataspb.no_spb}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          No. PO
+                          Pengirim
                         </label>
                         <Input
                           type="text"
@@ -152,14 +152,14 @@ const DetailVendorSite = () => {
                           name="site"
                           placeholder="Enter site"
                           readOnly
-                          value={detailVendorSite.no_po}
+                          value={detailVendorSite.dataspb.pengirim}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="nomor">
-                          Jumlah Part Request
+                          Penerima
                         </label>
                         <Input
                           type="text"
@@ -168,7 +168,87 @@ const DetailVendorSite = () => {
                           name="nomor"
                           placeholder="Enter nomor"
                           readOnly
-                          value={detailVendorSite.jumlah_part_pq}
+                          value={detailVendorSite.dataspb.penerima}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Penerima 2
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.dataspb.penerima_2}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Driver
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.dataspb.driver}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Keterangan
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.dataspb.keterangan}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Tanggal Dikirim
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.dataspb.date}
+                        />
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="mb-3">
+                        <label className="form-label" htmlFor="nomor">
+                          Jam Dikirim
+                        </label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          id="nomor"
+                          name="nomor"
+                          placeholder="Enter nomor"
+                          readOnly
+                          value={detailVendorSite.dataspb.dikirim_jam}
                         />
                       </div>
                     </Col>
@@ -176,39 +256,34 @@ const DetailVendorSite = () => {
                 </CardBody>
               </Card>
 
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
-                }}
-              >
-                <Card>
-                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request :</CardHeader>
-                  <CardBody>
-                    <div className="table-responsive">
-                      <Table className="invoice-table table-borderless table-nowrap mb-0">
-                        <thead className="align-middle">
-                          <tr className="table-active">
-                            <th scope="col" style={{ width: "50px" }}>
-                              No.
-                            </th>
-                            <th scope="col">Part Number</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Group</th>
-                            <th scope="col">Page Image</th>
-                            <th scope="col">Page Desc</th>
-                            <th scope="col">Remarks</th>
-                            <th scope="col">Qty vendor</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {detailVendorSite.partrequests.map((row, index) => (
-                            <tr key={row.id} className="product">
+              <Card>
+                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request :</CardHeader>
+                <CardBody>
+                  <div className="table-responsive">
+                    <Table className="table-nowrap mb-0" style={{ backgroundColor: "#f8f4f4" }}>
+                      <thead className="align-middle">
+                        <tr className="table-active">
+                          <th scope="col" style={{ width: "50px" }}>
+                            No.
+                          </th>
+                          <th scope="col">Part Number</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Qty</th>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Group</th>
+                          <th scope="col">Page Image</th>
+                          <th scope="col">Page Desc</th>
+                          <th scope="col">Remarks</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {detailVendorSite.datapart.map((row, index) => (
+                          <>
+                            <tr
+                              key={row.id}
+                              className="product cursor-pointer bg-white"
+                              onClick={() => toggleRowExpandTabTwo(row.id)}
+                            >
                               <th scope="row" className="product-id">
                                 {index + 1}
                               </th>
@@ -300,62 +375,86 @@ const DetailVendorSite = () => {
                                   readOnly
                                 />
                               </td>
-                              <td className="text-start">
-                                <Input
-                                  style={{ minWidth: "100px" }}
-                                  type="text"
-                                  className="form-control form-control-sm bg-light border-0"
-                                  placeholder="Remarks"
-                                  name="remarks"
-                                  value={row.qty}
-                                  readOnly
-                                />
-                              </td>
-                              <td className="text-start">
-                                <Input
-                                  style={{ minWidth: "100px" }}
-                                  type="text"
-                                  className="form-control form-control-sm bg-light border-0"
-                                  placeholder="Remarks"
-                                  name="remarks"
-                                  value={formatRupiah(row.pricepartrequest ? row.pricepartrequest.price : 0)}
-                                  readOnly
-                                />
-                              </td>
-                              <td className="text-start">
-                                {row.pricepartrequest.status_deliver === "to site" && (
-                                  <Input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    value={row.pricepartrequest.id}
-                                    checked={checkedRows[row.pricepartrequest.id] || false}
-                                    onChange={(e) => handleCheckboxChange(e, row.pricepartrequest.id)}
-                                  />
-                                )}
-
-                                {row.pricepartrequest.status_deliver === "completed cek site" && (
-                                  <Input className="form-check-input" type="checkbox" checked />
-                                )}
-
-                                {row.pricepartrequest.status_deliver !== "to site" &&
-                                  row.pricepartrequest.status_deliver !== "completed cek site" && <></>}
-                              </td>
                             </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </div>
-                  </CardBody>
-                </Card>
-
-                <div className="text-end mb-3">
-                  <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                    <button type="submit" className="btn btn-primary w-sm">
-                      Submit
-                    </button>
+                            {expandedRowsTabTwo[row.id] && (
+                              <React.Fragment>
+                                <tr>
+                                  <td className="text-end" style={{ fontSize: "0.7rem" }}>
+                                    No.
+                                  </td>
+                                  <td colSpan="1" style={{ fontSize: "0.7rem" }}>
+                                    Qty
+                                  </td>
+                                  <td colSpan="2" style={{ fontSize: "0.7rem" }}>
+                                    Keterangan
+                                  </td>
+                                  <td style={{ fontSize: "0.7rem" }}>Action</td>
+                                </tr>
+                                {row.partdevendorkendari.map((rowIn, indexIn) => (
+                                  <tr key={indexIn}>
+                                    <td className="text-end">{indexIn + 1}.</td>
+                                    <td colSpan="1">
+                                      <div className="d-flex">
+                                        <Input
+                                          type="text"
+                                          className="form-control form-control-sm"
+                                          name="qty"
+                                          placeholder="Enter qty"
+                                          autoComplete="off"
+                                          disabled
+                                          value={rowIn.qty}
+                                        />
+                                      </div>
+                                    </td>
+                                    <td colSpan="2">
+                                      <div className="d-flex">
+                                        <Input
+                                          type="text"
+                                          className="form-control form-control-sm"
+                                          name="qty"
+                                          placeholder="Enter Description..."
+                                          autoComplete="off"
+                                          disabled
+                                          value={rowIn.keterangan}
+                                        />
+                                      </div>
+                                    </td>
+                                    <td colSpan="2">
+                                      <div className="d-flex">
+                                        {rowIn.user_cek == null || rowIn.user_cek == "" ? (
+                                          <Input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            checked={checkedRows[rowIn.id] || false}
+                                            onChange={(e) => handleCheckboxChange(e, rowIn.id)}
+                                          />
+                                        ) : (
+                                          <Input className="form-check-input" type="checkbox" checked={true} disabled />
+                                        )}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </React.Fragment>
+                            )}
+                          </>
+                        ))}
+                      </tbody>
+                    </Table>
                   </div>
+                  <span className="mt-2" style={{ fontSize: "0.8rem", color: "#999" }}>
+                    *klik pada row tertentu untuk melihat detail qty
+                  </span>
+                </CardBody>
+              </Card>
+
+              <div className="text-end mb-3">
+                <div className="hstack gap-2 justify-content-end d-print-none mt-4">
+                  <button type="button" onClick={handleSubmitBtn} className="btn btn-primary w-sm">
+                    Submit
+                  </button>
                 </div>
-              </Form>
+              </div>
             </Col>
           </Row>
         )}

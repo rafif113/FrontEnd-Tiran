@@ -4,7 +4,8 @@ export const initialState = {
   user: {},
   role: "",
   token: {},
-  role: "admin",
+  userData: {},
+  // role: "admin",
   error: "", // for error message
   loading: false,
   isUserLogout: false,
@@ -23,6 +24,7 @@ const loginSlice = createSlice({
     },
     loginSuccess(state, action) {
       state.user = action.payload.user.email;
+      state.userData = action.payload.user;
       state.role = action.payload.roles;
       state.token = action.payload.token;
       state.loading = false;

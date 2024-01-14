@@ -3,6 +3,7 @@ import { CardBody, Row, Col, Card, Container } from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 
 import "./styles.css";
+import logo from "../../../assets/images/tiran-logo.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailPq as onGetDetailPq } from "../../../slices/thunks";
@@ -71,7 +72,7 @@ const CetakPq = () => {
                                           <tbody>
                                             <tr>
                                               <td width="100%" style={{ border: "0px solid black" }}>
-                                                {/* <img src={require("images/logo.png").default} alt="Deskripsi Gambar" width="100" height="100" /> */}
+                                                <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
                                               </td>
                                             </tr>
                                             <tr>

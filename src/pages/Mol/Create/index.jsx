@@ -236,8 +236,9 @@ const Mol = () => {
         // id_fpb: 0,
         keterangan: values.keterangan,
       };
+      console.log(newMol);
       await dispatch(onAddMol(newMol));
-      validation.resetForm();
+      // validation.resetForm();
       history("/mol");
     },
   });
@@ -660,9 +661,18 @@ const Mol = () => {
                                   handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
                                 }}
                               />
+                              <Input
+                                type="text"
+                                className="form-control mt-3"
+                                placeholder="Part Number"
+                                name="part_number"
+                                disabled
+                                value={row.part_number}
+                                onChange={(e) => handleInputChange(e, row.id, "part_number")}
+                              />
                             </td>
                             <td className="text-start" style={{ minWidth: "200px" }}>
-                              {/* <Select
+                              <Select
                                 placeholder="Description"
                                 name="description"
                                 value={masterPart.find((part) => part.id === row.id)}
@@ -679,13 +689,14 @@ const Mol = () => {
                                   handleInputChange({ target: { value: selectedPart.part_name } }, row.id, "description");
                                   handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
                                 }}
-                              /> */}
+                              />
                               <Input
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-3"
                                 placeholder="Description"
                                 name="description"
                                 value={row.description}
+                                disabled
                                 onChange={(e) => handleInputChange(e, row.id, "description")}
                               />
                             </td>
@@ -693,7 +704,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="number"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Quantity"
                                 name="qty"
                                 value={row.qty}
@@ -703,7 +714,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Unit"
                                 name="unit"
                                 value={row.unit}
@@ -713,7 +724,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Group"
                                 name="group"
                                 value={row.group}
@@ -723,7 +734,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="number"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Page Image"
                                 name="page_image"
                                 value={row.page_image}
@@ -733,7 +744,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Page Desc"
                                 name="page_desc"
                                 value={row.page_desc}
@@ -743,7 +754,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-4"
                                 placeholder="Remarks"
                                 name="remarks"
                                 value={row.remarks}
@@ -752,7 +763,7 @@ const Mol = () => {
                             </td>
 
                             <td className="product-removal">
-                              <Link to="#" className="btn btn-sm btn-danger" onClick={() => handleDeleteItem(row.id)}>
+                              <Link to="#" className="btn btn-sm btn-danger mt-4" onClick={() => handleDeleteItem(row.id)}>
                                 Delete
                               </Link>
                             </td>

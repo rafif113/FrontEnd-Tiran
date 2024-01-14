@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 
 import Ttd from "../../../assets/images/dummy/download.png";
 // import "../styles.css";
+import logo from "../../../assets/images/tiran-logo.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailPo as onGetDetailPo } from "../../../slices/thunks";
 
-import { setLoading, clearDetailPo } from "../../../slices/po/reducer";
+import { setLoadingCetak, clearDetailPo } from "../../../slices/po/reducer";
 
 import { useEffect } from "react";
 import { createSelector } from "reselect";
@@ -28,15 +29,15 @@ const CetakPo = () => {
     (detailPo) => detailPo
   );
   const detailPo = useSelector(selectDetailPo);
-  const loading = useSelector((state) => state.Po.loading);
+  const loading = useSelector((state) => state.Po.loadingCetak);
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const id_po = url.searchParams.get("id");
-    dispatch(setLoading(true));
+    dispatch(setLoadingCetak(true));
     dispatch(clearDetailPo());
     dispatch(onGetDetailPo({ id_po })).then(() => {
-      dispatch(setLoading(false));
+      dispatch(setLoadingCetak(false));
     });
   }, []);
 
@@ -84,12 +85,7 @@ const CetakPo = () => {
                                             <tbody>
                                               <tr>
                                                 <td width="100%" style={{ border: "0px solid black" }}>
-                                                  <img
-                                                    src="{{ asset('images/logo.png') }}"
-                                                    alt="Deskripsi Gambar"
-                                                    width={100}
-                                                    height={100}
-                                                  />
+                                                  <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
                                                 </td>
                                               </tr>
                                               <tr>
@@ -292,6 +288,7 @@ const CetakPo = () => {
                                             verticalAlign: "top",
                                             border: "1px solid black",
                                             backgroundColor: "#8585FF",
+                                            width: "50%", // Sesuaikan lebar kolom
                                           }}
                                         >
                                           <center>
@@ -301,8 +298,15 @@ const CetakPo = () => {
                                           </center>
                                         </td>
                                         <td style={{ width: "5%" }} border={0} />
-                                        <td>
-                                          <strong></strong>
+                                        <td
+                                          style={{
+                                            textTransform: "uppercase",
+                                            verticalAlign: "top",
+                                            border: "1px solid black",
+                                            backgroundColor: "#8585FF",
+                                            width: "50%", // Sesuaikan lebar kolom
+                                          }}
+                                        >
                                           <center>
                                             <strong>STAFF PENGADAAN</strong>
                                           </center>
@@ -311,16 +315,23 @@ const CetakPo = () => {
                                       <tr>
                                         <td
                                           style={{
-                                            width: "50%",
                                             textTransform: "uppercase",
                                             verticalAlign: "top",
                                             border: "1px solid black",
+                                            width: "50%", // Sesuaikan lebar kolom
                                           }}
                                         >
                                           {detailPo.spesial_intruksi}
                                         </td>
                                         <td />
-                                        <td style={{ width: "50%" }} className="kolom">
+                                        <td
+                                          style={{
+                                            verticalAlign: "top",
+                                            border: "1px solid black",
+                                            width: "50%", // Sesuaikan lebar kolom
+                                          }}
+                                          className="kolom"
+                                        >
                                           <h1>&nbsp;</h1>
                                           <h1>&nbsp;</h1>
                                           <hr style={{ border: "1px solid black", margin: 0 }} />
@@ -338,12 +349,12 @@ const CetakPo = () => {
                     <Col lg={12}>
                       <CardBody className="p-4">
                         <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                          <Link to="#" onClick={printInvoice} className="btn btn-success">
+                          <button onClick={printInvoice} className="btn btn-success">
                             <i className="ri-printer-line align-bottom me-1"></i> Print
-                          </Link>
-                          <Link to="#" className="btn btn-primary">
+                          </button>
+                          {/* <button className="btn btn-primary">
                             <i className="ri-download-2-line align-bottom me-1"></i> Download
-                          </Link>
+                          </button> */}
                         </div>
                       </CardBody>
                     </Col>

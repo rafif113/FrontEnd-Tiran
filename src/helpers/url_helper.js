@@ -104,6 +104,11 @@ export const POST_CEK_VENDOR_KENDARI = "/post/cek/vendorkendari";
 export const GET_VENDOR_SITE = "/get/delive/site";
 export const POST_DELIVE_VENDOR_SITE = "/post/delive/site";
 export const POST_CEK_VENDOR_SITE = "/post/cek/site/barang";
+export const POST_DELIVE_VENDOR_PARSIAL = "/post/delive/vendorkendari/parsial";
+export const GET_PART_SPB = "/get/part/spb";
+export const GET_LIST_SPB = "/get/spb";
+export const POST_SPB = "/post/spb";
+export const POST_SPB_SITE = "/post/spb/site";
 
 // Calendar
 export const GET_EVENTS = "/events";

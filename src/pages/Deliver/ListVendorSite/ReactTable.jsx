@@ -40,14 +40,20 @@ const VendorSiteTable = () => {
         filterable: false,
       },
       {
-        Header: "NO FPB",
-        accessor: "no_fpb",
+        Header: "NO SPB",
+        accessor: "no_spb",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Part Questions",
-        accessor: "pq_ke",
+        Header: "Jumlah Part",
+        accessor: "jumlah_part",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Pengirim",
+        accessor: "nama_pengirim",
         disableFilters: true,
         filterable: false,
       },
@@ -58,18 +64,12 @@ const VendorSiteTable = () => {
         filterable: false,
       },
       {
-        Header: "Total Part PQ",
-        // accessor: "total",
-        accessor: (cellProps) => {
-          return (
-            <div>
-              <b>{cellProps.jumlah_part_pq}</b> (dari {cellProps.total} part request FPB)
-            </div>
-          );
-        },
+        Header: "Keterangan",
+        accessor: "keterangan",
         disableFilters: true,
         filterable: false,
       },
+
       {
         Header: "Actions",
         disableFilters: true,
@@ -77,7 +77,7 @@ const VendorSiteTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailClick(cellProps.id_pq)} className="btn btn-sm btn-light">
+              <button onClick={() => handleDetailClick(cellProps.id_spb)} className="btn btn-sm btn-light">
                 Detail
               </button>
             </>

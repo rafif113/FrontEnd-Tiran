@@ -79,58 +79,6 @@ const PaginationTable = () => {
     });
   }, []);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state: { expanded },
-  } = useTable(
-    {
-      columns,
-      data: penawaranPq || [],
-    },
-    useExpanded
-  );
-
-  // const [checkedRows, setCheckedRows] = useState([]);
-
-  // const handleCheckboxChange = (e, row, fpb) => {
-  //   const isChecked = e.target.checked;
-
-  //   setCheckedRows((prevCheckedRows) => {
-  //     if (isChecked) {
-  //       // Checkbox dicentang, tambahkan objek ke array
-  //       return [
-  //         ...prevCheckedRows,
-  //         {
-  //           desc: row.desc,
-  //           id: row.id,
-  //           id_fpb: row.id_fpb,
-  //           page_desc: row.page_desc,
-  //           page_image: row.page_image,
-  //           part_number: row.part_number,
-  //           qty: row.qty,
-  //           remarks: row.remarks,
-  //           stock: row.stock,
-  //           unit: row.unit,
-
-  //           nomor: fpb.nomor,
-  //           note: fpb.note,
-  //           pengajuan: fpb.pengajuan,
-  //           sifat: fpb.sifat,
-  //           site: fpb.site,
-  //           tujuan: fpb.tujuan,
-  //         },
-  //       ];
-  //     } else {
-  //       // Checkbox tidak dicentang, hapus objek dari array berdasarkan id
-  //       return prevCheckedRows.filter((item) => item.id !== row.id);
-  //     }
-  //   });
-  // };
-
   const [checkedRows, setCheckedRows] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState([]);
 

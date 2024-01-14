@@ -77,6 +77,8 @@ import VendorKendari from "../pages/Deliver/ListVendorKendari";
 import DetailVendorKendari from "../pages/Deliver/DetailsKendari";
 import VendorSite from "../pages/Deliver/ListVendorSite";
 import DetailVendorSite from "../pages/Deliver/DetailsSite";
+import Spb from "../pages/Deliver/Spb";
+import CetakSpb from "../pages/Deliver/DetailsSpb/Cetak";
 
 const authProtectedRoutes = [
   // User Profile
@@ -147,6 +149,8 @@ const authProtectedRoutes = [
   { path: "/deliver/vendor/detail", component: <DetailVendorKendari /> },
   { path: "/deliver/site", component: <VendorSite /> },
   { path: "/deliver/site/detail", component: <DetailVendorSite /> },
+  { path: "/deliver/spb", component: <Spb /> },
+  { path: "/deliver/spb/detail", component: <CetakSpb /> },
 
   {
     path: "/",

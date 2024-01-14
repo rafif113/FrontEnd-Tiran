@@ -64,7 +64,8 @@ const TableContainer = ({
   divClass,
   SearchPlaceholder,
   toggleRowExpanded,
-  renderExpandedRowContent, // Tambahkan prop untuk konten ekspansi baris
+  renderExpandedRowContent,
+  hover = true,
 }) => {
   const {
     getTableProps,
@@ -147,7 +148,7 @@ const TableContainer = ({
       )}
 
       <div className={`table-responsive ${tableClass}`}>
-        <Table hover {...getTableProps()} className={tableClass}>
+        <Table hover={hover} {...getTableProps()} className={tableClass}>
           <thead className={theadClass}>
             {headerGroups.map((headerGroup) => (
               <tr className={trClass} key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>

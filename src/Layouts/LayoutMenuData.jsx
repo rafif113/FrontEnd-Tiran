@@ -204,6 +204,24 @@ const Navdata = () => {
         { id: "procurementlist", label: "Procurement List", link: "/procurement-list", parentId: "po" },
       ],
     },
+    // {
+    //   id: "deliver",
+    //   label: "Deliver",
+    //   icon: "ri-file-list-3-line",
+    //   link: "/#",
+    //   click: function (e) {
+    //     e.preventDefault();
+    //     setIsDeliver(!isDeliver);
+    //     setIsCurrentState("Deliver");
+    //     updateIconSidebar(e);
+    //   },
+    //   stateVariables: isDeliver,
+
+    //   subItems: [
+    //     { id: "vendorkendari", label: "Kendari", link: "/deliver/vendor", parentId: "deliver" },
+    //     { id: "vendorsite", label: "Site", link: "/deliver/site", parentId: "deliver" },
+    //   ],
+    // },
     {
       id: "deliver",
       label: "Deliver",
@@ -216,12 +234,17 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isDeliver,
-
       subItems: [
-        { id: "vendorkendari", label: "Kendari", link: "/deliver/vendor", parentId: "deliver" },
-        { id: "vendorsite", label: "Site", link: "/deliver/site", parentId: "deliver" },
-      ],
+        { id: "spb", label: "SPB", link: "/deliver/spb", parentId: "deliver" },
+        role.includes("kendari") || role.includes("developer")
+          ? { id: "vendorkendari", label: "Kendari", link: "/deliver/vendor", parentId: "deliver" }
+          : null,
+        role.includes("site") || role.includes("developer")
+          ? { id: "vendorsite", label: "Site", link: "/deliver/site", parentId: "deliver" }
+          : null,
+      ].filter(Boolean),
     },
+
     // {
     //   id: "ktt",
     //   label: "KTT",
@@ -310,11 +333,16 @@ const Navdata = () => {
   const molItem = menuItems.find((item) => item.id === "mol");
   const poItem = menuItems.find((item) => item.id === "po");
   const reportItem = menuItems.find((item) => item.id === "report");
+  const deliverItem = menuItems.find((item) => item.id === "deliver");
 
   if (role === "finance") {
     return <React.Fragment>{financeItem && dashboardItem ? [dashboardItem, financeItem] : null}</React.Fragment>;
-  } else if (role == "vendor") {
-    return <React.Fragment>{vendorItem && dashboardItem ? [dashboardItem, vendorItem] : null}</React.Fragment>;
+  } else if (role == "kendari" || role == "site") {
+    return <React.Fragment>{deliverItem && dashboardItem ? [dashboardItem, deliverItem] : null}</React.Fragment>;
+  } else if (role == "mol") {
+    return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
+  } else if (role == "fpb") {
+    return <React.Fragment>{fbpItem && dashboardItem ? [dashboardItem, fbpItem] : null}</React.Fragment>;
   } else if (role == "pengadaan") {
     return (
       <React.Fragment>

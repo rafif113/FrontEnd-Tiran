@@ -126,6 +126,10 @@ const DetailPenawaran = () => {
     closeSubmitModal();
   };
 
+  const handleCetakClick = (id) => {
+    history(`/fpb/pq/cetak?id=${id}`);
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -144,7 +148,20 @@ const DetailPenawaran = () => {
                 }}
               >
                 <Card>
-                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail Part Questions : </CardHeader>
+                  <CardHeader
+                    className="d-flex justify-content-between align-items-center"
+                    style={{ fontSize: "14px", fontWeight: "600" }}
+                  >
+                    <div>Detail Part Questions :</div>
+                    <button
+                      onClick={() => handleCetakClick(detailPenawaran.id_pq)}
+                      type="button"
+                      className="btn btn-primary btn-sm w-sm"
+                    >
+                      <i className="ri-printer-line align-bottom me-1"></i> Print
+                    </button>
+                  </CardHeader>
+
                   <CardBody>
                     <Row>
                       <Col lg={6}>
