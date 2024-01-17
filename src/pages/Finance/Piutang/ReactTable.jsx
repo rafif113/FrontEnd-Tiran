@@ -15,7 +15,7 @@ const PiutangFinanceTable = () => {
 
   const handleDetailClick = (id) => {
     console.log(id);
-    // history(`/finance/monitoring/tongkang/detail?id=${id}`);
+    history(`/finance/piutang/detail?id=${id}`);
   };
 
   const loading = useSelector((state) => state.Finance.loadingPiutang);

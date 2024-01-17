@@ -27,26 +27,33 @@ const Cetak = () => {
 
   const sendSpb = () => {
     const pdf = new jsPDF({
-      orientation: "l",
+      orientation: "p",
       unit: "px",
-      format: "a4",
+      format: "a1",
       putOnlyUsedFonts: true,
     });
     pdf.html(document.getElementById("head_Content_sik"), {
       // scale: 4,
-      callback: (pdf) => {
+      callback: async (pdf) => {
         const pdfDataUrl = pdf.output("dataurlstring");
         const downloadLink = document.createElement("a");
         downloadLink.href = pdfDataUrl;
-        downloadLink.download = "invoice.pdf";
-        downloadLink.click();
+        // downloadLink.download = "invoice.pdf";
+        // downloadLink.click();
 
         const pdfData = pdf.output("blob");
         const formData = new FormData();
         formData.append("file", pdfData, "spb.pdf");
         formData.append("keterangan", "tes");
+        alert("Menunggu pengiriman...");
 
-        dispatch(postFileGcs(formData));
+        try {
+          await dispatch(postFileGcs(formData));
+
+          alert("Pengiriman berhasil!");
+        } catch (error) {
+          alert("Terjadi kesalahan saat pengiriman.");
+        }
       },
     });
   };
@@ -84,7 +91,7 @@ const Cetak = () => {
                   <Row>
                     <Col lg={12}>
                       <div id="head_Content_sik">
-                        <div id="dvContents_sik" className="result">
+                        <div id="dvContents_sik" className="result" style={{ margin: "20px" }}>
                           <table width="100%">
                             <tbody>
                               <tr>

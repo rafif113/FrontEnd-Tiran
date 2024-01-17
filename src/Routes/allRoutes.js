@@ -48,6 +48,7 @@ import ListPenawaranPq from "../pages/Penawaran/ListPq";
 import DetailPenawaranPq from "../pages/Penawaran/DetailPq";
 // Finance
 import FinancePiutang from "../pages/Finance/Piutang";
+import FinanceDetailPiutang from "../pages/Finance/DetailsPiutang";
 import FinanceMonitoringInvoice from "../pages/Finance/Monitoring/Invoice";
 import CartPaymentRequest from "../pages/Finance/Monitoring/CartPaymentRequest";
 import CartPaymentRequestCetak from "../pages/Finance/Monitoring/CartPaymentRequest/Cetak";
@@ -125,6 +126,8 @@ const authProtectedRoutes = [
   { path: "/penawaran-pq/detail", component: <DetailPenawaranPq /> },
   // Finance
   { path: "/finance/piutang", component: <FinancePiutang /> },
+  { path: "/finance/piutang/detail", component: <FinanceDetailPiutang /> },
+  { path: "/finance/piutang/detail", component: <FinancePiutang /> },
   { path: "/finance/monitoring/po", component: <FinanceMonitoringPo /> },
   { path: "/finance/monitoring/payment-request", component: <FinanceMonitoringInvoice /> },
   { path: "/finance/monitoring/payment-request/detail", component: <FinanceMonitoringDetailInvoice /> },

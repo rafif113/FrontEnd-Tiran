@@ -23,9 +23,9 @@ import { formatRupiah } from "../../../utils/utils";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailVendorSite as onGetDetailVendorSite, postSpbSite as onPostSpbSite } from "../../../slices/thunks";
+import { getDetailFinancePiutang as onGetDetailFinancePiutang } from "../../../slices/thunks";
 
-import { clearDetailVendorSite, setLoadingDetailVendorSite } from "../../../slices/deliver/reducer";
+import { clearDetailPiutang, setLoadingDetailPiutang } from "../../../slices/finance/reducer";
 
 //formik
 import { useFormik } from "formik";
@@ -36,27 +36,22 @@ import { createSelector } from "reselect";
 import { Link, useNavigate } from "react-router-dom";
 
 const DetailPiutang = () => {
-  document.title = "Detail Site Vendor | PT Tiran";
+  document.title = "Detail Piutang | PT Tiran";
 
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  //   Data detail Mol
-  const detailVendorSiteData = createSelector(
-    (state) => state.Deliver.detailVendorSite,
-    (detailVendorSite) => detailVendorSite
-  );
-  const detailVendorSite = useSelector(detailVendorSiteData);
-  const loading = useSelector((state) => state.Deliver.loadingDetailVendorSite);
+  const detailPiutang = useSelector((state) => state.Finance.detailPiutang);
+  const loading = useSelector((state) => state.Finance.loadingDetailPiutang);
   const userLogin = useSelector((state) => state.Login.userData);
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const id_spb = url.searchParams.get("id");
-    dispatch(setLoadingDetailVendorSite(true));
-    dispatch(clearDetailVendorSite());
-    dispatch(onGetDetailVendorSite({ id_spb })).then(() => {
-      dispatch(setLoadingDetailVendorSite(false));
+    const id_vendor = url.searchParams.get("id");
+    dispatch(setLoadingDetailPiutang(true));
+    dispatch(clearDetailPiutang());
+    dispatch(onGetDetailFinancePiutang({ id_vendor })).then(() => {
+      dispatch(setLoadingDetailPiutang(false));
     });
   }, []);
 
@@ -104,15 +99,17 @@ const DetailPiutang = () => {
         id_part: JSON.stringify(id_part_request),
         id_user: userLogin.id,
       };
-      await dispatch(onPostSpbSite(data));
+      // await dispatch(onPostSpbSite(data));
       window.location.reload();
     }
   };
 
+  console.log(detailPiutang);
+
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Deliver Site" pageTitle="Deliver" />
+        <BreadCrumb title="Detail Piutang" pageTitle="Deliver" />
         {loading ? (
           <div className="text-center">
             <Spinner animation="border" variant="primary" />
@@ -121,13 +118,13 @@ const DetailPiutang = () => {
           <Row>
             <Col lg={12}>
               <Card>
-                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail SPB :</CardHeader>
+                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail Vendor :</CardHeader>
                 <CardBody>
                   <Row>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          No. SPB
+                          Nama Vendor
                         </label>
                         <Input
                           type="text"
@@ -135,14 +132,14 @@ const DetailPiutang = () => {
                           id="site"
                           name="site"
                           readOnly
-                          value={detailVendorSite.dataspb.no_spb}
+                          value={detailPiutang.vendor[0].vendor}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          Pengirim
+                          Alamat
                         </label>
                         <Input
                           type="text"
@@ -150,97 +147,22 @@ const DetailPiutang = () => {
                           id="site"
                           name="site"
                           readOnly
-                          value={detailVendorSite.dataspb.pengirim}
+                          value={detailPiutang.vendor[0].alamat}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Penerima
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.penerima}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Penerima 2
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.penerima_2}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Driver
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.driver}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
+                        <label className="form-label" htmlFor="site">
                           Keterangan
                         </label>
                         <Input
                           type="text"
                           className="form-control"
-                          id="nomor"
-                          name="nomor"
+                          id="site"
+                          name="site"
                           readOnly
-                          value={detailVendorSite.dataspb.keterangan}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Tanggal Dikirim
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.date}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Jam Dikirim
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.dikirim_jam}
+                          value={detailPiutang.vendor[0].keterangan}
                         />
                       </div>
                     </Col>
@@ -248,7 +170,187 @@ const DetailPiutang = () => {
                 </CardBody>
               </Card>
 
-              <Card>
+              {detailPiutang.po.map((row, index) => (
+                <Card>
+                  <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail PO : {row.po_detail.nomor_po}</CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="site">
+                            NO PR
+                          </label>
+                          <Input
+                            type="text"
+                            className="form-control"
+                            id="site"
+                            name="site"
+                            readOnly
+                            value={row.po_detail.nomor_pr}
+                          />
+                        </div>
+                      </Col>
+
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="site">
+                            Special Instruction
+                          </label>
+                          <Input
+                            type="text"
+                            className="form-control"
+                            id="site"
+                            name="site"
+                            readOnly
+                            value={row.po_detail.spesial_intruksi}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <div className="table-responsive">
+                        <Table className="table-nowrap mb-0" style={{ backgroundColor: "#f8f4f4" }}>
+                          <thead className="align-middle">
+                            <tr className="table-active">
+                              <th scope="col" style={{ width: "50px" }}>
+                                No.
+                              </th>
+                              <th scope="col">Part Number</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">Qty</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Unit</th>
+                              <th scope="col">Group</th>
+                              <th scope="col">Page Image</th>
+                              <th scope="col">Page Desc</th>
+                              <th scope="col">Remarks</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {row.po_detail.pricepart.map((rowPart, indexPart) => (
+                              <tr key={rowPart.partrequest.id} className="product cursor-pointer bg-white">
+                                <th scope="rowPart.partrequest" className="product-id">
+                                  {indexPart + 1}
+                                </th>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="part_number"
+                                    value={rowPart.partrequest.part_number}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="description"
+                                    value={rowPart.partrequest.desc}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="number"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="qty"
+                                    value={rowPart.partrequest.qty}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="qty"
+                                    value={formatRupiah(rowPart.price)}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="unit"
+                                    value={rowPart.partrequest.unit}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="group"
+                                    value={rowPart.partrequest.group}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="number"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="page_image"
+                                    value={rowPart.partrequest.page_image}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="page_desc"
+                                    value={rowPart.partrequest.page_desc}
+                                    readOnly
+                                  />
+                                </td>
+                                <td className="text-start">
+                                  <Input
+                                    style={{ minWidth: "100px" }}
+                                    type="text"
+                                    className="form-control form-control-sm bg-light border-0"
+                                    name="remarks"
+                                    value={rowPart.partrequest.remarks}
+                                    readOnly
+                                  />
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </div>
+                      <table className="mt-4 mx-4">
+                        <tbody>
+                          <tr>
+                            <td style={{ fontSize: "0.8rem", fontWeight: "bold", width: "15%" }}>Total Pembayaran</td>
+                            <td style={{ width: "1%" }}>:</td>
+                            <td style={{ fontSize: "0.8rem", fontWeight: "bold" }}>
+                              {formatRupiah(detailPiutang.po_keterangan_bayar[index].total_pembayaran)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontSize: "0.8rem", fontWeight: "bold", width: "15%" }}>Sudah Dibayar</td>
+                            <td style={{ width: "1%" }}>:</td>
+                            <td style={{ fontSize: "0.8rem", fontWeight: "bold" }}>
+                              {formatRupiah(detailPiutang.po_keterangan_bayar[index].yang_sudah_dibayar)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </Row>
+                  </CardBody>
+                </Card>
+              ))}
+
+              {/* <Card>
                 <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Part Request :</CardHeader>
                 <CardBody>
                   <div className="table-responsive">
@@ -428,13 +530,13 @@ const DetailPiutang = () => {
                     *klik pada row tertentu untuk melihat detail qty
                   </span>
                 </CardBody>
-              </Card>
+              </Card> */}
 
               <div className="text-end mb-3">
                 <div className="hstack gap-2 justify-content-end d-print-none mt-4">
-                  <button type="button" onClick={handleSubmitBtn} className="btn btn-primary w-sm">
+                  {/* <button type="button" className="btn btn-primary w-sm">
                     Submit
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </Col>
