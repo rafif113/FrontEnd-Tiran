@@ -4,27 +4,25 @@ import { Spinner } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { useNavigate } from "react-router-dom";
-import { formatRupiah } from "../../../utils/utils";
 
-import { getFinancePiutang as onGetFinancePiutang } from "../../../slices/thunks";
-import { setLoadingPiutang } from "../../../slices/finance/reducer";
+import { getListGrPo as onGetListGrPo } from "../../../slices/thunks";
+import { setLoadingGrPo } from "../../../slices/deliver/reducer";
 
-const PiutangFinanceTable = () => {
+const VendorGrPoTable = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
   const handleDetailClick = (id) => {
-    console.log(id);
-    // history(`/finance/monitoring/tongkang/detail?id=${id}`);
+    history(`/deliver/gr-po/detail?id=${id}`);
   };
 
-  const loading = useSelector((state) => state.Finance.loadingPiutang);
-  const piutang = useSelector((state) => state.Finance.piutang);
+  const GrPo = useSelector((state) => state.Deliver.GrPo);
+  const loading = useSelector((state) => state.Deliver.loadingGrPo);
 
   useEffect(() => {
-    dispatch(setLoadingPiutang(true));
-    dispatch(onGetFinancePiutang()).then(() => {
-      dispatch(setLoadingPiutang(false));
+    dispatch(setLoadingGrPo(true));
+    dispatch(onGetListGrPo()).then(() => {
+      dispatch(setLoadingGrPo(false));
     });
   }, []);
 
@@ -38,38 +36,36 @@ const PiutangFinanceTable = () => {
         filterable: false,
       },
       {
-        Header: "Nama Vendor",
-        accessor: "nama_vendor",
+        Header: "No PO",
+        accessor: "po.nomor_po",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Total PO",
+        Header: "No Pr",
+        accessor: "po.nomor_pr",
         disableFilters: true,
-        filterable: true,
-        accessor: (cellProps) => {
-          return (
-            <>
-              <div>{cellProps.po.length}</div>
-            </>
-          );
-        },
+        filterable: false,
       },
       {
-        Header: "Total Price",
+        Header: "Date",
+        accessor: "po.date",
         disableFilters: true,
-        filterable: true,
-        accessor: (cellProps) => {
-          const totalHarga = cellProps.po.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.total_harga;
-          }, 0);
-          return (
-            <>
-              <div>{formatRupiah(totalHarga)}</div>
-            </>
-          );
-        },
+        filterable: false,
       },
+      {
+        Header: "Spesial Intruksi",
+        accessor: "po.spesial_intruksi",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Keterangan",
+        accessor: "keterangan",
+        disableFilters: true,
+        filterable: false,
+      },
+
       {
         Header: "Actions",
         disableFilters: true,
@@ -77,7 +73,7 @@ const PiutangFinanceTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailClick(cellProps.id)} className="btn btn-sm btn-light">
+              <button onClick={() => handleDetailClick(cellProps.po.id)} className="btn btn-sm btn-light">
                 Detail
               </button>
             </>
@@ -95,7 +91,7 @@ const PiutangFinanceTable = () => {
       {!loading ? (
         <TableContainer
           columns={columns || []}
-          data={piutang || []}
+          data={GrPo || []}
           isPagination={true}
           isGlobalFilter={true}
           isGlobalSearch={true}
@@ -105,7 +101,7 @@ const PiutangFinanceTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari Tongkang..."
+          SearchPlaceholder="Cari List Kendari..."
         />
       ) : (
         <div className="text-center">
@@ -116,4 +112,4 @@ const PiutangFinanceTable = () => {
   );
 };
 
-export { PiutangFinanceTable };
+export { VendorGrPoTable };

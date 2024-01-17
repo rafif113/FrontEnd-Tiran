@@ -125,6 +125,7 @@ export const postFinanceTongkangPort = (data) => api.create(url.POST_FINANCE_TON
 export const postPaymentRequest = (data) => api.create(url.POST_PAYMENT_REQUEST, data);
 export const postRecapCart = (data) => api.create(url.POST_RECAP_CART, data);
 
+export const getFinancePiutang = (data) => api.create(url.GET_FINANCE_PIUTANG, data);
 // REPORT
 export const getReportUnit = () => api.get(url.GET_REPORT_UNIT);
 export const getReportBarangIn = (data) => api.create(url.GET_REPORT_BARANG_IN, data);
@@ -135,6 +136,7 @@ export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE
 
 // GCS
 export const postGcs = (data) => api.create(url.POST_GCS, data);
+export const postFileGcs = (data) => api.create(url.POST_FILE_GCS, data);
 
 // KTT
 export const getKttPo = (data) => api.create(url.GET_KTT_PO, data);
@@ -155,6 +157,7 @@ export const postDeliveVendorParsial = (data) => api.create(url.POST_DELIVE_VEND
 
 export const getPartSpb = (data) => api.create(url.GET_PART_SPB, data);
 export const getListSpb = (data) => api.create(url.GET_LIST_SPB, data);
+export const getListGrPo = (data) => api.create(url.GET_LIST_GR_PO, data);
 // postSocialLogin
 export const postSocialLogin = (data) => api.create(url.SOCIAL_LOGIN, data);
 

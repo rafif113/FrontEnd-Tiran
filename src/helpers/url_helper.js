@@ -71,6 +71,7 @@ export const POST_FINANCE_TONGKANG_PAYMENT = "/post/finance/tongkang/final_payme
 export const POST_FINANCE_TONGKANG_PORT = "/post/finance/tongkang/sd_port";
 export const POST_PAYMENT_REQUEST = "/post/paymentrequest";
 export const POST_RECAP_CART = "/get/recapcart";
+export const GET_FINANCE_PIUTANG = "/get/piutang/po";
 
 // REPORT
 export const GET_REPORT_UNIT = "/get/report/unit";
@@ -82,6 +83,7 @@ export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
 
 // GCS
 export const POST_GCS = "/post/do/vendor/gcs";
+export const POST_FILE_GCS = "/post/file/gcs";
 
 // KTT
 export const GET_KTT_PO = "/post/ktt/po";
@@ -109,6 +111,7 @@ export const GET_PART_SPB = "/get/part/spb";
 export const GET_LIST_SPB = "/get/spb";
 export const POST_SPB = "/post/spb";
 export const POST_SPB_SITE = "/post/spb/site";
+export const GET_LIST_GR_PO = "/get/po/grpo";
 
 // Calendar
 export const GET_EVENTS = "/events";

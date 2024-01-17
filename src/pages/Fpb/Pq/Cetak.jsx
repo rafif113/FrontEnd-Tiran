@@ -50,7 +50,7 @@ const CetakPq = () => {
                     <Col lg={12}>
                       <div id="head_Content_sik">
                         <div id="dvContents_sik" className="result">
-                          <table border="1" width="100%" cellSpacing="10">
+                          <table width="100%" cellSpacing="10">
                             <tr>
                               <td width="100%;" style={{ fontSize: "32px", border: "0px solid black" }}>
                                 <center>
@@ -72,7 +72,7 @@ const CetakPq = () => {
                                           <tbody>
                                             <tr>
                                               <td width="100%" style={{ border: "0px solid black" }}>
-                                                <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
+                                                <img src={logo} alt="Deskripsi Gambar" width={110} height={60} />
                                               </td>
                                             </tr>
                                             <tr>
@@ -106,14 +106,14 @@ const CetakPq = () => {
                                               <td></td>
                                             </tr>
                                             <tr>
-                                              <td width="20%">DATE</td>
-                                              <td style={{ border: "1px solid black" }}>
-                                                : {new Date().toISOString().split("T")[0]}
+                                              <td width="20%" style={{ fontWeight: "bold" }}>
+                                                DATE
                                               </td>
+                                              <td style={{ fontWeight: "bold" }}>: {new Date().toISOString().split("T")[0]}</td>
                                             </tr>
                                             <tr>
-                                              <td>FPB</td>
-                                              <td style={{ border: "1px solid black" }}>: 2808 S2/BIP/TI/X/2023 NO FPB</td>
+                                              <td style={{ fontWeight: "bold" }}>FPB</td>
+                                              <td style={{ fontWeight: "bold" }}>: 2808 S2/BIP/TI/X/2023 NO FPB</td>
                                             </tr>
                                           </tbody>
                                         </table>
@@ -130,26 +130,36 @@ const CetakPq = () => {
                                   style={{
                                     border: "1px solid black",
                                     borderCollapse: "collapse",
-                                    fontSize: "12px",
+                                    fontSize: "10px",
                                     marginTop: "4px",
                                   }}
                                   border="1"
                                 >
-                                  <thead className="head_table" style={{ backgroundColor: "#8585FF" }}>
-                                    <tr>
-                                      <th style={{ width: "5%" }}>NO</th>
-                                      <th style={{ width: "45%" }}>Description and Specification</th>
-                                      <th style={{ width: "10%" }}>QTY</th>
+                                  <thead className="head_table" style={{ textAlign: "center" }}>
+                                    <tr style={{ fontWeight: "bold" }}>
+                                      <th style={{ width: "5%", borderRight: "1px solid black" }}>NO</th>
+                                      <th style={{ width: "45%", borderRight: "1px solid black" }}>
+                                        Description and Specification
+                                      </th>
+                                      <th style={{ width: "10%", borderRight: "1px solid black" }}>QTY</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     {detailPq.partrequests.map((row, index) => (
-                                      <tr key={index} style={{ fontWeight: "bold" }}>
-                                        <td>{index + 1}</td>
-                                        <td>
+                                      <tr key={index} style={{ fontWeight: "bold", border: "1px solid black" }}>
+                                        <td
+                                          style={{
+                                            borderLeft: "1px solid black",
+                                            borderRight: "1px solid black",
+                                            textAlign: "center",
+                                          }}
+                                        >
+                                          {index + 1}
+                                        </td>
+                                        <td style={{ borderRight: "1px solid black", textAlign: "center" }}>
                                           {row.part_number} {row.desc}
                                         </td>
-                                        <td>
+                                        <td style={{ borderRight: "1px solid black", textAlign: "center" }}>
                                           {row.qty} {row.unit}
                                         </td>
                                       </tr>

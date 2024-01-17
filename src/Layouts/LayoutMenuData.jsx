@@ -236,6 +236,7 @@ const Navdata = () => {
       stateVariables: isDeliver,
       subItems: [
         { id: "spb", label: "SPB", link: "/deliver/spb", parentId: "deliver" },
+        { id: "grpo", label: "GR PO", link: "/deliver/gr-po", parentId: "deliver" },
         role.includes("kendari") || role.includes("developer")
           ? { id: "vendorkendari", label: "Kendari", link: "/deliver/vendor", parentId: "deliver" }
           : null,

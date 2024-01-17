@@ -85,7 +85,7 @@ const CetakPo = () => {
                                             <tbody>
                                               <tr>
                                                 <td width="100%" style={{ border: "0px solid black" }}>
-                                                  <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
+                                                  <img src={logo} alt="Deskripsi Gambar" width={110} height={60} />
                                                 </td>
                                               </tr>
                                               <tr>
@@ -214,7 +214,7 @@ const CetakPo = () => {
                                     }}
                                     border={1}
                                   >
-                                    <thead className="head_table" style={{ backgroundColor: "#8585FF" }}>
+                                    <thead className="head_table" style={{ textAlign: "center" }}>
                                       <tr>
                                         <th style={{ width: "5%" }}>NO</th>
                                         <th style={{ width: "45%" }}>Description and Specification</th>

@@ -89,7 +89,7 @@ const CetakFpb = () => {
                                             <tbody>
                                               <tr>
                                                 <td width="100%" style={{ border: "0px solid black" }}>
-                                                  <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
+                                                  <img src={logo} alt="Deskripsi Gambar" width={110} height={60} />
                                                 </td>
                                               </tr>
                                               <tr>

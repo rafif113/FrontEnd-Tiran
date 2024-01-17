@@ -169,7 +169,6 @@ const PaginationTable = () => {
             <th style={{ fontWeight: 450 }}>Merk / Type</th>
             <th style={{ fontWeight: 450 }}>Qty</th>
             <th style={{ fontWeight: 450 }}>Keterangan</th>
-            <th style={{ fontWeight: 450 }}>Stock</th>
             <th style={{ fontWeight: 450 }}>
               <input
                 id="check-all"
@@ -202,18 +201,12 @@ const PaginationTable = () => {
               <td className="text-start" style={{ fontSize: "12px" }}>
                 <span>{value.page_desc}</span>
               </td>
-              <td className="text-start" style={{ fontSize: "12px" }}>
-                <span>{value.stock}</span>
-              </td>
               <td className="text-start">
                 {!value.id_pq && (
                   <input
                     className="form-check-input"
                     type="checkbox"
                     value={value.id}
-                    // checked={checkedRows.some((item) => item.id === value.id)}
-                    // onChange={(e) => handleCheckboxChange(e, value, row.original.datafpb)}
-
                     checked={checkedRows.some((item) => item.id === value.id)}
                     onChange={(e) => handleCheckboxChange(e, value, row.original.datafpb)}
                   />

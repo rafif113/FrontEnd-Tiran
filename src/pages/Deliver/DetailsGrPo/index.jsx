@@ -23,9 +23,9 @@ import { formatRupiah } from "../../../utils/utils";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailVendorSite as onGetDetailVendorSite, postSpbSite as onPostSpbSite } from "../../../slices/thunks";
+import { getDetailGrPo as onGetDetailGrPo, postSpbSite as onPostSpbSite } from "../../../slices/thunks";
 
-import { clearDetailVendorSite, setLoadingDetailVendorSite } from "../../../slices/deliver/reducer";
+import { clearDetailGrPo, setLoadingDetailGrPo } from "../../../slices/deliver/reducer";
 
 //formik
 import { useFormik } from "formik";
@@ -35,28 +35,25 @@ import { useEffect } from "react";
 import { createSelector } from "reselect";
 import { Link, useNavigate } from "react-router-dom";
 
-const DetailVendorSite = () => {
-  document.title = "Detail Site Vendor | PT Tiran";
+const DetailGrPo = () => {
+  document.title = "Detail GR PO | PT Tiran";
 
   const dispatch = useDispatch();
   const history = useNavigate();
 
   //   Data detail Mol
-  const detailVendorSiteData = createSelector(
-    (state) => state.Deliver.detailVendorSite,
-    (detailVendorSite) => detailVendorSite
-  );
-  const detailVendorSite = useSelector(detailVendorSiteData);
-  const loading = useSelector((state) => state.Deliver.loadingDetailVendorSite);
+
+  const detailGrPo = useSelector((state) => state.Deliver.detailGrPo);
+  const loading = useSelector((state) => state.Deliver.loadingDetailGrPo);
   const userLogin = useSelector((state) => state.Login.userData);
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const id_spb = url.searchParams.get("id");
-    dispatch(setLoadingDetailVendorSite(true));
-    dispatch(clearDetailVendorSite());
-    dispatch(onGetDetailVendorSite({ id_spb })).then(() => {
-      dispatch(setLoadingDetailVendorSite(false));
+    const id_po = url.searchParams.get("id");
+    dispatch(setLoadingDetailGrPo(true));
+    dispatch(clearDetailGrPo());
+    dispatch(onGetDetailGrPo({ id_po })).then(() => {
+      dispatch(setLoadingDetailGrPo(false));
     });
   }, []);
 
@@ -96,23 +93,23 @@ const DetailVendorSite = () => {
   };
 
   const handleSubmitBtn = async () => {
-    if (selectedItems.length == 0) {
-      alert("Data tidak ada yang dipilih");
-    } else {
-      const id_part_request = selectedItems.map((item) => item.id);
-      const data = {
-        id_part: JSON.stringify(id_part_request),
-        id_user: userLogin.id,
-      };
-      await dispatch(onPostSpbSite(data));
-      window.location.reload();
-    }
+    // if (selectedItems.length == 0) {
+    //   alert("Data tidak ada yang dipilih");
+    // } else {
+    //   const id_part_request = selectedItems.map((item) => item.id);
+    //   const data = {
+    //     id_part: JSON.stringify(id_part_request),
+    //     id_user: userLogin.id,
+    //   };
+    //   await dispatch(onPostSpbSite(data));
+    //   window.location.reload();
+    // }
   };
 
   return (
     <div className="page-content">
       <Container fluid>
-        <BreadCrumb title="Deliver Site" pageTitle="Deliver" />
+        <BreadCrumb title="Detail GR PO" pageTitle="Deliver" />
         {loading ? (
           <div className="text-center">
             <Spinner animation="border" variant="primary" />
@@ -121,13 +118,13 @@ const DetailVendorSite = () => {
           <Row>
             <Col lg={12}>
               <Card>
-                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail SPB :</CardHeader>
+                <CardHeader style={{ fontSize: "14px", fontWeight: "600" }}>Detail PO :</CardHeader>
                 <CardBody>
                   <Row>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          No. SPB
+                          No. PO
                         </label>
                         <Input
                           type="text"
@@ -135,14 +132,14 @@ const DetailVendorSite = () => {
                           id="site"
                           name="site"
                           readOnly
-                          value={detailVendorSite.dataspb.no_spb}
+                          value={detailGrPo[0].nomor_po}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="site">
-                          Pengirim
+                          No. PR
                         </label>
                         <Input
                           type="text"
@@ -150,14 +147,14 @@ const DetailVendorSite = () => {
                           id="site"
                           name="site"
                           readOnly
-                          value={detailVendorSite.dataspb.pengirim}
+                          value={detailGrPo[0].nomor_pr}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="nomor">
-                          Penerima
+                          Special Instruction
                         </label>
                         <Input
                           type="text"
@@ -165,83 +162,16 @@ const DetailVendorSite = () => {
                           id="nomor"
                           name="nomor"
                           readOnly
-                          value={detailVendorSite.dataspb.penerima}
+                          value={detailGrPo[0].spesial_intruksi}
                         />
                       </div>
                     </Col>
                     <Col lg={6}>
                       <div className="mb-3">
                         <label className="form-label" htmlFor="nomor">
-                          Penerima 2
+                          Date
                         </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.penerima_2}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Driver
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.driver}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Keterangan
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.keterangan}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Tanggal Dikirim
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.date}
-                        />
-                      </div>
-                    </Col>
-                    <Col lg={6}>
-                      <div className="mb-3">
-                        <label className="form-label" htmlFor="nomor">
-                          Jam Dikirim
-                        </label>
-                        <Input
-                          type="text"
-                          className="form-control"
-                          id="nomor"
-                          name="nomor"
-                          readOnly
-                          value={detailVendorSite.dataspb.dikirim_jam}
-                        />
+                        <Input type="text" className="form-control" id="nomor" name="nomor" readOnly value={detailGrPo[0].date} />
                       </div>
                     </Col>
                   </Row>
@@ -261,6 +191,7 @@ const DetailVendorSite = () => {
                           <th scope="col">Part Number</th>
                           <th scope="col">Description</th>
                           <th scope="col">Qty</th>
+                          <th scope="col">Price</th>
                           <th scope="col">Unit</th>
                           <th scope="col">Group</th>
                           <th scope="col">Page Image</th>
@@ -268,11 +199,12 @@ const DetailVendorSite = () => {
                           <th scope="col">Remarks</th>
                         </tr>
                       </thead>
+
                       <tbody>
-                        {detailVendorSite.datapart.map((row, index) => (
+                        {detailGrPo[0].pricepart.map((row, index) => (
                           <>
                             <tr
-                              key={row.id}
+                              key={index}
                               className="product cursor-pointer bg-white"
                               onClick={() => toggleRowExpandTabTwo(row.id)}
                             >
@@ -285,7 +217,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="part_number"
-                                  value={row.part_number}
+                                  value={row.partrequest.part_number}
                                   readOnly
                                 />
                               </td>
@@ -295,7 +227,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="description"
-                                  value={row.desc}
+                                  value={row.partrequest.desc}
                                   readOnly
                                 />
                               </td>
@@ -305,7 +237,17 @@ const DetailVendorSite = () => {
                                   type="number"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="qty"
-                                  value={row.qty}
+                                  value={row.partrequest.qty}
+                                  readOnly
+                                />
+                              </td>
+                              <td className="text-start">
+                                <Input
+                                  style={{ minWidth: "100px" }}
+                                  type="text"
+                                  className="form-control form-control-sm bg-light border-0"
+                                  name="qty"
+                                  value={formatRupiah(row.price)}
                                   readOnly
                                 />
                               </td>
@@ -315,7 +257,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="unit"
-                                  value={row.unit}
+                                  value={row.partrequest.unit}
                                   readOnly
                                 />
                               </td>
@@ -325,7 +267,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="group"
-                                  value={row.group}
+                                  value={row.partrequest.group}
                                   readOnly
                                 />
                               </td>
@@ -335,7 +277,7 @@ const DetailVendorSite = () => {
                                   type="number"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="page_image"
-                                  value={row.page_image}
+                                  value={row.partrequest.page_image}
                                   readOnly
                                 />
                               </td>
@@ -345,7 +287,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="page_desc"
-                                  value={row.page_desc}
+                                  value={row.partrequest.page_desc}
                                   readOnly
                                 />
                               </td>
@@ -355,7 +297,7 @@ const DetailVendorSite = () => {
                                   type="text"
                                   className="form-control form-control-sm bg-light border-0"
                                   name="remarks"
-                                  value={row.remarks}
+                                  value={row.partrequest.remarks}
                                   readOnly
                                 />
                               </td>
@@ -374,7 +316,7 @@ const DetailVendorSite = () => {
                                   </td>
                                   <td style={{ fontSize: "0.7rem" }}>Action</td>
                                 </tr>
-                                {row.partdevendorkendari.map((rowIn, indexIn) => (
+                                {row.delivekendari.map((rowIn, indexIn) => (
                                   <tr key={indexIn}>
                                     <td className="text-end">{indexIn + 1}.</td>
                                     <td colSpan="1">
@@ -446,4 +388,4 @@ const DetailVendorSite = () => {
   );
 };
 
-export default DetailVendorSite;
+export default DetailGrPo;

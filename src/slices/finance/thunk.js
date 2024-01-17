@@ -11,6 +11,7 @@ import {
   getCartProcurementList as getCartProcurementListApi,
   postPaymentRequest as postPaymentRequestApi,
   postRecapCart as postRecapCartApi,
+  getFinancePiutang as getFinancePiutangApi,
 } from "../../helpers/backend_helper";
 
 export const getFinancePo = createAsyncThunk("finance/getFinancePo", async () => {
@@ -126,6 +127,24 @@ export const postRecapCart = createAsyncThunk("finance/postRecapCart", async (ca
     return response;
   } catch (error) {
     toast.error("PR Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getFinancePiutang = createAsyncThunk("finance/getFinancePiutang", async () => {
+  try {
+    const response = getFinancePiutangApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailFinancePiutang = createAsyncThunk("finance/getDetailFinancePiutang", async (data) => {
+  try {
+    const response = getFinancePiutangApi(data);
+    return response;
+  } catch (error) {
     return error;
   }
 });

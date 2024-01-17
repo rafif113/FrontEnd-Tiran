@@ -7,23 +7,49 @@ import Ttd from "../../../assets/images/dummy/download.png";
 // import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailSpb as onGetDetailSpb } from "../../../slices/thunks";
+import { getDetailSpb as onGetDetailSpb, postFileGcs } from "../../../slices/thunks";
 
 import { clearDetailSpb, setLoadingDetailSpb } from "../../../slices/deliver/reducer";
+import jsPDF from "jspdf";
 
 import { useEffect } from "react";
 import { useState } from "react";
 import logo from "../../../assets/images/tiran-logo.png";
 
 const Cetak = () => {
+  const dispatch = useDispatch();
+  const detailSpb = useSelector((state) => state.Deliver.detailSpb);
+  const loading = useSelector((state) => state.Deliver.loadingDetailSpb);
+
   const printInvoice = () => {
     window.print();
   };
 
-  const dispatch = useDispatch();
+  const sendSpb = () => {
+    const pdf = new jsPDF({
+      orientation: "l",
+      unit: "px",
+      format: "a4",
+      putOnlyUsedFonts: true,
+    });
+    pdf.html(document.getElementById("head_Content_sik"), {
+      // scale: 4,
+      callback: (pdf) => {
+        const pdfDataUrl = pdf.output("dataurlstring");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pdfDataUrl;
+        downloadLink.download = "invoice.pdf";
+        downloadLink.click();
 
-  const detailSpb = useSelector((state) => state.Deliver.detailSpb);
-  const loading = useSelector((state) => state.Deliver.loadingDetailSpb);
+        const pdfData = pdf.output("blob");
+        const formData = new FormData();
+        formData.append("file", pdfData, "spb.pdf");
+        formData.append("keterangan", "tes");
+
+        dispatch(postFileGcs(formData));
+      },
+    });
+  };
 
   useEffect(() => {
     document.title = "SPB Cetak | PT Tiran";
@@ -59,7 +85,7 @@ const Cetak = () => {
                     <Col lg={12}>
                       <div id="head_Content_sik">
                         <div id="dvContents_sik" className="result">
-                          <table border={1} width="100%" cellSpacing={10}>
+                          <table width="100%">
                             <tbody>
                               <tr>
                                 <td width="100%;" style={{ fontSize: 32, border: "0px solid black" }}>
@@ -86,7 +112,7 @@ const Cetak = () => {
                                             <tbody>
                                               <tr>
                                                 <td width="100%" style={{ border: "0px solid black" }}>
-                                                  <img src={logo} alt="Deskripsi Gambar" width={130} height={80} />
+                                                  <img src={logo} alt="Deskripsi Gambar" width={110} height={60} />
                                                 </td>
                                               </tr>
                                               <tr>
@@ -103,20 +129,20 @@ const Cetak = () => {
                                                   >
                                                     <tbody>
                                                       <tr>
-                                                        <td width="30%" style={{ border: "1px solid black" }}>
+                                                        <td width="30%" style={{ fontWeight: 600 }}>
                                                           NO SPB
                                                         </td>
-                                                        <td style={{ border: "1px solid black" }}>: 12345</td>
+                                                        <td style={{ fontWeight: 600 }}>: 12345</td>
                                                       </tr>
                                                       <tr>
-                                                        <td width="20%" style={{ border: "1px solid black" }}>
+                                                        <td width="20%" style={{ fontWeight: 600 }}>
                                                           PENGIRIM
                                                         </td>
-                                                        <td style={{ border: "1px solid black" }}>: SAYA</td>
+                                                        <td style={{ fontWeight: 600 }}>: SAYA</td>
                                                       </tr>
                                                       <tr>
-                                                        <td style={{ border: "1px solid black" }}>PENERIMA</td>
-                                                        <td style={{ border: "1px solid black" }}>: KAMI</td>
+                                                        <td style={{ fontWeight: 600 }}>PENERIMA</td>
+                                                        <td style={{ fontWeight: 600 }}>: KAMI</td>
                                                       </tr>
                                                     </tbody>
                                                   </table>
@@ -138,20 +164,56 @@ const Cetak = () => {
                                             cellSpacing={5}
                                           >
                                             <tbody>
-                                              {Array.from({ length: 12 }).map((_, index) => (
+                                              {/* {Array.from({ length: 12 }).map((_, index) => (
                                                 <tr key={index}>
                                                   <td />
                                                 </tr>
-                                              ))}
+                                              ))} */}
                                               <tr>
-                                                <td width="20%" style={{ border: "1px solid black" }}>
-                                                  DATE
-                                                </td>
-                                                <td style={{ border: "1px solid black" }}>: 17/10/2023</td>
+                                                <td />
                                               </tr>
                                               <tr>
-                                                <td style={{ border: "1px solid black" }}>BLOK</td>
-                                                <td style={{ border: "1px solid black" }}>: BLOK 4</td>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td width="20%" style={{ fontWeight: 600 }}>
+                                                  DATE
+                                                </td>
+                                                <td style={{ fontWeight: 600 }}>: {new Date().toISOString().split("T")[0]}</td>
+                                              </tr>
+                                              <tr>
+                                                <td style={{ fontWeight: 600 }}>BLOK</td>
+                                                <td style={{ fontWeight: 600 }}>: BLOK 4</td>
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
+                                              </tr>
+                                              <tr>
+                                                <td />
                                               </tr>
                                             </tbody>
                                           </table>
@@ -168,20 +230,20 @@ const Cetak = () => {
                                     style={{
                                       border: "1px solid black",
                                       borderCollapse: "collapse",
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       marginTop: 4,
                                     }}
                                     border={1}
                                   >
-                                    <thead className="head_table" style={{ backgroundColor: "#8585FF" }}>
-                                      <tr>
-                                        <th style={{ width: "5%" }}>NO</th>
-                                        <th style={{ width: "20%" }}>NAMA BARANG</th>
-                                        <th style={{ width: "20%" }}>NO.FPB</th>
-                                        <th style={{ width: "20%" }}>KEBUTUHAN</th>
-                                        <th style={{ width: "5%" }}>QTY</th>
-                                        <th style={{ width: "5%" }}>SATUAN</th>
-                                        <th style={{ width: "20%" }}>DEPT</th>
+                                    <thead className="head_table" style={{ textAlign: "center" }}>
+                                      <tr style={{ fontWeight: "bold" }}>
+                                        <th style={{ width: "5%", borderRight: "1px solid black" }}>NO</th>
+                                        <th style={{ width: "20%", borderRight: "1px solid black" }}>NAMA BARANG</th>
+                                        <th style={{ width: "20%", borderRight: "1px solid black" }}>NO.FPB</th>
+                                        <th style={{ width: "20%", borderRight: "1px solid black" }}>KEBUTUHAN</th>
+                                        <th style={{ width: "5%", borderRight: "1px solid black" }}>QTY</th>
+                                        <th style={{ width: "5%", borderRight: "1px solid black" }}>SATUAN</th>
+                                        <th style={{ width: "20%", borderRight: "1px solid black" }}>DEPT</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -191,14 +253,28 @@ const Cetak = () => {
                                           const no = rowNumber++;
 
                                           return (
-                                            <tr key={no} style={{ fontWeight: "bold" }}>
-                                              <td>{no}</td>
-                                              <td>{item.nama_part}</td>
-                                              <td>{item.no_fpb}</td>
-                                              <td>{item.kebutuhan}</td>
-                                              <td>{item.qty}</td>
-                                              <td>{item.kebutuhan}</td>
-                                              <td>{item.dept}</td>
+                                            <tr key={no} style={{ fontWeight: "bold", border: "1px solid black" }}>
+                                              <td
+                                                style={{
+                                                  borderLeft: "1px solid black",
+                                                  borderRight: "1px solid black",
+                                                  textAlign: "center",
+                                                }}
+                                              >
+                                                {no}
+                                              </td>
+                                              <td style={{ borderRight: "1px solid black" }}>{item.nama_part}</td>
+                                              <td style={{ borderRight: "1px solid black", textAlign: "center" }}>
+                                                {item.no_fpb}
+                                              </td>
+                                              <td style={{ borderRight: "1px solid black", textAlign: "center" }}>
+                                                {item.kebutuhan}
+                                              </td>
+                                              <td style={{ borderRight: "1px solid black", textAlign: "center" }}>{item.qty}</td>
+                                              <td style={{ borderRight: "1px solid black", textAlign: "center" }}>
+                                                {item.kebutuhan}
+                                              </td>
+                                              <td style={{ borderRight: "1px solid black" }}>{item.dept}</td>
                                             </tr>
                                           );
                                         })
@@ -208,73 +284,28 @@ const Cetak = () => {
                                 </td>
                               </tr>
                               <tr>
-                                <td style={{ border: "0px solid black" }}>
+                                <td>
                                   <table
                                     width="100%"
-                                    border="1px"
                                     style={{
-                                      borderCollapse: "collapse",
+                                      // borderCollapse: "collapse",
                                       width: "100%",
-                                      fontSize: 14,
+                                      fontSize: 12,
                                     }}
                                   >
                                     <tbody>
                                       <tr>
                                         <td
                                           style={{
-                                            textTransform: "uppercase",
-                                            verticalAlign: "top",
-                                            border: "1px solid black",
                                             width: "30%", // Sesuaikan lebar kolom
-                                          }}
-                                        >
-                                          <center>
-                                            <strong>
-                                              <span>Pengirim</span>
-                                            </strong>
-                                          </center>
-                                        </td>
-                                        <td
-                                          style={{
-                                            textTransform: "uppercase",
+                                            // textTransform: "uppercase",
                                             verticalAlign: "top",
-                                            border: "1px solid black",
-                                            width: "30%", // Sesuaikan lebar kolom
-                                          }}
-                                        >
-                                          <center>
-                                            <strong>PENGANTAR / DRIVER</strong>
-                                          </center>
-                                        </td>
-                                        <td
-                                          style={{
-                                            textTransform: "uppercase",
-                                            verticalAlign: "top",
-                                            border: "1px solid black",
-                                            width: "30%", // Sesuaikan lebar kolom
-                                          }}
-                                        >
-                                          <center>
-                                            <strong>
-                                              <span>Penerima / File Office Site</span>
-                                            </strong>
-                                          </center>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td
-                                          style={{
-                                            width: "30%", // Sesuaikan lebar kolom
-                                            textTransform: "uppercase",
-                                            verticalAlign: "top",
-                                            border: "1px solid black",
                                           }}
                                         ></td>
                                         <td
                                           style={{
                                             width: "30%", // Sesuaikan lebar kolom
                                             verticalAlign: "top",
-                                            border: "1px solid black",
                                           }}
                                           className="kolom"
                                         >
@@ -285,12 +316,55 @@ const Cetak = () => {
                                           style={{
                                             width: "30%", // Sesuaikan lebar kolom
                                             verticalAlign: "top",
-                                            border: "1px solid black",
                                           }}
                                           className="kolom"
                                         >
                                           <h1>&nbsp;</h1>
                                           <h1>&nbsp;</h1>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td
+                                          style={{
+                                            verticalAlign: "top",
+                                            width: "30%", // Sesuaikan lebar kolom
+                                          }}
+                                        >
+                                          <center>
+                                            <strong>
+                                              <span>Pengirim</span>
+                                              <br />
+                                              <span style={{ fontSize: "10px" }}>Distribusi Form : Lembar 1 : Pengirim</span>
+                                            </strong>
+                                          </center>
+                                        </td>
+                                        <td
+                                          style={{
+                                            verticalAlign: "top",
+                                            width: "30%", // Sesuaikan lebar kolom
+                                          }}
+                                        >
+                                          <center>
+                                            <strong>
+                                              <span> Pengantar / Driver</span>
+                                              <br />
+                                              <span style={{ fontSize: "10px" }}>Lembar 2 : Pengantar / Driver</span>
+                                            </strong>
+                                          </center>
+                                        </td>
+                                        <td
+                                          style={{
+                                            verticalAlign: "top",
+                                            width: "30%", // Sesuaikan lebar kolom
+                                          }}
+                                        >
+                                          <center>
+                                            <strong>
+                                              <span> Penerima / File Office Site</span>
+                                              <br />
+                                              <span style={{ fontSize: "10px" }}>Lembar 3 : Penerima / File Office Site</span>
+                                            </strong>
+                                          </center>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -307,6 +381,9 @@ const Cetak = () => {
                         <div className="hstack gap-2 justify-content-end d-print-none mt-4">
                           <button onClick={printInvoice} className="btn btn-success">
                             <i className="ri-printer-line align-bottom me-1"></i> Print
+                          </button>
+                          <button onClick={sendSpb} className="btn btn-info">
+                            <i className="ri-printer-line align-bottom me-1"></i> Send
                           </button>
                           <button className="btn btn-primary" onClick={handleApproveClick}>
                             <i className="ri-send-plane-fill align-bottom me-1"></i> Approve

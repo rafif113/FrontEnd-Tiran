@@ -79,6 +79,8 @@ import VendorSite from "../pages/Deliver/ListVendorSite";
 import DetailVendorSite from "../pages/Deliver/DetailsSite";
 import Spb from "../pages/Deliver/Spb";
 import CetakSpb from "../pages/Deliver/DetailsSpb/Cetak";
+import GrPo from "../pages/Deliver/ListVendorGrPo";
+import DetailGrPo from "../pages/Deliver/DetailsGrPo";
 
 const authProtectedRoutes = [
   // User Profile
@@ -152,6 +154,8 @@ const authProtectedRoutes = [
   { path: "/deliver/spb", component: <Spb /> },
   { path: "/deliver/spb/detail", component: <CetakSpb /> },
 
+  { path: "/deliver/gr-po", component: <GrPo /> },
+  { path: "/deliver/gr-po/detail", component: <DetailGrPo /> },
   {
     path: "/",
     exact: true,

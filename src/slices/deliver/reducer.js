@@ -7,6 +7,8 @@ import {
   getPartSpb,
   getListSpb,
   getDetailSpb,
+  getListGrPo,
+  getDetailGrPo,
 } from "./thunk";
 export const initialState = {
   vendorKendari: [],
@@ -22,6 +24,10 @@ export const initialState = {
   loadingSpb: true,
   detailSpb: [],
   loadingDetailSpb: true,
+  GrPo: [],
+  loadingGrPo: true,
+  detailGrPo: [],
+  loadingDetailGrPo: true,
   error: {},
 };
 
@@ -56,6 +62,15 @@ const DeliverSlice = createSlice({
     setLoadingDetailSpb: (state, action) => {
       state.loadingDetailSpb = action.payload;
     },
+    setLoadingGrPo: (state, action) => {
+      state.loadingGrPo = action.payload;
+    },
+    setLoadingDetailGrPo: (state, action) => {
+      state.loadingDetailGrPo = action.payload;
+    },
+    clearDetailGrPo: (state) => {
+      state.detailGrPo = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getVendorKendari.fulfilled, (state, action) => {
@@ -85,6 +100,14 @@ const DeliverSlice = createSlice({
     builder.addCase(getPartSpb.fulfilled, (state, action) => {
       state.partSpb = action.payload.data;
     });
+
+    builder.addCase(getListGrPo.fulfilled, (state, action) => {
+      state.GrPo = action.payload.data;
+    });
+
+    builder.addCase(getDetailGrPo.fulfilled, (state, action) => {
+      state.detailGrPo = action.payload.data;
+    });
   },
 });
 export const {
@@ -97,6 +120,9 @@ export const {
   setLoadingSpb,
   clearDetailSpb,
   setLoadingDetailSpb,
+  clearDetailGrPo,
+  setLoadingDetailGrPo,
+  setLoadingGrPo,
 } = DeliverSlice.actions;
 
 export default DeliverSlice.reducer;

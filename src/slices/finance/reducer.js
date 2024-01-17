@@ -6,6 +6,8 @@ import {
   getDetailFinanceTongkang,
   getCartProcurementList,
   postRecapCart,
+  getFinancePiutang,
+  getDetailFinancePiutang,
 } from "./thunk";
 export const initialState = {
   invoicePo: [],
@@ -21,6 +23,10 @@ export const initialState = {
   loadingTongkang: true,
   loadingDetailTongkang: true,
   recapCart: [],
+  piutang: [],
+  detailPiutang: [],
+  loadingPiutang: true,
+  loadingDetailPiutang: true,
   error: {},
 };
 
@@ -58,6 +64,15 @@ const FinanceSlice = createSlice({
     clearRecapCart: (state) => {
       state.recapCart = [];
     },
+    clearDetailPiutang: (state) => {
+      state.detailPiutang = null;
+    },
+    setLoadingPiutang: (state, action) => {
+      state.loadingPiutang = action.payload;
+    },
+    setLoadingDetailPiutang: (state, action) => {
+      state.loadingDetailPiutang = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getFinancePo.fulfilled, (state, action) => {
@@ -85,6 +100,13 @@ const FinanceSlice = createSlice({
     builder.addCase(postRecapCart.fulfilled, (state, action) => {
       state.recapCart = action.payload.data;
     });
+
+    builder.addCase(getFinancePiutang.fulfilled, (state, action) => {
+      state.piutang = action.payload;
+    });
+    builder.addCase(getDetailFinancePiutang.fulfilled, (state, action) => {
+      state.detailPiutang = action.payload.data;
+    });
   },
 });
 export const {
@@ -98,6 +120,9 @@ export const {
   setLoadingDetailTongkang,
   setLoadingCartPaymentRequest,
   clearRecapCart,
+  clearDetailPiutang,
+  setLoadingDetailPiutang,
+  setLoadingPiutang,
 } = FinanceSlice.actions;
 
 export default FinanceSlice.reducer;

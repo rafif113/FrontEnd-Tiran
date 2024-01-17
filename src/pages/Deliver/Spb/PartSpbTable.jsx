@@ -111,7 +111,6 @@ const PartSpbTable = (props) => {
                             type="text"
                             className="form-control form-control-sm"
                             name="qty"
-                            placeholder="Enter qty"
                             autoComplete="off"
                             disabled
                             value={rowIn.qty}
@@ -124,7 +123,6 @@ const PartSpbTable = (props) => {
                             type="text"
                             className="form-control form-control-sm"
                             name="qty"
-                            placeholder="Enter Description..."
                             autoComplete="off"
                             disabled
                             value={rowIn.keterangan}
@@ -195,7 +193,7 @@ const PartSpbTable = (props) => {
       },
 
       {
-        Header: "Nomor FPB",
+        Header: "Nomor PR",
         accessor: "no_fpb",
         disableFilters: true,
         filterable: false,
@@ -263,7 +261,6 @@ const PartSpbTable = (props) => {
                   <label htmlFor="pengirim" className="form-label">
                     Pengirim
                   </label>
-                  <Input type="text" className="form-control" placeholder="Pengirim" value={dataUserLogin.name} disabled />
                 </div>
               </Col>
               <Col xxl={12}>
@@ -274,7 +271,6 @@ const PartSpbTable = (props) => {
                   <Input
                     type="text"
                     className="form-control"
-                    placeholder="Driver..."
                     value={formData.driver}
                     onChange={(e) => setFormData({ ...formData, driver: e.target.value })}
                     required
@@ -289,7 +285,6 @@ const PartSpbTable = (props) => {
                   <Input
                     type="text"
                     className="form-control"
-                    placeholder="Keterangan..."
                     value={formData.keterangan}
                     onChange={(e) => setFormData({ ...formData, keterangan: e.target.value })}
                     required

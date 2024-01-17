@@ -11,6 +11,7 @@ import {
   getListSpb as getListSpbApi,
   postSpb as postSpbApi,
   postSpbSite as postSpbSiteApi,
+  getListGrPo as getListGrPoApi,
 } from "../../helpers/backend_helper";
 
 export const getVendorKendari = createAsyncThunk("deliver/getVendorKendari", async () => {
@@ -142,6 +143,24 @@ export const postSpbSite = createAsyncThunk("deliver/postSpbSite", async (spb) =
     return data;
   } catch (error) {
     toast.error("Cek Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const getListGrPo = createAsyncThunk("deliver/getListGrPo", async () => {
+  try {
+    const response = getListGrPoApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getDetailGrPo = createAsyncThunk("deliver/getDetailGrPo", async (data) => {
+  try {
+    const response = getListGrPoApi(data);
+    return response;
+  } catch (error) {
     return error;
   }
 });

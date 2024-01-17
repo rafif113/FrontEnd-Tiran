@@ -35,7 +35,7 @@ import { useEffect } from "react";
 import { createSelector } from "reselect";
 import { Link, useNavigate } from "react-router-dom";
 
-const DetailVendorSite = () => {
+const DetailPiutang = () => {
   document.title = "Detail Site Vendor | PT Tiran";
 
   const dispatch = useDispatch();
@@ -446,4 +446,4 @@ const DetailVendorSite = () => {
   );
 };
 
-export default DetailVendorSite;
+export default DetailPiutang;
