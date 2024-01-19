@@ -126,6 +126,7 @@ export const postPaymentRequest = (data) => api.create(url.POST_PAYMENT_REQUEST,
 export const postRecapCart = (data) => api.create(url.POST_RECAP_CART, data);
 
 export const getFinancePiutang = (data) => api.create(url.GET_FINANCE_PIUTANG, data);
+export const getFinanceRecap = (data) => api.create(url.GET_FINANCE_RECAP, data);
 // REPORT
 export const getReportUnit = () => api.get(url.GET_REPORT_UNIT);
 export const getReportBarangIn = (data) => api.create(url.GET_REPORT_BARANG_IN, data);

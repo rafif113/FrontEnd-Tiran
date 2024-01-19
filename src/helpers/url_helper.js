@@ -73,6 +73,8 @@ export const POST_PAYMENT_REQUEST = "/post/paymentrequest";
 export const POST_RECAP_CART = "/get/recapcart";
 export const GET_FINANCE_PIUTANG = "/get/piutang/po";
 
+export const GET_FINANCE_RECAP = "/get/uploadrecapcart";
+
 // REPORT
 export const GET_REPORT_UNIT = "/get/report/unit";
 export const GET_REPORT_BARANG_IN = "/get/barangmasuk";

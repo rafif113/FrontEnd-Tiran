@@ -8,6 +8,7 @@ import {
   postRecapCart,
   getFinancePiutang,
   getDetailFinancePiutang,
+  getFinanceRecap,
 } from "./thunk";
 export const initialState = {
   invoicePo: [],
@@ -27,6 +28,8 @@ export const initialState = {
   detailPiutang: [],
   loadingPiutang: true,
   loadingDetailPiutang: true,
+  recap: [],
+  loadingRecap: true,
   error: {},
 };
 
@@ -73,6 +76,9 @@ const FinanceSlice = createSlice({
     setLoadingDetailPiutang: (state, action) => {
       state.loadingDetailPiutang = action.payload;
     },
+    setLoadingRecap: (state, action) => {
+      state.loadingRecap = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getFinancePo.fulfilled, (state, action) => {
@@ -107,6 +113,9 @@ const FinanceSlice = createSlice({
     builder.addCase(getDetailFinancePiutang.fulfilled, (state, action) => {
       state.detailPiutang = action.payload.data;
     });
+    builder.addCase(getFinanceRecap.fulfilled, (state, action) => {
+      state.recap = action.payload.data;
+    });
   },
 });
 export const {
@@ -123,6 +132,7 @@ export const {
   clearDetailPiutang,
   setLoadingDetailPiutang,
   setLoadingPiutang,
+  setLoadingRecap,
 } = FinanceSlice.actions;
 
 export default FinanceSlice.reducer;

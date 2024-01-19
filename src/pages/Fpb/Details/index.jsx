@@ -302,7 +302,7 @@ const DetailFpb = () => {
                                   <th scope="col">Qty</th>
                                   <th scope="col">Keterangan</th>
                                   <th scope="col">Stock</th>
-                                  <th scope="col">Action</th>
+                                  {/* <th scope="col">Action</th> */}
                                 </tr>
                               </thead>
                               <tbody id="newlink">
@@ -377,7 +377,7 @@ const DetailFpb = () => {
                                         value={row.stock}
                                       />
                                     </td>
-                                    <td className="text-start">
+                                    {/* <td className="text-start">
                                       {!row.id_pq && (
                                         <Input
                                           className="form-check-input"
@@ -387,8 +387,8 @@ const DetailFpb = () => {
                                           onChange={(e) => handleCheckboxChange(e, row.id)}
                                         />
                                       )}
-                                      {/* {row.id_pq ? <Input className="form-check-input" type="checkbox" value checked /> : ""} */}
-                                    </td>
+                                      {row.id_pq ? <Input className="form-check-input" type="checkbox" value checked /> : ""}
+                                    </td> */}
                                   </tr>
                                 ))}
                               </tbody>
@@ -397,11 +397,11 @@ const DetailFpb = () => {
                         </CardBody>
                       </Card>
 
-                      <div className="text-end mb-3">
+                      {/* <div className="text-end mb-3">
                         <button type="submit" className="btn btn-primary w-sm">
                           Create PQ
                         </button>
-                      </div>
+                      </div> */}
                     </Form>
                   </TabPane>
 

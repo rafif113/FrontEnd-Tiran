@@ -46,6 +46,12 @@ const VendorSiteTable = () => {
         filterable: false,
       },
       {
+        Header: "NO PR",
+        accessor: "no_pr",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
         Header: "Jumlah Part",
         accessor: "jumlah_part",
         disableFilters: true,
@@ -54,6 +60,12 @@ const VendorSiteTable = () => {
       {
         Header: "Pengirim",
         accessor: "nama_pengirim",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "From",
+        accessor: "kiriman_dari",
         disableFilters: true,
         filterable: false,
       },

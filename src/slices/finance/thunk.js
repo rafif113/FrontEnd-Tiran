@@ -12,6 +12,7 @@ import {
   postPaymentRequest as postPaymentRequestApi,
   postRecapCart as postRecapCartApi,
   getFinancePiutang as getFinancePiutangApi,
+  getFinanceRecap as getFinanceRecapApi,
 } from "../../helpers/backend_helper";
 
 export const getFinancePo = createAsyncThunk("finance/getFinancePo", async () => {
@@ -143,6 +144,15 @@ export const getFinancePiutang = createAsyncThunk("finance/getFinancePiutang", a
 export const getDetailFinancePiutang = createAsyncThunk("finance/getDetailFinancePiutang", async (data) => {
   try {
     const response = getFinancePiutangApi(data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getFinanceRecap = createAsyncThunk("finance/getFinanceRecap", async () => {
+  try {
+    const response = getFinanceRecapApi();
     return response;
   } catch (error) {
     return error;

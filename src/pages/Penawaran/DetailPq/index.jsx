@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { addPq as onAddPq } from "../../../slices/thunks";
 import { Link, useNavigate } from "react-router-dom";
+import { getReferensiPart as getReferensiPartApi } from "../../../helpers/backend_helper";
 
 const DetailPq = () => {
   document.title = "Detail Create Penawaran | PT Tiran";
@@ -109,7 +110,6 @@ const DetailPq = () => {
                                     type="text"
                                     className="form-control bg-light border-0"
                                     id="productName-1"
-                                    placeholder="Product Name"
                                     name="product_name"
                                     readOnly
                                     value={rowPart.part_number}
@@ -120,7 +120,6 @@ const DetailPq = () => {
                                     type="text"
                                     className="form-control bg-light border-0"
                                     id="productName-1"
-                                    placeholder="Product Name"
                                     name="product_name"
                                     readOnly
                                     value={rowPart.desc}
@@ -131,7 +130,6 @@ const DetailPq = () => {
                                     type="text"
                                     className="form-control bg-light border-0"
                                     id="productName-1"
-                                    placeholder="Product Name"
                                     name="product_name"
                                     readOnly
                                     value={rowPart.unit}
@@ -142,7 +140,6 @@ const DetailPq = () => {
                                     type="text"
                                     className="form-control bg-light border-0"
                                     id="productName-1"
-                                    placeholder="Product Name"
                                     name="product_name"
                                     readOnly
                                     value={rowPart.qty}
@@ -153,7 +150,6 @@ const DetailPq = () => {
                                     type="text"
                                     className="form-control bg-light border-0"
                                     id="productName-1"
-                                    placeholder="Product Name"
                                     name="product_name"
                                     readOnly
                                     value={rowPart.page_desc}

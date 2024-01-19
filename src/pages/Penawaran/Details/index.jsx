@@ -24,6 +24,7 @@ import {
   getDetailPenawaran as onGetDetailPenawaran,
   addPricePenawaran as onAddPricePenawaran,
   getVendor as onGetVendor,
+  getReferensiPart as getReferensiPartApi,
 } from "../../../slices/thunks";
 //formik
 import { useFormik } from "formik";
@@ -130,6 +131,11 @@ const DetailPenawaran = () => {
     history(`/fpb/pq/cetak?id=${id}`);
   };
 
+  const handleClickPrice = (value) => {
+    console.log(value);
+    dispatch(getReferensiPartApi({ part_number: value }));
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
@@ -233,7 +239,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Part Number"
                                         name="part_number"
                                         value={row.part_number}
                                         readOnly
@@ -244,7 +249,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Description"
                                         name="description"
                                         value={row.desc}
                                         readOnly
@@ -255,7 +259,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="number"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Quantity"
                                         name="qty"
                                         value={row.qty}
                                         readOnly
@@ -266,7 +269,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Unit"
                                         name="unit"
                                         value={row.unit}
                                         readOnly
@@ -277,7 +279,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Group"
                                         name="group"
                                         value={row.group}
                                         readOnly
@@ -288,7 +289,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="number"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Page Image"
                                         name="page_image"
                                         value={row.page_image}
                                         readOnly
@@ -299,7 +299,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Page Desc"
                                         name="page_desc"
                                         value={row.page_desc}
                                         readOnly
@@ -310,7 +309,6 @@ const DetailPenawaran = () => {
                                         style={{ minWidth: "100px" }}
                                         type="text"
                                         className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Remarks"
                                         name="remarks"
                                         value={row.remarks}
                                         readOnly
@@ -324,10 +322,10 @@ const DetailPenawaran = () => {
                                           thousandSeparator={true}
                                           prefix={"Rp "}
                                           decimalScale={2}
-                                          placeholder="Enter price"
                                           customInput={Input}
                                           className="form-control form-control-sm me-2"
                                           name="price"
+                                          placeholder="Enter price..."
                                           autoComplete="off"
                                           onValueChange={(values) =>
                                             handleInputChange(row.id, values.value, inputValues[row.id]?.qty || "", row.id, 1)
@@ -340,9 +338,16 @@ const DetailPenawaran = () => {
                                           }
                                           className="form-control form-control-sm"
                                           name="qty"
-                                          placeholder="Enter qty"
+                                          placeholder="Enter qty..."
                                           autoComplete="off"
                                         />
+                                        <button
+                                          type="button"
+                                          className="ms-3 btn btn-sm btn-primary"
+                                          onClick={() => handleClickPrice(row.part_number)}
+                                        >
+                                          price
+                                        </button>
                                       </div>
                                     </td>
                                   </tr>
