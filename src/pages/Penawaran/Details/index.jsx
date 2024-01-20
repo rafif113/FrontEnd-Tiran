@@ -346,7 +346,7 @@ const DetailPenawaran = () => {
                                           className="ms-3 btn btn-sm btn-primary"
                                           onClick={() => handleClickPrice(row.part_number)}
                                         >
-                                          price
+                                          referensi harga
                                         </button>
                                       </div>
                                     </td>

@@ -144,12 +144,17 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isMol,
-      subItems: [
-        { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
-        { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
-        { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
-        { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
-      ],
+      subItems:
+        role.includes("mol") || role.includes("developer")
+          ? [
+              { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+              { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+              { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
+              { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
+            ]
+          : role.includes("fpb")
+          ? [{ id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" }]
+          : [],
     },
     {
       id: "fpb",
@@ -343,7 +348,7 @@ const Navdata = () => {
   } else if (role == "mol") {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
   } else if (role == "fpb") {
-    return <React.Fragment>{fbpItem && dashboardItem ? [dashboardItem, fbpItem] : null}</React.Fragment>;
+    return <React.Fragment>{molItem && fbpItem && dashboardItem ? [dashboardItem, molItem, fbpItem] : null}</React.Fragment>;
   } else if (role == "pengadaan") {
     return (
       <React.Fragment>
