@@ -89,7 +89,7 @@ const Navdata = () => {
     },
     {
       id: "dashboard",
-      label: "Dashboards",
+      label: "Welcoming Page",
       icon: "ri-dashboard-2-line",
       link: "/#",
       stateVariables: isDashboard,
@@ -102,8 +102,8 @@ const Navdata = () => {
       subItems: [
         {
           id: "analytic",
-          label: "Analytic",
-          link: "/dashboard",
+          label: "Welcome",
+          link: "/welcoming-page",
           parentId: "dashboard",
         },
       ],

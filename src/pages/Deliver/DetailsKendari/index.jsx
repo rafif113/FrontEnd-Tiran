@@ -216,7 +216,7 @@ const DetailVendorKendari = () => {
                         TAB IN
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         style={{ cursor: "pointer" }}
                         className={classnames({
@@ -228,7 +228,7 @@ const DetailVendorKendari = () => {
                       >
                         TAB OUT
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
                 </CardHeader>
                 <CardBody>
@@ -252,7 +252,6 @@ const DetailVendorKendari = () => {
                                 <th scope="col">Page Desc</th>
                                 <th scope="col">Remarks</th>
                                 <th scope="col">Qty vendor</th>
-                                <th scope="col">Price</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -364,17 +363,6 @@ const DetailVendorKendari = () => {
                                           placeholder="Remarks"
                                           name="remarks"
                                           value={row.pricepartrequest.qty}
-                                          readOnly
-                                        />
-                                      </td>
-                                      <td className="text-start">
-                                        <Input
-                                          style={{ minWidth: "100px" }}
-                                          type="text"
-                                          className="form-control form-control-sm bg-light border-0"
-                                          placeholder="Remarks"
-                                          name="remarks"
-                                          value={formatRupiah(row.pricepartrequest ? row.pricepartrequest.price : 0)}
                                           readOnly
                                         />
                                       </td>
@@ -491,7 +479,6 @@ const DetailVendorKendari = () => {
                                 <th scope="col">Page Desc</th>
                                 <th scope="col">Remarks</th>
                                 <th scope="col">Qty vendor</th>
-                                <th scope="col">Price</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -601,17 +588,6 @@ const DetailVendorKendari = () => {
                                         placeholder="Remarks"
                                         name="remarks"
                                         value={row.pricepartrequest.qty}
-                                        readOnly
-                                      />
-                                    </td>
-                                    <td className="text-start">
-                                      <Input
-                                        style={{ minWidth: "100px" }}
-                                        type="text"
-                                        className="form-control form-control-sm bg-light border-0"
-                                        placeholder="Remarks"
-                                        name="remarks"
-                                        value={formatRupiah(row.pricepartrequest ? row.pricepartrequest.price : 0)}
                                         readOnly
                                       />
                                     </td>

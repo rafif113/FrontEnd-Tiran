@@ -63,7 +63,7 @@ const Sidebar = ({ layoutType }) => {
             <span className="logo-lg">
               <img src={logoLight} alt="" height="17" />
             </span> */}
-            Pt Tiran
+            PT Tiran
           </Link>
           <button
             onClick={addEventListenerOnSmHoverMenu}

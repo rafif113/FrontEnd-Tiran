@@ -1,17 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import Widget from "./Widgets";
-import Revenue from "./Revenue";
 import Section from "./Section";
-import StoreVisits from "./StoreVisits";
 
 const DashboardEcommerce = () => {
-  document.title = "Dashboard | PT Tiran";
-
-  const [rightColumn, setRightColumn] = useState(true);
-  const toggleRightColumn = () => {
-    setRightColumn(!rightColumn);
-  };
+  document.title = "Welcoming Page | PT Tiran";
 
   return (
     <React.Fragment>
@@ -20,16 +12,7 @@ const DashboardEcommerce = () => {
           <Row>
             <Col>
               <div className="h-100">
-                <Section rightClickBtn={toggleRightColumn} />
-                <Row>
-                  <Widget />
-                </Row>
-                <Row>
-                  <Col xl={8}>
-                    <Revenue />
-                  </Col>
-                  <StoreVisits />
-                </Row>
+                <Section />
               </div>
             </Col>
           </Row>

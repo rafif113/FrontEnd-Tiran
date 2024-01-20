@@ -191,7 +191,6 @@ const DetailGrPo = () => {
                           <th scope="col">Part Number</th>
                           <th scope="col">Description</th>
                           <th scope="col">Qty</th>
-                          <th scope="col">Price</th>
                           <th scope="col">Unit</th>
                           <th scope="col">Group</th>
                           <th scope="col">Page Image</th>
@@ -238,16 +237,6 @@ const DetailGrPo = () => {
                                   className="form-control form-control-sm bg-light border-0"
                                   name="qty"
                                   value={row.partrequest.qty}
-                                  readOnly
-                                />
-                              </td>
-                              <td className="text-start">
-                                <Input
-                                  style={{ minWidth: "100px" }}
-                                  type="text"
-                                  className="form-control form-control-sm bg-light border-0"
-                                  name="qty"
-                                  value={formatRupiah(row.price)}
                                   readOnly
                                 />
                               </td>

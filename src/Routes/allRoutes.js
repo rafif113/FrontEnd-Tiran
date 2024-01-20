@@ -87,7 +87,7 @@ const authProtectedRoutes = [
   // User Profile
   { path: "/profile", component: <UserProfile /> },
   // Dashboard
-  { path: "/dashboard", component: <DashboardEcommerce /> },
+  { path: "/welcoming-page", component: <DashboardEcommerce /> },
   { path: "/index", component: <DashboardEcommerce /> },
   // Master Barang
   { path: "/barang", component: <ListBarang /> },
@@ -162,9 +162,9 @@ const authProtectedRoutes = [
   {
     path: "/",
     exact: true,
-    component: <Navigate to="/dashboard" />,
+    component: <Navigate to="/welcoming-page" />,
   },
-  { path: "*", component: <Navigate to="/dashboard" /> },
+  { path: "*", component: <Navigate to="/welcoming-page" /> },
 ];
 
 const publicRoutes = [
