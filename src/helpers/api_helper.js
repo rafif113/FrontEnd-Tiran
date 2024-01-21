@@ -94,6 +94,12 @@ class APIClient {
   };
 }
 const getLoggedinUser = () => {
+  const authUserData = JSON.parse(localStorage.getItem("authUser"));
+  if (authUserData && authUserData.data.roles[0] == "mol") {
+    authUserData.data.roles = ["logistik"];
+  }
+  localStorage.setItem("authUser", JSON.stringify(authUserData));
+
   const user = localStorage.getItem("authUser");
   if (!user) {
     return null;

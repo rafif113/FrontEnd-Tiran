@@ -4,6 +4,8 @@ import { useProfile } from "../../Components/Hooks/UserHooks";
 
 const Section = () => {
   const { userProfile } = useProfile();
+
+  console.log(userProfile);
   return (
     <React.Fragment>
       <Row className="mb-3 pb-1">

@@ -74,8 +74,8 @@ const DetailMol = () => {
   const componentGroup = useSelector((state) => state.Mol.componentGroup);
   const costCode = useSelector((state) => state.Mol.costCode);
   const materialType = useSelector((state) => state.Mol.materialType);
+  const role = useSelector((state) => state.Login.role);
   const descArray = ["Urgent", "Sangat Urgent", "Biasa"];
-
   //   Data detail Mol
   const selectDetailMolData = createSelector(
     (state) => state.Mol.detailMol,
@@ -511,20 +511,14 @@ const DetailMol = () => {
                                   />
                                 </td>
                                 <td className="product-removal">
-                                  {/* <Input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    value={row.flag === "1" ? "" : row.id}
-                                    onChange={() => handleCheckboxChange(row.id)}
-                                    checked={row.flag === "1" || selectedItems.includes(row.id)}
-                                  /> */}
-                                  {row.flag !== "1" && (
+                                  {role.includes("mekanik") || role.includes("maintenance") ? null : (
                                     <Input
                                       className="form-check-input"
                                       type="checkbox"
                                       value={row.id}
                                       onChange={() => handleCheckboxChange(row.id)}
-                                      checked={selectedItems.includes(row.id)}
+                                      checked={selectedItems.includes(row.id) || row.flag == 1}
+                                      disabled={row.flag == 1}
                                     />
                                   )}
                                 </td>
@@ -744,14 +738,30 @@ const DetailMol = () => {
                     </CardBody>
                   </Card>
 
-                  <div className="text-end mb-3">
-                    <button type="submit" className="btn btn-primary w-sm me-2" onClick={() => handleButtonClick("pengeluaran")}>
-                      Pengeluaran
-                    </button>
-                    <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
-                      Create FPB
-                    </button>
-                  </div>
+                  {role.includes("mekanik") || role.includes("maintenance") ? null : (
+                    <div className="text-end mb-3">
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-sm me-2"
+                        onClick={() => handleButtonClick("pengeluaran")}
+                      >
+                        Pengeluaran
+                      </button>
+                      <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
+                        Create FPB
+                      </button>
+                    </div>
+                  )}
+                  {role.includes("maintenance") && (
+                    <div className="text-end mb-3">
+                      <button type="submit" className="btn btn-danger w-sm me-2">
+                        Tolak
+                      </button>
+                      <button type="submit" className="btn btn-primary w-sm">
+                        Setuju
+                      </button>
+                    </div>
+                  )}
                 </Form>
               </Col>
             </Row>

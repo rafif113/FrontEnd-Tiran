@@ -4,8 +4,6 @@ import { combineReducers } from "redux";
 import LayoutReducer from "./layouts/reducer";
 // Authentication
 import LoginReducer from "./auth/login/reducer";
-import AccountReducer from "./auth/register/reducer";
-import ForgetPasswordReducer from "./auth/forgetpwd/reducer";
 import ProfileReducer from "./auth/profile/reducer";
 // Barang
 import BarangReducer from "./barang/reducer";
@@ -28,8 +26,7 @@ import KttReducer from "./ktt/reducer";
 import MasterReducer from "./master/reducer";
 // DELIVER
 import DeliverReducer from "./deliver/reducer";
-// Dashboard Ecommerce
-import DashboardEcommerceReducer from "./dashboardEcommerce/reducer";
+import UserReducer from "./user/reducer";
 
 const rootReducer = combineReducers({
   Layout: LayoutReducer,
@@ -45,10 +42,8 @@ const rootReducer = combineReducers({
   Ktt: KttReducer,
   Master: MasterReducer,
   Deliver: DeliverReducer,
-  Account: AccountReducer,
-  ForgetPassword: ForgetPasswordReducer,
   Profile: ProfileReducer,
-  DashboardEcommerce: DashboardEcommerceReducer,
+  User: UserReducer,
 });
 
 export default rootReducer;

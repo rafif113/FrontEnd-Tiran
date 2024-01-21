@@ -1057,7 +1057,7 @@ const Mol = () => {
 
               <div className="text-end mb-3">
                 <button type="submit" className="btn btn-primary w-sm">
-                  Submit
+                  Create Mol
                 </button>
               </div>
             </Form>

@@ -37,5 +37,4 @@ export * from "./master/thunk";
 // DELIVER
 export * from "./deliver/thunk";
 
-// Dashboard Ecommerce
-export * from "./dashboardEcommerce/thunk";
+export * from "./user/thunk";

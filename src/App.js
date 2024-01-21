@@ -10,10 +10,10 @@ import Route from "./Routes";
 // import { initFirebaseBackend } from "./helpers/firebase_helper";
 
 // // Fake Backend
-import fakeBackend from "./helpers/AuthType/fakeBackend";
+// import fakeBackend from "./helpers/AuthType/fakeBackend";
 
 // // Activating fake backend
-fakeBackend();
+// fakeBackend();
 
 function App() {
   return (

@@ -125,6 +125,8 @@ const Navdata = () => {
       },
       stateVariables: isBarang,
       subItems: [
+        { id: "listuser", label: "List User", link: "/list-user", parentId: "barang" },
+        { id: "listrole", label: "List Role", link: "/list-role", parentId: "barang" },
         { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
         { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
         { id: "unit", label: "Unit", link: "/unit", parentId: "barang" },
@@ -145,14 +147,19 @@ const Navdata = () => {
       },
       stateVariables: isMol,
       subItems:
-        role.includes("mol") || role.includes("developer")
+        role.includes("developer") || role.includes("logistik")
           ? [
               { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
               { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
               { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
               { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
             ]
-          : role.includes("fpb")
+          : role.includes("mekanik")
+          ? [
+              { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+              { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+            ]
+          : role.includes("maintenance")
           ? [{ id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" }]
           : [],
     },
@@ -345,7 +352,11 @@ const Navdata = () => {
     return <React.Fragment>{financeItem && dashboardItem ? [dashboardItem, financeItem] : null}</React.Fragment>;
   } else if (role == "kendari" || role == "site") {
     return <React.Fragment>{deliverItem && dashboardItem ? [dashboardItem, deliverItem] : null}</React.Fragment>;
-  } else if (role == "mol") {
+  } else if (role == "mekanik") {
+    return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
+  } else if (role == "maintenance") {
+    return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
+  } else if (role == "logistik") {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
   } else if (role == "fpb") {
     return <React.Fragment>{molItem && fbpItem && dashboardItem ? [dashboardItem, molItem, fbpItem] : null}</React.Fragment>;

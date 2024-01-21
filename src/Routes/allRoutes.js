@@ -8,6 +8,8 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 // User Profile
 import UserProfile from "../pages/Authentication/user-profile";
+import ListUser from "../pages/User";
+import ListRole from "../pages/Role";
 //Dashboard
 import DashboardEcommerce from "../pages/DashboardEcommerce";
 // Master Barang
@@ -86,6 +88,8 @@ import DetailGrPo from "../pages/Deliver/DetailsGrPo";
 const authProtectedRoutes = [
   // User Profile
   { path: "/profile", component: <UserProfile /> },
+  { path: "/list-user", component: <ListUser /> },
+  { path: "/list-role", component: <ListRole /> },
   // Dashboard
   { path: "/welcoming-page", component: <DashboardEcommerce /> },
   { path: "/index", component: <DashboardEcommerce /> },

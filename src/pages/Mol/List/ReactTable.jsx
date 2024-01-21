@@ -16,6 +16,10 @@ const PaginationTable = () => {
   const handleCetakClick = (id) => {
     history(`/mol/cetak?id=${id}`);
   };
+  const role = useSelector((state) => state.Login.role);
+
+  console.log(role);
+
   const columns = useMemo(
     () => [
       {
@@ -74,14 +78,24 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: true,
         accessor: (cellProps) => {
+          const hasMekanikRole = role.includes("mekanik");
+          const hasMekanikMaintenance = role.includes("maintenance");
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
-                Details
-              </button>
-              <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
-                Cetak
-              </button>
+              {hasMekanikRole || hasMekanikMaintenance ? (
+                <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
+                  Details
+                </button>
+              ) : (
+                <>
+                  <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
+                    Details
+                  </button>
+                  <button onClick={() => handleCetakClick(cellProps.id)} className="btn btn-sm btn-light">
+                    Cetak
+                  </button>
+                </>
+              )}
             </>
           );
         },

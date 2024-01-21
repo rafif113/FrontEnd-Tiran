@@ -330,7 +330,7 @@ const DetailPiutang = () => {
                       <table className="mt-4 mx-4">
                         <tbody>
                           <tr>
-                            <td style={{ fontSize: "0.8rem", fontWeight: "bold", width: "15%" }}>Total Pembayaran</td>
+                            <td style={{ fontSize: "0.8rem", fontWeight: "bold", width: "15%" }}>Total Tagihan</td>
                             <td style={{ width: "1%" }}>:</td>
                             <td style={{ fontSize: "0.8rem", fontWeight: "bold" }}>
                               {formatRupiah(detailPiutang.po_keterangan_bayar[index].total_pembayaran)}
