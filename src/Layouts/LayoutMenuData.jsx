@@ -360,7 +360,7 @@ const Navdata = () => {
 
   const dashboardItem = menuItems.find((item) => item.id === "dashboard");
   const financeItem = menuItems.find((item) => item.id === "finance");
-  const vendorItem = menuItems.find((item) => item.id === "penawaran");
+  const penawaranItem = menuItems.find((item) => item.id === "penawaran");
 
   const barangItem = menuItems.find((item) => item.id === "barang");
   const fbpItem = menuItems.find((item) => item.id === "fpb");
@@ -378,18 +378,28 @@ const Navdata = () => {
   } else if (role == "maintenance") {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
   } else if (role == "logistik") {
-    return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
+    return <React.Fragment>{molItem && poItem && dashboardItem ? [dashboardItem, molItem, poItem] : null}</React.Fragment>;
   } else if (role == "ktt") {
     return <React.Fragment>{fbpItem && dashboardItem ? [dashboardItem, fbpItem] : null}</React.Fragment>;
+  } else if (role == "ho") {
+    return (
+      <React.Fragment>{penawaranItem && poItem && dashboardItem ? [dashboardItem, penawaranItem, poItem] : null}</React.Fragment>
+    );
   } else if (role == "pengadaan") {
     return (
-      <React.Fragment>
-        {barangItem && dashboardItem && fbpItem && molItem && poItem && reportItem
-          ? [dashboardItem, barangItem, molItem, fbpItem, poItem, reportItem]
-          : null}
-      </React.Fragment>
+      <React.Fragment>{penawaranItem && poItem && dashboardItem ? [dashboardItem, penawaranItem, poItem] : null}</React.Fragment>
     );
-  } else {
+  }
+  // else if (role == "pengadaan") {
+  //   return (
+  //     <React.Fragment>
+  //       {barangItem && dashboardItem && fbpItem && molItem && poItem && reportItem
+  //         ? [dashboardItem, barangItem, molItem, fbpItem, poItem, reportItem]
+  //         : null}
+  //     </React.Fragment>
+  //   );
+  // }
+  else {
     return <React.Fragment>{menuItems}</React.Fragment>;
   }
 };
