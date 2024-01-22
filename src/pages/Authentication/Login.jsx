@@ -24,7 +24,7 @@ const Login = (props) => {
 
   const selectLayoutState = (state) => state;
   const loginPageData = createSelector(selectLayoutState, (state) => ({
-    user: state.Account.user,
+    // user: state.Account.user,
     error: state.Login.error,
     loading: state.Login.loading,
     errorMsg: state.Login.errorMsg,

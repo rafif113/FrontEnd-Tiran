@@ -41,6 +41,8 @@ axios.interceptors.response.use(
  */
 const setAuthorization = (token) => {
   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  const authUserData = JSON.parse(localStorage.getItem("authUser"));
+  axios.defaults.headers.common["User-Id"] = authUserData.data.user.id;
 };
 
 class APIClient {
@@ -95,9 +97,6 @@ class APIClient {
 }
 const getLoggedinUser = () => {
   const authUserData = JSON.parse(localStorage.getItem("authUser"));
-  if (authUserData && authUserData.data.roles[0] == "mol") {
-    authUserData.data.roles = ["logistik"];
-  }
   localStorage.setItem("authUser", JSON.stringify(authUserData));
 
   const user = localStorage.getItem("authUser");

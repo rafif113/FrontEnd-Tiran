@@ -16,6 +16,7 @@ const Navdata = () => {
   const [isDeliver, setIsDeliver] = useState(false);
   const [isPo, setIsPo] = useState(false);
   const [isPenawaran, setIsPenawaran] = useState(false);
+  const [isMasterUser, setIsMasterUser] = useState(false);
 
   const [isFinance, setIsFinance] = useState(false);
   const [isFinanceMonitoring, setIsFinanceMonitoring] = useState(false);
@@ -125,8 +126,22 @@ const Navdata = () => {
       },
       stateVariables: isBarang,
       subItems: [
-        { id: "listuser", label: "List User", link: "/list-user", parentId: "barang" },
-        { id: "listrole", label: "List Role", link: "/list-role", parentId: "barang" },
+        {
+          id: "masteruser",
+          label: "Master User",
+          link: "/#",
+          isChildItem: true,
+          click: function (e) {
+            e.preventDefault();
+            setIsMasterUser(!isMasterUser);
+          },
+          stateVariables: isMasterUser,
+          childItems: [
+            { id: "listuser", label: "List User", link: "/list-user" },
+            { id: "listrole", label: "List Role", link: "/list-role" },
+          ],
+        },
+
         { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
         { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
         { id: "unit", label: "Unit", link: "/unit", parentId: "barang" },
@@ -146,22 +161,27 @@ const Navdata = () => {
         updateIconSidebar(e);
       },
       stateVariables: isMol,
-      subItems:
-        role.includes("developer") || role.includes("logistik")
-          ? [
-              { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
-              { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
-              { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
-              { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
-            ]
-          : role.includes("mekanik")
-          ? [
-              { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
-              { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
-            ]
-          : role.includes("maintenance")
-          ? [{ id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" }]
-          : [],
+      subItems: role.includes("developer")
+        ? [
+            { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+            { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+            { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
+            { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
+          ]
+        : role.includes("mekanik")
+        ? [
+            { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+            { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
+          ]
+        : role.includes("maintenance")
+        ? [{ id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" }]
+        : role.includes("logistik")
+        ? [
+            { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
+            { id: "listpengeluaran", label: "List Pengeluaran", link: "/mol/pengeluaran", parentId: "mol" },
+            { id: "fueltire", label: "Create Fuel / Tire", link: "/mol/fuel-tire", parentId: "mol" },
+          ]
+        : [],
     },
     {
       id: "fpb",
@@ -330,6 +350,7 @@ const Navdata = () => {
       stateVariables: isReport,
 
       subItems: [
+        { id: "part", label: "List Part", link: "/report/part", parentId: "report" },
         { id: "unit", label: "Unit", link: "/report/unit", parentId: "report" },
         { id: "barangIn", label: "Barang Masuk", link: "/report/barang-masuk", parentId: "report" },
         { id: "out", label: "Barang Keluar", link: "/report/barang-keluar", parentId: "report" },
@@ -358,8 +379,8 @@ const Navdata = () => {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
   } else if (role == "logistik") {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
-  } else if (role == "fpb") {
-    return <React.Fragment>{molItem && fbpItem && dashboardItem ? [dashboardItem, molItem, fbpItem] : null}</React.Fragment>;
+  } else if (role == "ktt") {
+    return <React.Fragment>{fbpItem && dashboardItem ? [dashboardItem, fbpItem] : null}</React.Fragment>;
   } else if (role == "pengadaan") {
     return (
       <React.Fragment>

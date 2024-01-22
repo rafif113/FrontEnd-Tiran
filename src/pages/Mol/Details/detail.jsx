@@ -132,6 +132,8 @@ const DetailMol = () => {
     },
   });
 
+  console.log(detailMol);
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -402,7 +404,7 @@ const DetailMol = () => {
                               <th scope="col">Page Desc</th>
                               <th scope="col">Remarks</th>
                               <th scope="col">Stock</th>
-                              <th scope="col">Action</th>
+                              {role.includes("mekanik") || role.includes("maintenance") ? null : <th scope="col">Action</th>}
                             </tr>
                           </thead>
                           <tbody>
@@ -738,20 +740,23 @@ const DetailMol = () => {
                     </CardBody>
                   </Card>
 
-                  {role.includes("mekanik") || role.includes("maintenance") ? null : (
-                    <div className="text-end mb-3">
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-sm me-2"
-                        onClick={() => handleButtonClick("pengeluaran")}
-                      >
-                        Pengeluaran
-                      </button>
-                      <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
-                        Create FPB
-                      </button>
-                    </div>
-                  )}
+                  {role.includes("mekanik") || role.includes("maintenance")
+                    ? null
+                    : detailMol.mol.analis === "setuju" && (
+                        <div className="text-end mb-3">
+                          <button
+                            type="submit"
+                            className="btn btn-primary w-sm me-2"
+                            onClick={() => handleButtonClick("pengeluaran")}
+                          >
+                            Pengeluaran
+                          </button>
+                          <button type="submit" className="btn btn-success w-sm" onClick={() => handleButtonClick("fpb")}>
+                            Create FPB
+                          </button>
+                        </div>
+                      )}
+
                   {role.includes("maintenance") && (
                     <div className="text-end mb-3">
                       <button type="submit" className="btn btn-danger w-sm me-2">

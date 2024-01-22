@@ -79,6 +79,7 @@ export const GET_FINANCE_RECAP = "/get/uploadrecapcart";
 export const GET_REPORT_UNIT = "/get/report/unit";
 export const GET_REPORT_BARANG_IN = "/get/barangmasuk";
 export const GET_REPORT_BARANG_OUT = "/get/barangkeluar";
+export const GET_REPORT_PART = "/get/report/status/part";
 
 export const GET_PENAWARAN_PEMENANG = "/get/penawaran/pemenang";
 export const POST_PEMENANG_INVOICE = "/store/pemenang/invoice";
