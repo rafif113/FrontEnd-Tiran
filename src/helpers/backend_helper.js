@@ -84,6 +84,7 @@ export const addComponentGroup = (data) => api.create(url.ADD_COMPONENT_GROUP, d
 export const addMaterialType = (data) => api.create(url.ADD_MATERIAL_TYPE, data);
 export const addCostCode = (data) => api.create(url.ADD_COST_CODE, data);
 export const addMolFuelTire = (data) => api.create(url.ADD_MOL_FUEL_TIRE, data);
+export const postAnalisisMol = (data) => api.create(url.POST_ANALISIS_MOL, data);
 
 // FPB
 export const getFpb = (data) => api.create(url.GET_FPB, data);

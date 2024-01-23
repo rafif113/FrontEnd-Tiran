@@ -66,10 +66,8 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "Status",
-        accessor: () => {
-          return <>Approved</>;
-        },
+        Header: "Status Analis",
+        accessor: "analis",
         disableFilters: true,
         filterable: false,
       },

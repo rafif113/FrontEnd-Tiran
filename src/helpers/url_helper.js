@@ -23,6 +23,7 @@ export const ADD_MOL = "/store/mol";
 export const GET_COMPONENT_GROUP = "/get/master/componen_group";
 export const ADD_COMPONENT_GROUP = "/store/master/componen_group";
 export const ADD_MOL_FUEL_TIRE = "/post/request/ar";
+export const POST_ANALISIS_MOL = "/post/analis/mol";
 
 export const GET_PENGELUARAN = "/get/mol/pengeluaran";
 export const ADD_PENGELUARAN = "/sote/mol/pengeluaran";

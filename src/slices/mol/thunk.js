@@ -12,6 +12,7 @@ import {
   getPengeluaran as getPengeluaranApi,
   addPengeluaran as addPengeluaranApi,
   addMolFuelTire as addMolFuelTireApi,
+  postAnalisisMol as postAnalisisMolApi,
 } from "../../helpers/backend_helper";
 
 export const getMol = createAsyncThunk("mol/getMol", async () => {
@@ -141,6 +142,18 @@ export const getDetailPengeluaran = createAsyncThunk("mol/getDetailPengeluaran",
 export const addMolFuelTire = createAsyncThunk("mol/addMolFuelTire", async (fueltire) => {
   try {
     const response = addMolFuelTireApi(fueltire);
+    const data = await response;
+    toast.success("Component Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("Component Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const postAnalisisMol = createAsyncThunk("mol/postAnalisisMol", async (analisis) => {
+  try {
+    const response = postAnalisisMolApi(analisis);
     const data = await response;
     toast.success("Component Added Successfully", { autoClose: 3000 });
     return data;

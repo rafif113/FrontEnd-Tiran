@@ -18,11 +18,15 @@ import {
   Table,
   Alert,
   Spinner,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Button,
 } from "reactstrap";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailFpb as onGetDetailFpb, addPq as onAddPq } from "../../../slices/thunks";
+import { getDetailFpb as onGetDetailFpb, addPq as onAddPq, postAnalisisMol } from "../../../slices/thunks";
 
 import { setLoadingDetail, clearDetailFpb, clearSelectedFpbList, setSelectedFpbList } from "../../../slices/fpb/reducer";
 import { getReferensiPart as getReferensiPartApi } from "../../../helpers/backend_helper";
@@ -138,6 +142,32 @@ const DetailFpb = () => {
 
   const handleCetakClick = (id) => {
     history(`/fpb/pq/cetak?id=${id}`);
+  };
+
+  const [isModalOpenAnalisis, setIsModalOpenAnalisis] = useState(false);
+  const [keteranganAnalisis, setKeteranganAnalisis] = useState("");
+  const [statusAnalisis, setStatusAnalisis] = useState("");
+
+  const handleButtonClickAnalisis = (val) => {
+    setStatusAnalisis(val);
+    setIsModalOpenAnalisis(true);
+  };
+
+  const userLogin = useSelector((state) => state.Login.userData);
+
+  const handleSubmitAnalisis = async () => {
+    console.log(keteranganAnalisis, statusAnalisis);
+    const url = new URL(window.location.href);
+    const id_mol = url.searchParams.get("id");
+    const data = {
+      id_mol,
+      action: statusAnalisis,
+      keterangan: keteranganAnalisis,
+      user_id: userLogin.id,
+      jenis_dok: "fpb",
+    };
+    await dispatch(postAnalisisMol(data));
+    history("/fpb");
   };
 
   return (
@@ -402,6 +432,22 @@ const DetailFpb = () => {
                           Create PQ
                         </button>
                       </div> */}
+                      <div className="text-end mb-3">
+                        <button
+                          type="button"
+                          onClick={() => handleButtonClickAnalisis("tidak")}
+                          className="btn btn-danger w-sm me-2"
+                        >
+                          Tolak
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleButtonClickAnalisis("setuju")}
+                          className="btn btn-primary w-sm"
+                        >
+                          Setuju
+                        </button>
+                      </div>
                     </Form>
                   </TabPane>
 
@@ -507,6 +553,47 @@ const DetailFpb = () => {
       </div>
       {/* {isModalOpen && <Modals isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} */}
       {isModalOpen && partPrice && <Modals data={partPrice} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+      <Modal
+        isOpen={isModalOpenAnalisis}
+        toggle={() => {
+          setIsModalOpenAnalisis(!isModalOpenAnalisis);
+        }}
+        centered
+      >
+        <ModalHeader>
+          <h5 className="modal-title">{statusAnalisis == "tidak" ? "Penolakan" : "Persutujuan"} MOL</h5>
+        </ModalHeader>
+        <ModalBody>
+          <form>
+            <div className="row g-3">
+              <Col xxl={12}>
+                <div>
+                  <label htmlFor="keterangan" className="form-label">
+                    Keterangan
+                  </label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    value={keteranganAnalisis}
+                    onChange={(e) => setKeteranganAnalisis(e.target.value)}
+                    required
+                  />
+                </div>
+              </Col>
+              <div className="col-lg-12">
+                <div className="hstack gap-2 justify-content-end">
+                  <Button color="light" onClick={() => setIsModalOpenAnalisis(false)}>
+                    Close
+                  </Button>
+                  <Button color={statusAnalisis == "tidak" ? "danger" : "primary"} onClick={handleSubmitAnalisis}>
+                    {statusAnalisis == "tidak" ? "Tolak" : "Setuju"}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </ModalBody>
+      </Modal>
     </React.Fragment>
   );
 };

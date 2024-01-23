@@ -20,6 +20,16 @@ const CreatePengeluaran = () => {
   const selectedPartRequest = useSelector((state) => state.Mol.selectedPartRequest);
   const selectedPartRequestIds = selectedPartRequest.map((item) => ({ id: item.id }));
 
+  const [revisiQtyValues, setRevisiQtyValues] = useState(Array(selectedPartRequest.length).fill());
+
+  const handleRevisiQtyChange = (e, index) => {
+    const newValue = parseInt(e.target.value, 10) || null;
+    setRevisiQtyValues((prevValues) => {
+      const newValues = [...prevValues];
+      newValues[index] = newValue;
+      return newValues;
+    });
+  };
   const detailMol = useSelector((state) => state.Mol.detailMol);
 
   // handle form input
@@ -38,7 +48,12 @@ const CreatePengeluaran = () => {
         mol_no: values.mol_no,
         unit_id: values.unit_id,
         id_part_request: selectedPartRequestIds,
+        qty_pengeluaran: revisiQtyValues,
+        // qty_pengeluaran: revisiQtyValues.map((qty) => ({
+        //   qty: qty,
+        // })),
       };
+
       await dispatch(onAddPengeluaran(newPengeluaran));
       history("/mol/pengeluaran");
       validation.resetForm();
@@ -194,7 +209,18 @@ const CreatePengeluaran = () => {
                                 readOnly
                                 value={row.qty}
                               />
+                              <Input
+                                type="number"
+                                className="form-control bg-light border-0 mt-3"
+                                id={`revisiQty-${index}`}
+                                placeholder="Revisi Qty"
+                                name="revisi_qty"
+                                onChange={(e) => handleRevisiQtyChange(e, index)}
+                                value={revisiQtyValues[index]}
+                                max={row.stock}
+                              />
                             </td>
+
                             <td className="text-start">
                               <Input
                                 type="text"
@@ -217,12 +243,6 @@ const CreatePengeluaran = () => {
                                 value={row.page_desc}
                               />
                             </td>
-
-                            {/* <td className="product-removal">
-                            <Link to="#" className="btn btn-success">
-                              Delete
-                            </Link>
-                          </td> */}
                           </tr>
                         ))}
                       </tbody>

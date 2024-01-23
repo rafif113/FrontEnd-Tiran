@@ -173,7 +173,7 @@ const Navdata = () => {
             { id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" },
             { id: "createmol", label: "Create Mol", link: "/mol/create", parentId: "mol" },
           ]
-        : role.includes("maintenance")
+        : role.includes("maintenance") || role.includes("analisis")
         ? [{ id: "listmol", label: "List Mol", link: "/mol", parentId: "mol" }]
         : role.includes("logistik")
         ? [
@@ -377,6 +377,8 @@ const Navdata = () => {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
   } else if (role == "maintenance") {
     return <React.Fragment>{molItem && dashboardItem ? [dashboardItem, molItem] : null}</React.Fragment>;
+  } else if (role == "analisis") {
+    return <React.Fragment>{molItem && fbpItem && dashboardItem ? [dashboardItem, molItem, fbpItem] : null}</React.Fragment>;
   } else if (role == "logistik") {
     return <React.Fragment>{molItem && poItem && dashboardItem ? [dashboardItem, molItem, poItem] : null}</React.Fragment>;
   } else if (role == "ktt") {
