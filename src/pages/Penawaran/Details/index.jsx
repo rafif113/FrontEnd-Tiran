@@ -158,6 +158,52 @@ const DetailPenawaran = () => {
                     className="d-flex justify-content-between align-items-center"
                     style={{ fontSize: "14px", fontWeight: "600" }}
                   >
+                    <div>Detail MOL :</div>
+                  </CardHeader>
+
+                  <CardBody>
+                    <Row>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="unit-name">
+                            NO. MOL
+                          </label>
+                          <Input type="text" className="form-control" id="unit-name" name="unit_name" readOnly />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="engine-model">
+                            Unit Name
+                          </label>
+                          <Input type="text" className="form-control" id="engine-model" name="engine_model" readOnly />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="engine-model">
+                            Unit Code
+                          </label>
+                          <Input type="text" className="form-control" id="engine-model" name="engine_model" readOnly />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="engine-model">
+                            Serial No
+                          </label>
+                          <Input type="text" className="form-control" id="engine-model" name="engine_model" readOnly />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+
+                <Card>
+                  <CardHeader
+                    className="d-flex justify-content-between align-items-center"
+                    style={{ fontSize: "14px", fontWeight: "600" }}
+                  >
                     <div>Detail Part Questions :</div>
                     <button
                       onClick={() => handleCetakClick(detailPenawaran.id_pq)}

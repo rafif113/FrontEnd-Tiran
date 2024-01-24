@@ -784,7 +784,6 @@ const DetailMol = () => {
                           </button>
                         </div>
                       )}
-                  detailMol.mol.analis
                   {!detailMol.mol.analis && role.includes("analisis") ? (
                     <div className="text-end mb-3">
                       <button

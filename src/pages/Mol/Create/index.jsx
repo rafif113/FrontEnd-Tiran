@@ -104,6 +104,7 @@ const Mol = () => {
       page_desc: "",
       remarks: "",
       ids: "",
+      selectedOption: null,
     },
   ]);
 
@@ -135,9 +136,49 @@ const Mol = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(rows);
-  }, [rows]);
+  const CustomSelect = ({ placeholder, masterPart, row }) => {
+    const options = masterPart.map((detail) => ({
+      label: `${detail.part_number} || ${detail.part_name}`, // Tambahkan spasi di sini
+      // label: `${detail.part_number}||${detail.part_name}`,
+      value: detail.id,
+    }));
+
+    const findPartById = (id) => masterPart.find((part) => part.id === id);
+
+    const handleChange = (selectedOption) => {
+      const selectedPart = findPartById(selectedOption.value);
+
+      handleInputChange({ target: { value: selectedPart.part_number } }, row.id, "part_number");
+      handleInputChange({ target: { value: selectedOption.value } }, row.id, "ids");
+      handleInputChange({ target: { value: selectedPart.part_name } }, row.id, "description");
+      handleInputChange({ target: { value: selectedPart.satuan } }, row.id, "unit");
+
+      handleInputChange({ target: { value: row.id } }, row.id, "selectedValue");
+
+      const updatedRows = rows.map((r) => (r.id === row.id ? { ...r, selectedOption } : r));
+      setRows(updatedRows);
+    };
+
+    const filterOption = (option, inputValue) => {
+      const parts = option.label.toLowerCase().split("||");
+      const partNumberMatch = parts[0].includes(inputValue.trim().toLowerCase());
+      const descriptionMatch = parts[1].includes(inputValue.trim().toLowerCase());
+      return partNumberMatch || descriptionMatch;
+    };
+
+    return (
+      <Select
+        placeholder={placeholder}
+        name="customSelect"
+        value={row.selectedOption}
+        options={options}
+        isSearchable={true}
+        menuPlacement="auto"
+        onChange={handleChange}
+        filterOption={filterOption}
+      />
+    );
+  };
 
   const handleDeleteItem = (id) => {
     const updatedRows = rows.filter((row) => row.id !== id);
@@ -236,9 +277,9 @@ const Mol = () => {
         // id_fpb: 0,
         keterangan: values.keterangan,
       };
-      console.log(newMol);
+      // console.log(newMol);
       await dispatch(onAddMol(newMol));
-      // validation.resetForm();
+      validation.resetForm();
       history("/mol");
     },
   });
@@ -624,9 +665,9 @@ const Mol = () => {
                             No.
                           </th>
                           <th scope="col" style={{ width: "100%" }}>
-                            Part Number
+                            Part Number || Description
                           </th>
-                          <th scope="col">Description</th>
+                          {/* <th scope="col">Description</th> */}
                           <th scope="col">Qty</th>
                           <th scope="col">Unit</th>
                           <th scope="col">Group</th>
@@ -642,7 +683,7 @@ const Mol = () => {
                             <th scope="row" className="product-id text-center">
                               <div className="pt-2">{row.id}</div>
                             </th>
-                            <td className="text-start" style={{ minWidth: "200px" }}>
+                            {/* <td className="text-start" style={{ minWidth: "200px" }}>
                               <Select
                                 placeholder="Part Number"
                                 name="part_number"
@@ -676,7 +717,6 @@ const Mol = () => {
                                 placeholder="Description"
                                 name="description"
                                 value={masterPart.find((part) => part.id === row.id)}
-                                // defaultValue={row.part_number ? { label: row.description, value: row.ids } : null}
                                 options={masterPart.map((detail) => ({
                                   label: detail.part_name,
                                   value: detail.id,
@@ -699,12 +739,16 @@ const Mol = () => {
                                 disabled
                                 onChange={(e) => handleInputChange(e, row.id, "description")}
                               />
+                            </td> */}
+
+                            <td className="text-start" style={{ minWidth: "350px" }}>
+                              <CustomSelect placeholder="Part Number || Description" masterPart={masterPart} row={row} />
                             </td>
 
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="number"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Quantity"
                                 name="qty"
                                 value={row.qty}
@@ -714,7 +758,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Unit"
                                 name="unit"
                                 value={row.unit}
@@ -724,7 +768,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Group"
                                 name="group"
                                 value={row.group}
@@ -734,7 +778,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="number"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Page Image"
                                 name="page_image"
                                 value={row.page_image}
@@ -744,7 +788,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Page Desc"
                                 name="page_desc"
                                 value={row.page_desc}
@@ -754,7 +798,7 @@ const Mol = () => {
                             <td className="text-start" style={{ minWidth: "200px" }}>
                               <Input
                                 type="text"
-                                className="form-control mt-4"
+                                className="form-control"
                                 placeholder="Remarks"
                                 name="remarks"
                                 value={row.remarks}
@@ -763,7 +807,7 @@ const Mol = () => {
                             </td>
 
                             <td className="product-removal">
-                              <Link to="#" className="btn btn-sm btn-danger mt-4" onClick={() => handleDeleteItem(row.id)}>
+                              <Link to="#" className="btn btn-sm btn-danger" onClick={() => handleDeleteItem(row.id)}>
                                 Delete
                               </Link>
                             </td>

@@ -92,13 +92,26 @@ const InvoicePoFinanceTable = () => {
         filterable: false,
       },
       {
+        Header: "Status Dokumen",
+        accessor: (cellProps) => <div>Dokumen belum lengkap</div>,
+        disableFilters: true,
+        filterable: false,
+      },
+      {
         Header: "Actions",
         disableFilters: true,
         filterable: true,
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)} className="btn btn-sm btn-info">
+              {/* <button onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)} className="btn btn-sm btn-info">
+                +
+              </button> */}
+              <button
+                disabled
+                onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)}
+                className="btn btn-sm btn-info"
+              >
                 +
               </button>
             </>
