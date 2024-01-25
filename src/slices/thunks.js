@@ -7,61 +7,34 @@ export * from "./auth/register/thunk";
 export * from "./auth/forgetpwd/thunk";
 export * from "./auth/profile/thunk";
 
-//Calendar
-export * from "./calendar/thunk";
-//Chat
-export * from "./chat/thunk";
-//Ecommerce
-export * from "./ecommerce/thunk";
+//Barang
+export * from "./barang/thunk";
+//Mol
+export * from "./mol/thunk";
+//Fpb
+export * from "./fpb/thunk";
+//Po
+export * from "./po/thunk";
+//Po
+export * from "./vendor/thunk";
+//Penawwaran
+export * from "./penawaran/thunk";
+//Finance
+export * from "./finance/thunk";
 
-//Project
-export * from "./projects/thunk";
+// Report
+export * from "./report/thunk";
 
-// Tasks
-export * from "./tasks/thunk";
-//Crypto
-export * from "./crypto/thunk";
+// GCS
+export * from "./gcs/thunk";
 
-//TicketsList
-export * from "./tickets/thunk";
-//Crm
-export * from "./crm/thunk";
+// GCS
+export * from "./ktt/thunk";
 
-//Invoice
-export * from "./invoice/thunk";
+// MASTER
+export * from "./master/thunk";
 
-//Mailbox
-export * from "./mailbox/thunk";
+// DELIVER
+export * from "./deliver/thunk";
 
-// Dashboard Analytics
-export * from "./dashboardAnalytics/thunk";
-
-// Dashboard CRM
-export * from "./dashboardCRM/thunk";
-
-// Dashboard Ecommerce
-export * from "./dashboardEcommerce/thunk";
-
-// Dashboard Cryto
-export * from "./dashboardCrypto/thunk";
-
-// Dashboard Cryto
-export * from "./dashboardProject/thunk";
-
-// Dashboard NFT
-export * from "./dashboardNFT/thunk";
-
-// Pages > Team
-export * from "./team/thunk";
-
-// File Manager
-export * from "./fileManager/thunk";
-
-// To do
-export * from "./todos/thunk";
-
-// Jobs
-export * from "./jobs/thunk";
-
-// API Key
-export * from "./apiKey/thunk";
+export * from "./user/thunk";

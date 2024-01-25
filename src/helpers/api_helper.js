@@ -5,11 +5,11 @@ import { api } from "../config";
 axios.defaults.baseURL = api.API_URL;
 // content type
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 
 // content type
 const token = JSON.parse(sessionStorage.getItem("authUser")) ? JSON.parse(sessionStorage.getItem("authUser")).token : null;
-if (token)
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+if (token) axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 // intercepting to capture errors
 axios.interceptors.response.use(
@@ -41,6 +41,10 @@ axios.interceptors.response.use(
  */
 const setAuthorization = (token) => {
   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  const authUserData = JSON.parse(localStorage.getItem("authUser"));
+  if (authUserData) {
+    axios.defaults.headers.common["User-Id"] = authUserData.data.user.id;
+  }
 };
 
 class APIClient {
@@ -57,12 +61,12 @@ class APIClient {
     let paramKeys = [];
 
     if (params) {
-      Object.keys(params).map(key => {
-        paramKeys.push(key + '=' + params[key]);
+      Object.keys(params).map((key) => {
+        paramKeys.push(key + "=" + params[key]);
         return paramKeys;
       });
 
-      const queryString = paramKeys && paramKeys.length ? paramKeys.join('&') : "";
+      const queryString = paramKeys && paramKeys.length ? paramKeys.join("&") : "";
       response = axios.get(`${url}?${queryString}`, params);
     } else {
       response = axios.get(`${url}`, params);
@@ -94,7 +98,10 @@ class APIClient {
   };
 }
 const getLoggedinUser = () => {
-  const user = sessionStorage.getItem("authUser");
+  const authUserData = JSON.parse(localStorage.getItem("authUser"));
+  localStorage.setItem("authUser", JSON.stringify(authUserData));
+
+  const user = localStorage.getItem("authUser");
   if (!user) {
     return null;
   } else {

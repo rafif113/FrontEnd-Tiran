@@ -4,8 +4,8 @@ import {
   getAllRevenueData as getAllRevenueDataApi,
   getMonthRevenueData as getMonthRevenueDataApi,
   getHalfYearRevenueData as getHalfYearRevenueDataApi,
-  getYearRevenueData as getYearRevenueDataApi
-} from "../../helpers/fakebackend_helper";
+  getYearRevenueData as getYearRevenueDataApi,
+} from "../../helpers/backend_helper";
 
 export const getRevenueChartsData = createAsyncThunk("dashboardEcommerce/getRevenueChartsData", async (data) => {
   try {

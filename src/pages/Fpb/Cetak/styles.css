@@ -1,0 +1,7 @@
+/* styles.css */
+.table-container {
+  border: 1px solid black;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
