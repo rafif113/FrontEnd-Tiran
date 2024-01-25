@@ -51,8 +51,8 @@ const Login = (props) => {
     // enableReinitialize: true,
 
     initialValues: {
-      email: userLogin.email || "dev@dev.com" || "",
-      password: userLogin.password || "root" || "",
+      email: "",
+      password: "",
       // email: userLogin.email || "admin@themesbrand.com" || "",
       // password: userLogin.password || "123456" || "",
     },
