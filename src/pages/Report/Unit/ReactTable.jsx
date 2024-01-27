@@ -48,7 +48,9 @@ const UnitTable = () => {
       },
       {
         Header: "Total",
-        accessor: "total",
+        accessor: (cellProps) => {
+          return <>{cellProps.total} Request MOL.</>;
+        },
         disableFilters: true,
         filterable: false,
       },

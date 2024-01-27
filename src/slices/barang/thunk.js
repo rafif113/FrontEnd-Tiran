@@ -6,6 +6,8 @@ import {
   addBarang as addBarangApi,
   getKategoriBarang as getKategoriBarangApi,
   addKategori as addKategoriApi,
+  addAlatBerat as addAlatBeratApi,
+  addPartNumber as addPartNumberApi,
 } from "../../helpers/backend_helper";
 
 export const getBarang = createAsyncThunk("barang/getBarang", async () => {
@@ -50,6 +52,29 @@ export const getKategoriBarang = createAsyncThunk("barang/getKategoriBarang", as
 export const addKategori = createAsyncThunk("barang/addKategori", async (kategori) => {
   try {
     const response = addKategoriApi(kategori);
+    const data = await response;
+    toast.success("Kategori Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("Kategori Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+
+export const addPartNumber = createAsyncThunk("barang/addPartNumber", async (kategori) => {
+  try {
+    const response = addPartNumberApi(kategori);
+    const data = await response;
+    toast.success("Kategori Added Successfully", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    toast.error("Kategori Added Failed", { autoClose: 3000 });
+    return error;
+  }
+});
+export const addAlatBerat = createAsyncThunk("barang/addAlatBerat", async (kategori) => {
+  try {
+    const response = addAlatBeratApi(kategori);
     const data = await response;
     toast.success("Kategori Added Successfully", { autoClose: 3000 });
     return data;

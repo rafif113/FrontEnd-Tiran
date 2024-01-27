@@ -59,9 +59,14 @@ const PaginationTable = () => {
         disableFilters: true,
         filterable: false,
         accessor: (cellProps) => {
-          return cellProps.roles.map((value, index) => {
-            return <span key={index}>{value.nama_role}</span>;
+          const roles = cellProps.roles.map((value, index) => {
+            return index === cellProps.roles.length - 1 ? (
+              <span key={index}>{value.nama_role}</span>
+            ) : (
+              <span key={index}>{value.nama_role}, </span>
+            );
           });
+          return roles;
         },
       },
 
@@ -72,9 +77,6 @@ const PaginationTable = () => {
         accessor: (cellProps) => {
           return (
             <>
-              <button onClick={() => handleDetailsClick(cellProps.id)} className="btn btn-sm btn-light">
-                Details
-              </button>
               <button onClick={() => toggleRole(cellProps.id)} className="btn btn-sm btn-light">
                 Role
               </button>

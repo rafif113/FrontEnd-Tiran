@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getRole, getUser } from "../../slices/thunks";
+import { getMasterPart as onGetMasterPart } from "../../slices/thunks";
 import { clearDetailUser } from "../../slices/user/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -21,14 +21,20 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "Role Name",
-        accessor: "nama_role",
+        Header: "Part Name",
+        accessor: "part_name",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Description",
-        accessor: "keterangan",
+        Header: "Part Number",
+        accessor: "part_number",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Satuan",
+        accessor: "satuan",
         disableFilters: true,
         filterable: false,
       },
@@ -39,8 +45,8 @@ const PaginationTable = () => {
   // -------------------------------------------
 
   const selectUserData = createSelector(
-    (state) => state.User.role,
-    (role) => role
+    (state) => state.Master.part,
+    (part) => part
   );
   const user = useSelector(selectUserData);
 
@@ -48,7 +54,7 @@ const PaginationTable = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(getRole()).then(() => {
+    dispatch(onGetMasterPart()).then(() => {
       setLoading(false);
     });
   }, []);
@@ -68,7 +74,7 @@ const PaginationTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari User..."
+          SearchPlaceholder="Cari Part Number..."
         />
       ) : (
         <div className="text-center">

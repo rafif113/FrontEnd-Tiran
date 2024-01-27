@@ -188,7 +188,7 @@ const CreateProcurement = () => {
                       <Col lg={6}>
                         <div className="mb-3">
                           <label className="form-label" htmlFor="title">
-                            Keterangan
+                            Description
                           </label>
                           <textarea
                             className="form-control"

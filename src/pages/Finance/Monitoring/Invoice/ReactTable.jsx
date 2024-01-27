@@ -93,7 +93,20 @@ const InvoicePoFinanceTable = () => {
       },
       {
         Header: "Status Dokumen",
-        accessor: (cellProps) => <div>Dokumen belum lengkap</div>,
+        accessor: (cellProps) => {
+          const isAnyFileNull = !cellProps.file_invoice || !cellProps.file_spb || !cellProps.file_po;
+
+          if (isAnyFileNull) {
+            const missingFiles = [];
+            if (!cellProps.file_invoice) missingFiles.push("Invoice");
+            if (!cellProps.file_spb) missingFiles.push("SPB");
+            if (!cellProps.file_po) missingFiles.push("PO");
+
+            return <div>Dokumen belum lengkap: {missingFiles.join(", ")}</div>;
+          } else {
+            return <div>Dokumen Lengkap</div>;
+          }
+        },
         disableFilters: true,
         filterable: false,
       },
@@ -102,13 +115,11 @@ const InvoicePoFinanceTable = () => {
         disableFilters: true,
         filterable: true,
         accessor: (cellProps) => {
+          const isAnyFileNull = !cellProps.file_invoice || !cellProps.file_spb || !cellProps.file_po;
           return (
             <>
-              {/* <button onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)} className="btn btn-sm btn-info">
-                +
-              </button> */}
               <button
-                disabled
+                disabled={isAnyFileNull}
                 onClick={() => handlePaymentClick(cellProps.id_pl, cellProps.no_po)}
                 className="btn btn-sm btn-info"
               >

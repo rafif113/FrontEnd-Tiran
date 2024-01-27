@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import TableContainer from "../../Components/Common/TableContainerReactTable";
 import { Spinner } from "reactstrap";
-import { getRole, getUser } from "../../slices/thunks";
+import { getMasterAlat as onGetMasterAlat } from "../../slices/thunks";
 import { clearDetailUser } from "../../slices/user/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -39,8 +39,8 @@ const PaginationTable = () => {
   // -------------------------------------------
 
   const selectUserData = createSelector(
-    (state) => state.User.role,
-    (role) => role
+    (state) => state.Master.alat,
+    (alat) => alat
   );
   const user = useSelector(selectUserData);
 
@@ -48,7 +48,7 @@ const PaginationTable = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(getRole()).then(() => {
+    dispatch(onGetMasterAlat()).then(() => {
       setLoading(false);
     });
   }, []);

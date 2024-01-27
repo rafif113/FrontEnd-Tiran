@@ -68,6 +68,8 @@ export const getKategoriBarang = () => api.get(url.GET_KATEGORI_BARANG);
 // post Barang
 export const addBarang = (data) => api.create(url.ADD_BARANG, data);
 export const addKategori = (data) => api.create(url.ADD_KATEGORI, data);
+export const addPartNumber = (data) => api.create(url.ADD_PART_NUMBER, data);
+export const addAlatBerat = (data) => api.create(url.ADD_ALAT_BERAT, data);
 
 // get MOL
 export const getMol = (data) => api.create(url.GET_MOL, data);

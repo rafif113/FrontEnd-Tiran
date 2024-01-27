@@ -13,7 +13,8 @@ export const SOCIAL_LOGIN = "/social-login";
 export const GET_BARANG = "/barang";
 export const GET_MASTER_BARANG = "/master/barang";
 export const ADD_BARANG = "/store/barang";
-
+export const ADD_PART_NUMBER = "/post/master/partnumber";
+export const ADD_ALAT_BERAT = "/post/master/alatberat";
 export const GET_KATEGORI_BARANG = "/barang_kategori";
 export const ADD_KATEGORI = "/store/kategori";
 

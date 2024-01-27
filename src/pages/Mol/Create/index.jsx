@@ -137,11 +137,17 @@ const Mol = () => {
   };
 
   const CustomSelect = ({ placeholder, masterPart, row }) => {
-    const options = masterPart.map((detail) => ({
-      label: `${detail.part_number} || ${detail.part_name}`, // Tambahkan spasi di sini
-      // label: `${detail.part_number}||${detail.part_name}`,
-      value: detail.id,
-    }));
+    // const options = masterPart.map((detail) => ({
+    //   label: `${detail.part_number} || ${detail.part_name}`,
+    //   value: detail.id,
+    // }));
+
+    const options = masterPart
+      .filter((detail) => detail.part_number !== null && detail.part_name !== null)
+      .map((detail) => ({
+        label: `${detail.part_number} || ${detail.part_name}`,
+        value: detail.id,
+      }));
 
     const findPartById = (id) => masterPart.find((part) => part.id === id);
 

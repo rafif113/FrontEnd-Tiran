@@ -15,6 +15,8 @@ import DashboardEcommerce from "../pages/DashboardEcommerce";
 // Master Barang
 import CreateBarang from "../pages/Barang/CreateBarang";
 import ListBarang from "../pages/Barang/ListBarang";
+import AlatBerat from "../pages/AlatBerat";
+import PartNumber from "../pages/PartNumber";
 // MOL
 import Mol from "../pages/Mol/List";
 import CreateMol from "../pages/Mol/Create";
@@ -91,6 +93,8 @@ const authProtectedRoutes = [
   { path: "/profile", component: <UserProfile /> },
   { path: "/list-user", component: <ListUser /> },
   { path: "/list-role", component: <ListRole /> },
+  { path: "/alat-berat", component: <AlatBerat /> },
+  { path: "/part-number", component: <PartNumber /> },
   // Dashboard
   { path: "/welcoming-page", component: <DashboardEcommerce /> },
   { path: "/index", component: <DashboardEcommerce /> },

@@ -142,11 +142,12 @@ const Navdata = () => {
           ],
         },
 
-        { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
-        { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
+        // { id: "listbarang", label: "List Barang", link: "/barang", parentId: "barang" },
+        // { id: "createbarang", label: "Create Barang", link: "/barang/create", parentId: "barang" },
         { id: "unit", label: "Unit", link: "/unit", parentId: "barang" },
-        { id: "carrier", label: "Carrier", link: "/carrier", parentId: "barang" },
-        { id: "buyer", label: "Buyer", link: "/buyer", parentId: "barang" },
+        { id: "partnumber", label: "Part Number", link: "/part-number", parentId: "barang" },
+        { id: "alatberat", label: "Alat Berat", link: "/alat-berat", parentId: "barang" },
+        // { id: "buyer", label: "Buyer", link: "/buyer", parentId: "barang" },
       ],
     },
     {
@@ -388,9 +389,7 @@ const Navdata = () => {
       <React.Fragment>{penawaranItem && poItem && dashboardItem ? [dashboardItem, penawaranItem, poItem] : null}</React.Fragment>
     );
   } else if (role == "pengadaan") {
-    return (
-      <React.Fragment>{penawaranItem && poItem && dashboardItem ? [dashboardItem, penawaranItem, poItem] : null}</React.Fragment>
-    );
+    return <React.Fragment>{fbpItem && poItem && dashboardItem ? [dashboardItem, fbpItem, poItem] : null}</React.Fragment>;
   }
   // else if (role == "pengadaan") {
   //   return (

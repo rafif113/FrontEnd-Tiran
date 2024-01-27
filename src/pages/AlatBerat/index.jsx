@@ -21,7 +21,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { postRole } from "../../slices/thunks";
 
-const ListUser = () => {
+const ListAlatBerat = () => {
   document.title = "List Role | PT Tiran";
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -164,4 +164,4 @@ const ListUser = () => {
   );
 };
 
-export default ListUser;
+export default ListAlatBerat;
