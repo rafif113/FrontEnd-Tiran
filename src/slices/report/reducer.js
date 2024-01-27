@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getReportUnit, getReportBarangIn, getReportBarangOut, getReportPart } from "./thunk";
+import { getReportUnit, getReportBarangIn, getReportBarangOut, getReportPart, getReportStock } from "./thunk";
 export const initialState = {
   unit: [],
   barangIn: [],
@@ -8,6 +8,7 @@ export const initialState = {
   loadingUnit: true,
   loadingBarangIn: true,
   loadingBarangOut: true,
+  stock: [],
   error: {},
 };
 
@@ -40,6 +41,9 @@ const ReportSlice = createSlice({
 
     builder.addCase(getReportPart.fulfilled, (state, action) => {
       state.part = action.payload.message;
+    });
+    builder.addCase(getReportStock.fulfilled, (state, action) => {
+      state.stock = action.payload.data;
     });
   },
 });

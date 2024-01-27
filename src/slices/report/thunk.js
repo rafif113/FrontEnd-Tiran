@@ -5,6 +5,7 @@ import {
   getReportBarangIn as getReportBarangInApi,
   getReportBarangOut as getReportBarangOutApi,
   getReportPart as getReportPartApi,
+  getReportStock as getReportStockApi,
 } from "../../helpers/backend_helper";
 
 export const getReportUnit = createAsyncThunk("report/getReportUnit", async () => {
@@ -34,6 +35,14 @@ export const getReportBarangOut = createAsyncThunk("report/getReportBarangOut", 
 export const getReportPart = createAsyncThunk("report/getReportPart", async () => {
   try {
     const response = getReportPartApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getReportStock = createAsyncThunk("report/getReportStock", async () => {
+  try {
+    const response = getReportStockApi();
     return response;
   } catch (error) {
     return error;

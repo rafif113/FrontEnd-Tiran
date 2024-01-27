@@ -138,6 +138,7 @@ export const getReportBarangOut = (data) => api.create(url.GET_REPORT_BARANG_OUT
 export const getPenawaranPemenang = (data) => api.create(url.GET_PENAWARAN_PEMENANG, data);
 export const addPemenangInvoice = (data) => api.create(url.POST_PEMENANG_INVOICE, data);
 export const getReportPart = () => api.create(url.GET_REPORT_PART);
+export const getReportStock = () => api.create(url.GET_REPORT_STOCK);
 
 // GCS
 export const postGcs = (data) => api.create(url.POST_GCS, data);

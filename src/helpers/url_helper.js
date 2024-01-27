@@ -47,6 +47,7 @@ export const ADD_MATERIAL_TYPE = "/store/master/material_type";
 
 export const GET_COST_CODE = "/get/master/cost_code";
 export const ADD_COST_CODE = "/store/master/cost_code";
+export const GET_REPORT_STOCK = "/get/report/stock";
 
 // VENDOR
 export const GET_VENDOR = "/get/list/vendor";

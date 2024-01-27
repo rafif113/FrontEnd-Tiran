@@ -353,6 +353,7 @@ const Navdata = () => {
       subItems: [
         { id: "part", label: "List Part", link: "/report/part", parentId: "report" },
         { id: "unit", label: "Unit", link: "/report/unit", parentId: "report" },
+        { id: "stock", label: "Stock", link: "/report/stock", parentId: "report" },
         { id: "barangIn", label: "Barang Masuk", link: "/report/barang-masuk", parentId: "report" },
         { id: "out", label: "Barang Keluar", link: "/report/barang-keluar", parentId: "report" },
       ],

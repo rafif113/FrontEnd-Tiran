@@ -34,9 +34,9 @@ const FileModal = ({ fileInvoice, filePO, fileSPB }) => {
               </a>
             </div>
             <div className="mb-3">
-              <p style={{ margin: 0 }}>File SPB:</p>
+              <p style={{ margin: 0 }}>File BAST:</p>
               <a href={fileSPB} target="_blank" rel="noopener noreferrer">
-                Preview SPB
+                Preview BAST
               </a>
             </div>
           </ModalBody>
