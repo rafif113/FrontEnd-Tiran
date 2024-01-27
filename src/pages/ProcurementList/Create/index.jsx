@@ -45,18 +45,22 @@ const CreateProcurement = () => {
       date: "",
       spesial_intruksi: "",
       note: "",
-      file: null, // Add file field to initialValues
+      file_invo: null, // Add file field to initialValues
+      file_po: null, // Add file field to initialValues
+      file_bast: null, // Add file field to initialValues
     },
     // validationSchema: Yup.object({}),
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("id_po", values.id_po);
       formData.append("keterangan", values.note);
-      formData.append("file_invo", values.file);
+      formData.append("file_invo", values.file_invo);
+      formData.append("file_po", values.file_po);
+      formData.append("file_bast", values.file_bast);
       setLoading(true);
       await dispatch(onPostProcurementList(formData));
       // setLoading(false);
-      history("/procurement-list");
+      // history("/procurement-list");
       validation.resetForm();
     },
   });
@@ -173,15 +177,45 @@ const CreateProcurement = () => {
                       <Col lg={6}>
                         <div className="mb-3">
                           <label className="form-label" htmlFor="title">
-                            File
+                            File Invoice
                           </label>
                           <Input
                             type="file"
                             className="form-control"
-                            id="file"
-                            name="file"
-                            onChange={(event) => validation.setFieldValue("file", event.currentTarget.files[0])}
+                            id="file_invo"
+                            name="file_invo"
+                            onChange={(event) => validation.setFieldValue("file_invo", event.currentTarget.files[0])}
                             placeholder="File Invoice"
+                          />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="title">
+                            File PO
+                          </label>
+                          <Input
+                            type="file"
+                            className="form-control"
+                            id="file_po"
+                            name="file_po"
+                            onChange={(event) => validation.setFieldValue("file_po", event.currentTarget.files[0])}
+                            placeholder="File PO"
+                          />
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <div className="mb-3">
+                          <label className="form-label" htmlFor="title">
+                            File BAST
+                          </label>
+                          <Input
+                            type="file"
+                            className="form-control"
+                            id="file_bast"
+                            name="file_bast"
+                            onChange={(event) => validation.setFieldValue("file_bast", event.currentTarget.files[0])}
+                            placeholder="File BAST"
                           />
                         </div>
                       </Col>

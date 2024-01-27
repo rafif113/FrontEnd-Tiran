@@ -21,14 +21,80 @@ const PaginationTable = () => {
         filterable: false,
       },
       {
-        Header: "Role Name",
-        accessor: "nama_role",
+        Header: "Type",
+        accessor: "type",
         disableFilters: true,
         filterable: false,
       },
       {
-        Header: "Description",
+        Header: "Brand",
+        accessor: "brand",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Model",
+        accessor: "model",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "NoPol",
+        accessor: "nopol",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "New Plat Number",
+        accessor: "new_plat_number",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Serial Number",
+        accessor: "serial_number",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Engine Number",
+        accessor: "engine_number",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "SN Radio",
+        accessor: "sn_radio_momunikasi",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Keterangan",
         accessor: "keterangan",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Location",
+        accessor: "location",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Masuk",
+        accessor: "masuk",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Cat",
+        accessor: "cat",
+        disableFilters: true,
+        filterable: false,
+      },
+      {
+        Header: "Sub Cat",
+        accessor: "sub_cat",
         disableFilters: true,
         filterable: false,
       },
@@ -68,7 +134,7 @@ const PaginationTable = () => {
           className="custom-header-css table align-middle table-nowrap"
           tableClassName="table-centered align-middle table-nowrap mb-0"
           theadClassName="text-muted table-light"
-          SearchPlaceholder="Cari User..."
+          SearchPlaceholder="Cari Alat Berat..."
         />
       ) : (
         <div className="text-center">
